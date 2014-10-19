@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name="com.thumbsup.coolnamecli.User" table="User">
+      <meta attribute="class-description">
+         This class contains the user detail. 
+      </meta>
+      <id name="userName" type="string" column="UserName">
+         
+      </id>
+      <property name="userType" column="UserType" type="int"/>
+      <property name="firstName" column="FirstName" type="string"/>
+      <property name="lastName" column="LastName" type="string"/>
+      <property name="phoneNumber" column="PhoneNumber" type="string"/>
+      <property name="password" column="Password" type="string"/>
+      <property name="passwordSalt" column="PasswordSalt" type="string"/>
+   </class>
+</hibernate-mapping>
