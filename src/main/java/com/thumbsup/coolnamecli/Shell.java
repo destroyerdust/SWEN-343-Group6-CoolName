@@ -3,10 +3,18 @@ package com.thumbsup.coolnamecli;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Console;
+
+import com.thumbsup.coolnamecli.entity.User;
 
 public class Shell {
 
 	public static void main(String[] args) {
+		
+		Console c = System.console();
+		//String input = c.readLine("Hi: ");
+		//System.out.println("Input: " + input);
+		
 		// TODO Auto-generated method stub
 		System.out.println("Initializing ThumpbsUp Version 0.0.1");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -28,8 +36,6 @@ public class Shell {
 	}
 	
 	public static void mainMenu() {
-		String input = null;
-		
 		System.out.println("ThumbsUp Main Menu");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("Please select from the following:");
@@ -38,24 +44,13 @@ public class Shell {
 		System.out.println("2. Add Vehicle");
 		
 		// Input Selection
-		System.out.print("Enter number selection: ");
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		//  read the input from the command-line; need to use try/catch with the
-	    //  readLine() method
-	    try {
-	    	input = br.readLine();
-	    } catch (IOException ioe) {
-	       System.out.println("IO error trying to read your input!");
-	       System.out.println("Returning to main menu!");
-	       mainMenu();
-	    }
+		//String input = c.readLine("Enter number selection: ");
 	    
-	    System.out.println("Input Selected: " + input);
+	    //System.out.println("Input Selected: " + input);
 	}
 	
 	public static void addUser() {
-		
+		User user = new User();
 	}
 
 }

@@ -64,13 +64,14 @@ public class UserDAO {
 		
     }
 	
-    public static void insertUser(User u)
+    public static Integer insertUser(User u)
     {
     	Session s = SessionFactory.openSession();
 		Transaction t = s.beginTransaction();        
-		s.save(u);
+		Integer userId = (Integer) s.save(u);
         t.commit();
         s.close();
+		return userId;
     }
     
     public static User selectUser(String username)
