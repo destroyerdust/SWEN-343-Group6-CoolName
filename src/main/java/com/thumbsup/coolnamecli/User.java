@@ -1,101 +1,90 @@
 package com.thumbsup.coolnamecli;
 
-public class User {
-	
-	private int userId;
-	
-	private int userType;
-	
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the User database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private String userName;
+
 	private String firstName;
-	
+
 	private String lastName;
-	
-	private String phoneNumber;
-	
+
 	private String password;
-	
-	public User() {}
-	public User(int userType, String firstName, String lastName, String phoneNumber, String password){
-		this.userType = userType;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.password = password;
+
+	private String passwordSalt;
+
+	private String phoneNumber;
+
+	private int userType;
+
+	public User() {
 	}
-	/**
-	 * @return the userId
-	 */
-	public int getUserId() {
-		return userId;
+
+	public String getUserName() {
+		return this.userName;
 	}
-	/**
-	 * @param userId the userId to set
-	 */
-	public void setUserId(int userId) {
-		this.userId = userId;
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-	/**
-	 * @return the userTypeId
-	 */
-	public int getUserType() {
-		return userType;
-	}
-	/**
-	 * @param userType the userType to set
-	 */
-	public void setUserType(int userType) {
-		this.userType = userType;
-	}
-	/**
-	 * @return
-	 */
-	/**
-	 * @return the firstName
-	 */
+
 	public String getFirstName() {
-		return firstName;
+		return this.firstName;
 	}
-	/**
-	 * @param firstName the firstName to set
-	 */
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	/**
-	 * @return the lastName
-	 */
+
 	public String getLastName() {
-		return lastName;
+		return this.lastName;
 	}
-	/**
-	 * @param lastName the lastName to set
-	 */
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	/**
-	 * @return the phoneNumber
-	 */
-	public String getPhoneNumber() {
-		return phoneNumber;
+
+	public String getPassword() {
+		return this.password;
 	}
-	/**
-	 * @param phoneNumber the phoneNumber to set
-	 */
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPasswordSalt() {
+		return this.passwordSalt;
+	}
+
+	public void setPasswordSalt(String passwordSalt) {
+		this.passwordSalt = passwordSalt;
+	}
+
+	public String getPhoneNumber() {
+		return this.phoneNumber;
+	}
+
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
+
+	public int getUserType() {
+		return this.userType;
 	}
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
+
+	public void setUserType(int userType) {
+		this.userType = userType;
 	}
 
 }

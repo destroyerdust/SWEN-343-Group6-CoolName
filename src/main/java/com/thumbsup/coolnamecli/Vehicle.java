@@ -1,35 +1,61 @@
 package com.thumbsup.coolnamecli;
 
-public class Vehicle {
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
 
-	private int vehicleId;
-	private String model;
-	private String name;
-	private int numSeats;
+
+/**
+ * The persistent class for the Vehicle database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Vehicle.findAll", query="SELECT v FROM Vehicle v")
+public class Vehicle implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int vehicleID;
+
 	private String description;
+
+	private String model;
+
+	private String name;
+
+	private int numSeats;
+
+	//bi-directional many-to-one association to RideEntry
+	@OneToMany(mappedBy="vehicle")
+	private List<RideEntry> rideEntries;
+
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="UserName")
 	private User user;
-	
-	public Vehicle() {}
 
-	public Vehicle(String model, String name, int numSeats,
-			String description, User user) {
-		this.model = model;
-		this.name = name;
-		this.numSeats = numSeats;
+	public Vehicle() {
+	}
+
+	public int getVehicleID() {
+		return this.vehicleID;
+	}
+
+	public void setVehicleID(int vehicleID) {
+		this.vehicleID = vehicleID;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
 		this.description = description;
-		this.user = user;
-	}
-
-	public int getVehicleId() {
-		return vehicleId;
-	}
-
-	public void setVehicleId(int vehicleId) {
-		this.vehicleId = vehicleId;
 	}
 
 	public String getModel() {
-		return model;
+		return this.model;
 	}
 
 	public void setModel(String model) {
@@ -37,7 +63,7 @@ public class Vehicle {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -45,23 +71,37 @@ public class Vehicle {
 	}
 
 	public int getNumSeats() {
-		return numSeats;
+		return this.numSeats;
 	}
 
 	public void setNumSeats(int numSeats) {
 		this.numSeats = numSeats;
 	}
 
-	public String getDescription() {
-		return description;
+	public List<RideEntry> getRideEntries() {
+		return this.rideEntries;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setRideEntries(List<RideEntry> rideEntries) {
+		this.rideEntries = rideEntries;
+	}
+
+	public RideEntry addRideEntry(RideEntry rideEntry) {
+		getRideEntries().add(rideEntry);
+		rideEntry.setVehicle(this);
+
+		return rideEntry;
+	}
+
+	public RideEntry removeRideEntry(RideEntry rideEntry) {
+		getRideEntries().remove(rideEntry);
+		rideEntry.setVehicle(null);
+
+		return rideEntry;
 	}
 
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 
 	public void setUser(User user) {
