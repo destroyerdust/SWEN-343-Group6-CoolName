@@ -28,11 +28,11 @@ public class UserDAO {
 		
 		//TESTING SECTION
 		UserDAO UserManager = new UserDAO();
-//		
-//		User u = new User();
-//		u.setUserName("Testsad");
-//		
-//		UserManager.deleteUser(u);
+		
+		User u = new User();
+		u.setUserName("Testsad");
+		
+		UserManager.deleteUser(u);
 //		
 //		User u = new User();
 //		u.setUserName("Testsad");
