@@ -4,132 +4,66 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
+import com.thumbsup.coolnamecli.dao.SessionFactory;
 import com.thumbsup.coolnamecli.entity.User;
 
-public class UserDAO {
-
-	private static SessionFactory SessionFactory;
-	
-	public static void main( String[] args )
-    {
-		Configuration configuration = new Configuration().configure();
-		
-		StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
-		serviceRegistryBuilder.applySettings(configuration.getProperties());
-		ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
-		SessionFactory = configuration.buildSessionFactory(serviceRegistry);
-
-		
-		//TESTING SECTION
-		UserDAO UserManager = new UserDAO();
-		
-		User u = new User();
-		u.setUserName("Testsad");
-		
-		UserManager.deleteUser(u);
-//		
-//		User u = new User();
-//		u.setUserName("Testsad");
-//		u.setPassword("testinP{assd");
-//		u.setPasswordSalt("eee");
-//		
-//		UserManager.insertUser(u);
-//		
-//		User x = selectUser(u.getUserName());
-//		System.out.println(x.getUserName());
-//		System.out.println(x.getPassword());
-//		
-//		List<User> list = UserManager.selectAllUsers();
-//		
-//		for(User user: list){
-//			System.out.println(user.getUserName());
-//			System.out.println(user.getFirstName());
-//			System.out.println(user.getLastName());
-//		}
-//		
-//		u.setPassword("eteasd");
-		
-//		UserManager.updateUser(u);
-//		
-//		User y = selectUser(u.getUserName());
-//		System.out.println(y.getUserName());
-//		System.out.println(y.getPassword());
-		
-		
-    }
-	
-    public static void insertUser(User u)
-    {
-    	Session s = SessionFactory.openSession();
+public class UserDAO extends CRUDManager<User, Integer>{
+    
+	@Override
+	public User insert(User u) {
+		SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
 		Transaction t = s.beginTransaction();        
 		s.save(u);
         t.commit();
+        s.flush();
+        u = (User)s.load(User.class, u);
         s.close();
-    }
-    
-    public static User selectUser(String username)
-    {
-    	User selectedUser = new User();
-    	
-    	Session s = SessionFactory.openSession();
-//        System.out.println( "Hello World!" );  
-    	
-    	Transaction transaction = s.beginTransaction();
-        selectedUser = (User)s.get(User.class, username);
-        transaction.commit();
-        
-        s.close();
-        return selectedUser;
-    }
-    
-    public static List<User> selectAllUsers()
-    {
-        List<User> userList = new ArrayList<User>();
-    	
-    	Session s = SessionFactory.openSession();    
-        
-    	Transaction transaction = s.beginTransaction();
-        userList = s.createCriteria(User.class).list();
-        transaction.commit();
-        
-        s.close();
-        
-        return userList;
-    }
-    
-    /**
-     * This method is used to update a user object within the database
-     * 
-     * @param updatedUser : the user to be updated
-     * @return void
-     */
-    public static void updateUser(User updatedUser)
-    {   	
-    	Session s = SessionFactory.openSession();
-    	
-    	User oldUser = (User) s.load(User.class, updatedUser.getUserName());
-    	
-    	Transaction transaction = s.beginTransaction();
-    	s.update(updatedUser);
-    	transaction.commit();
-    	
-    	s.close();    	
-    }
-    
-    public static void deleteUser(User user){
-    	Session s = SessionFactory.openSession();
-    	
+        return u;
+	}
+
+	@Override
+	public User select(Integer pk) {
+		SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
+		User u = (User)s.load(User.class, pk);
+		return u;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> selectAll() {
+		SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
+		List<User> u = new ArrayList<User>();
+        u = s.createCriteria(User.class).list();
+		return u;
+	}
+
+	@Override
+	public User delete(User user) {
+		SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
     	Transaction transaction = s.beginTransaction();
     	s.delete(user);
     	transaction.commit();
-    	
+    	s.flush();
+    	user = (User)s.load(User.class, user.getUserName());
     	s.close();
-    	
-    }
+    	return user;
+	}
+
+	@Override
+	public User update(User user) {
+		SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
+    	Transaction transaction = s.beginTransaction();
+    	s.update(user);
+    	transaction.commit();
+    	user = (User) s.load(User.class, user.getUserName());
+    	s.close();
+    	return user;
+	}
 }
