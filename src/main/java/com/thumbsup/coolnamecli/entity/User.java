@@ -31,11 +31,11 @@ public class User implements Serializable {
 
 	private int userType;
 
-	public User(Integer userId, String userName, String firstName,
+	public User(){}
+	public User(String userName, String firstName,
 			String lastName, String password, String passwordSalt,
 			String phoneNumber, int userType) {
 		super();
-		this.userId = userId;
 		this.userName = userName;
 		this.firstName = firstName;
 		this.lastName = lastName;

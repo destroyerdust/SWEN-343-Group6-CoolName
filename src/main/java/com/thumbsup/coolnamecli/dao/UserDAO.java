@@ -27,7 +27,7 @@ public class UserDAO {
 
 		
 		//TESTING SECTION
-		UserDAO UserManager = new UserDAO();
+		//UserDAO UserManager = new UserDAO();
 //		
 //		User u = new User();
 //		u.setUserName("Testsad");
@@ -77,7 +77,6 @@ public class UserDAO {
     public static User selectUser(String username)
     {
     	User selectedUser = new User();
-    	
     	Session s = SessionFactory.openSession();
 //        System.out.println( "Hello World!" );  
     	
@@ -89,7 +88,8 @@ public class UserDAO {
         return selectedUser;
     }
     
-    public static List<User> selectAllUsers()
+    @SuppressWarnings("unchecked")
+	public static List<User> selectAllUsers()
     {
         List<User> userList = new ArrayList<User>();
     	
