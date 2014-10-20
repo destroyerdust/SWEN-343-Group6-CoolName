@@ -7,7 +7,6 @@ import org.hibernate.Session;
 
 import org.hibernate.Transaction;
 
-import com.thumbsup.coolnamecli.entity.User;
 import com.thumbsup.coolnamecli.entity.Vehicle;
 import com.thumbsup.coolnamecli.dao.SessionFactory;
 
@@ -64,6 +63,7 @@ public class VehicleDAO extends CRUDManager<Vehicle, Integer> {
 		Session s = factory.getSession();
 		Vehicle v = (Vehicle)s.load(Vehicle.class, vehicleID);
 		s.close();
+		
 		return v;
 	}
 	
@@ -81,10 +81,7 @@ public class VehicleDAO extends CRUDManager<Vehicle, Integer> {
     {   	
     	SessionFactory factory = SessionFactory.getSessionFactory();
 		Session s = factory.getSession();
-		Transaction transaction = s.beginTransaction();
-		
-    	Vehicle oldVehicle = (Vehicle) s.load(Vehicle.class, vehicle.getVehicleID());
-    	
+		Transaction transaction = s.beginTransaction();    	
     	s.delete(vehicle);
     	transaction.commit();
     	s.flush();
