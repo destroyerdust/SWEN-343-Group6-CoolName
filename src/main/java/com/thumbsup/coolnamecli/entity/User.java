@@ -1,6 +1,7 @@
 package com.thumbsup.coolnamecli.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -14,6 +15,8 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	private Integer userId;
+	
 	private String userName;
 
 	private String firstName;
@@ -28,7 +31,26 @@ public class User implements Serializable {
 
 	private int userType;
 
-	public User() {
+	public User(Integer userId, String userName, String firstName,
+			String lastName, String password, String passwordSalt,
+			String phoneNumber, int userType) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.password = password;
+		this.passwordSalt = passwordSalt;
+		this.phoneNumber = phoneNumber;
+		this.userType = userType;
+	}
+
+	public Integer getUserId() {
+		return this.userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String getUserName() {

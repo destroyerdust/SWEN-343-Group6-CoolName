@@ -4,31 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+
 import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
-import com.thumbsup.coolnamecli.entity.User;
 import com.thumbsup.coolnamecli.entity.Vehicle;
+import com.thumbsup.coolnamecli.dao.SessionFactory;
 
-public class VehicleDAO {
-	
-	private static SessionFactory SessionFactory;
-	
-	public static void main(String[] args){
-		Configuration configuration = new Configuration().configure();
-		
-		StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
-		serviceRegistryBuilder.applySettings(configuration.getProperties());
-		ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
-		SessionFactory = configuration.buildSessionFactory(serviceRegistry);
-
-		VehicleDAO VehicleManager = new VehicleDAO();
-		
-		
-		//TESTING SECTION
+public class VehicleDAO extends CRUDManager<Vehicle, Integer> {
+//		
+//	public static void main(String[] args){
+//		Configuration configuration = new Configuration().configure();
+//		
+//		StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
+//		serviceRegistryBuilder.applySettings(configuration.getProperties());
+//		ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
+//		SessionFactory = configuration.buildSessionFactory(serviceRegistry);
+//
+//		VehicleDAO VehicleManager = new VehicleDAO();
+//		
+//		
+//		//TESTING SECTION
 //		
 //		User u = new User();
 //		u.setUserName("testing");
@@ -43,68 +38,68 @@ public class VehicleDAO {
 //		
 //		System.out.println(v2.getVehicleID());
 //		System.out.println(v2.getDescription());
-		
-		
-		
-		
-	}
-	
-	public static void createVehicle(Vehicle v){
-		Session s = SessionFactory.openSession();
+//		
+//		
+//		
+//		
+//	}
+//	
+	public Vehicle insert(Vehicle v){
+		SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
 		Transaction t = s.beginTransaction();        
 		s.save(v);
         t.commit();
+        s.flush();
+        v = (Vehicle)s.load(Vehicle.class, v);
         s.close();
+        
+        return v;
 	}
 	
-	public static Vehicle selectVehicle(int vehicleID){
-    	Vehicle selectedVehicle = new Vehicle();
-    	
-    	Session s = SessionFactory.openSession();  
-    	
-    	Transaction transaction = s.beginTransaction();
-    	selectedVehicle = (Vehicle)s.get(Vehicle.class, vehicleID);
-        transaction.commit();
-        
-        s.close();
-        return selectedVehicle;
+	@Override	
+	public Vehicle select(Integer vehicleID){
+		SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
+		Vehicle v = (Vehicle)s.load(Vehicle.class, vehicleID);
+		s.close();
+		
+		return v;
 	}
 	
-	public static List<Vehicle> selectAllVehicle(){
-		List<Vehicle> vehicleList = new ArrayList<Vehicle>();
-	    	
-    	Session s = SessionFactory.openSession();    
-        
-    	Transaction transaction = s.beginTransaction();
-        vehicleList = s.createCriteria(Vehicle.class).list();
-        transaction.commit();
-        
+	public List<Vehicle> selectAll(){
+		SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
+        List<Vehicle> vehicleList = new ArrayList<Vehicle>(); 
+		vehicleList = s.createCriteria(Vehicle.class).list();              
         s.close();
         
         return vehicleList;
 	}
 	
-    public static void updateVehicle(Vehicle updatedVehicle)
+    public Vehicle delete(Vehicle vehicle)
     {   	
-    	Session s = SessionFactory.openSession();
-    	
-    	Vehicle oldVehicle = (Vehicle) s.load(Vehicle.class, updatedVehicle.getVehicleID());
-    	
-    	Transaction transaction = s.beginTransaction();
-    	s.update(updatedVehicle);
-    	transaction.commit();
-    	
-    	s.close();    	
-    }
-    
-    public static void deleteVehicle(Vehicle vehicle){
-    	Session s = SessionFactory.openSession();
-    	
-    	Transaction transaction = s.beginTransaction();
+    	SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
+		Transaction transaction = s.beginTransaction();    	
     	s.delete(vehicle);
     	transaction.commit();
-    	
+    	s.flush();
+    	vehicle = (Vehicle)s.load(Vehicle.class, vehicle.getVehicleID());
     	s.close();
+    	
+    	return vehicle;
+    }
+    
+    public Vehicle update(Vehicle vehicle){
+    	SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
+    	Transaction transaction = s.beginTransaction();
+    	s.update(vehicle);
+    	transaction.commit();
+    	vehicle = (Vehicle) s.load(Vehicle.class, vehicle.getVehicleID());
+    	s.close();
+    	return vehicle;
     	
     }
     
