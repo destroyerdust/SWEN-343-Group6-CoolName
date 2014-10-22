@@ -5,9 +5,9 @@ import java.util.List;
 import com.thumbsup.coolnamecli.entity.RideEntry;
 
 /**
- * 
- * Interpret this class to be the holder of domain logic that pertains to
- * matching users within the system.
+ * This class contains methods that match Drivers with Passengers.
+ * This class has access to and will spawn sessions from the RideEntryDAO.
+ * This class is meant to be invoked by some other object in the runtime.
  * 
  * */
 public class RideMatchMaker {
@@ -33,15 +33,18 @@ public class RideMatchMaker {
 	 * */
 	private List<RideEntry> findPassengersForDriver(Driver d) {
 		//Hard-coded SQL query (Hibernate form)
-		/*
+		
+		/* 
+		 * Process:
+		 *  1) User the RideEntryDAO to get the full list of RideEntries.
+		 *  2) Selectively pick from the RideEntries those that do not have a vehicle ID 
+		 *  3) Discriminate the RideEntries by Group and Location
 		 * 
-		 * 
-		 * 
+		 * Potential code:
+		 *  String hql = "FROM RideEntry RE WHERE RE.VehicleID == null";
+		 *  Query query = session.createQuery(hql);
+		 *  List results = query.list();
 		 * */
-		
-		//execute query
-		
-		//parse results
 		
 		//return result
 		return null;
@@ -49,6 +52,8 @@ public class RideMatchMaker {
 
 	/* Match Passengers to Drivers */
 	private List<RideEntry> findDriversForPassenger(Passenger p) {
+		
+		//Please reference the findPassengersForDriver method for how to fill this out.
 		return null;
 	}
 }
