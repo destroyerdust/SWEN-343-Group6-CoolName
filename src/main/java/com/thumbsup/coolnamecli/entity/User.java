@@ -31,11 +31,10 @@ public class User implements Serializable {
 
 	private int userType;
 
-	public User(Integer userId, String userName, String firstName,
+	public User(String userName, String firstName,
 			String lastName, String password, String passwordSalt,
 			String phoneNumber, int userType) {
 		super();
-		this.userId = userId;
 		this.userName = userName;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -43,6 +42,11 @@ public class User implements Serializable {
 		this.passwordSalt = passwordSalt;
 		this.phoneNumber = phoneNumber;
 		this.userType = userType;
+	}
+	
+	public User()
+	{
+		
 	}
 
 	public Integer getUserId() {
