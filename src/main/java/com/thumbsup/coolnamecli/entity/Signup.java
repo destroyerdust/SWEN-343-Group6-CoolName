@@ -23,11 +23,18 @@ public class Signup implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date timestamp;
 
-	private String userID;
+	private int userID;
 
 	public Signup() {
 	}
 
+	public Signup(int rideEntryID, Date timestamp, int userID) {
+		super();
+		this.rideEntryID = rideEntryID;
+		this.timestamp = timestamp;
+		this.userID = userID;
+	}
+	
 	public int getRideOnID() {
 		return this.rideOnID;
 	}
@@ -52,11 +59,11 @@ public class Signup implements Serializable {
 		this.timestamp = timestamp;
 	}
 
-	public String getUserID() {
+	public int getUserID() {
 		return this.userID;
 	}
 
-	public void setUserID(String userID) {
+	public void setUserID(int userID) {
 		this.userID = userID;
 	}
 
