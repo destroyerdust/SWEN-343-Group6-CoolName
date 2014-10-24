@@ -9,7 +9,7 @@
    	<meta attribute="class-description">
    		"This class contains the vehicle detail."
    	</meta>
-   	<id name="vehicleId" type="int" column="VehicleID">
+   	<id name="vehicleID" type="int" column="VehicleID">
    		<generator class="native"></generator>
    	</id>
    	<property name="model" column="Model" type="string"/>
