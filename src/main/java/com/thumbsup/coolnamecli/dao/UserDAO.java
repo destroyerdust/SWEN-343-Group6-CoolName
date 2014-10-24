@@ -19,7 +19,7 @@ public class UserDAO extends CRUDManager<User, Integer>{
 		s.save(u);
         t.commit();
         s.flush();
-        u = (User)s.load(User.class, u);
+        u = (User)s.get(User.class, u.getUserId());
         s.close();
         return u;
 	}
