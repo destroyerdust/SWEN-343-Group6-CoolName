@@ -8,7 +8,7 @@
       <meta attribute="class-description">
          This class contains the signup detail. 
       </meta>
-      <id name="rideOnID" type="int" column="UserID">
+      <id name="rideOnID" type="int" column="RideOnID">
          <generator class="native"/>
       </id>
       <property name="rideEntryID" column="RideEntryID" type="int"/>
