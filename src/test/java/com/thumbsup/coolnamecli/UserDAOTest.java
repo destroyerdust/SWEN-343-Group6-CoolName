@@ -15,31 +15,31 @@ import com.thumbsup.coolnamecli.entity.User;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserDAOTest {
 	UserDAO dao = new UserDAO();
-	private static User u = new User();
+	private static User testedUser = new User();
 	
 	@BeforeClass
 	public static void setUp()
 	{
-		u.setUserName("MyUserNameTest");
-		u.setFirstName("John");
-		u.setLastName("Tester");
-		u.setPassword("1324");
-		u.setPasswordSalt("saltTest");
-		u.setPhoneNumber("888-8888");
-		u.setUserType(2);
+		testedUser.setUserName("MyUserNameTest");
+		testedUser.setFirstName("John");
+		testedUser.setLastName("Tester");
+		testedUser.setPassword("1324");
+		testedUser.setPasswordSalt("saltTest");
+		testedUser.setPhoneNumber("888-8888");
+		testedUser.setUserType(2);
 	}
 	
 	@Test
 	public void testA_InsertUser() {
-		User insertedUser = dao.insert(u);
-		assertTrue(userIsEquals(u, insertedUser));
-		u.setUserId(insertedUser.getUserId());
+		User insertedUser = dao.insert(testedUser);
+		assertTrue(userIsEquals(testedUser, insertedUser));
+		testedUser.setUserId(insertedUser.getUserId());
 	}
 
 	@Test
 	public void testB_SelectUser() {
-		User selectedUser = dao.select(u.getUserId());
-		assertTrue(userIsEquals(u, selectedUser));
+		User selectedUser = dao.select(testedUser.getUserId());
+		assertTrue(userIsEquals(testedUser, selectedUser));
 	}
 
 	@Test
@@ -50,14 +50,14 @@ public class UserDAOTest {
 
 	@Test
 	public void testC_UpdateUser() {
-		u.setPhoneNumber("000-0000");
-		User uptadedUser = dao.update(u);
-		assertTrue( userIsEquals(u, uptadedUser));
+		testedUser.setPhoneNumber("000-0000");
+		User uptadedUser = dao.update(testedUser);
+		assertTrue( userIsEquals(testedUser, uptadedUser));
 	}
 
 	@Test
 	public void testD_DeleteUser() {
-		assertNull(dao.delete(u));
+		assertNull(dao.delete(testedUser));
 	}
 	
 	private boolean userIsEquals(User expected, User actual)
