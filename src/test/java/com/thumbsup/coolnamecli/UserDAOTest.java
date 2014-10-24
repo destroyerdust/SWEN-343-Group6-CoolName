@@ -2,6 +2,8 @@ package com.thumbsup.coolnamecli;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -40,7 +42,8 @@ public class UserDAOTest {
 
 	@Test
 	public void testSelectAllUsers() {
-		fail("Not yet implemented");
+		List<User> result = dao.selectAll();
+		assertTrue(result.size() > 0);
 	}
 
 	@Test
