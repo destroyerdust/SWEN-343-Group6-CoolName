@@ -2,7 +2,9 @@ package com.thumbsup.coolnamecli;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.thumbsup.coolnamecli.dao.UserDAO;
@@ -10,10 +12,10 @@ import com.thumbsup.coolnamecli.entity.User;
 
 public class UserDAOTest {
 	UserDAO dao = new UserDAO();
-	User u = new User();
+	private static User u = new User();
 	
-	@Before
-	public void setUp()
+	@BeforeClass
+	public static void setUp()
 	{
 		u.setUserName("MyUserNameTest");
 		u.setFirstName("John");
@@ -32,7 +34,8 @@ public class UserDAOTest {
 
 	@Test
 	public void testSelectUser() {
-		fail("Not yet implemented");
+		User selectedUser = dao.select(u.getUserId());
+		assertTrue(userIsEquals(u, selectedUser));
 	}
 
 	@Test
