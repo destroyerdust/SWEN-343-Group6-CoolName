@@ -19,7 +19,7 @@ public class UserDAO extends CRUDManager<User, Integer>{
 		s.save(u);
         t.commit();
         s.flush();
-        u = (User)s.load(User.class, u);
+        u = (User)s.get(User.class, u.getUserId());
         s.close();
         return u;
 	}
@@ -28,7 +28,7 @@ public class UserDAO extends CRUDManager<User, Integer>{
 	public User select(Integer pk) {
 		SessionFactory factory = SessionFactory.getSessionFactory();
 		Session s = factory.getSession();
-		User u = (User)s.load(User.class, pk);
+		User u = (User)s.get(User.class, pk);
 		return u;
 	}
 
