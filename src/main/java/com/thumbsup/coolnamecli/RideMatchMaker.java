@@ -2,65 +2,85 @@ package com.thumbsup.coolnamecli;
 
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-
 import com.thumbsup.coolnamecli.dao.RideEntryDAO;
-import com.thumbsup.coolnamecli.dao.SessionFactory;
 import com.thumbsup.coolnamecli.entity.RideEntry;
 import com.thumbsup.coolnamecli.entity.User;
 
 /**
- * This class contains methods that match Drivers with Passengers.
- * This class has access to and will spawn sessions from the RideEntryDAO.
- * This class is meant to be invoked by some other object in the runtime.
+ * This class contains methods that match Drivers with Passengers. This class
+ * has access to and will invoke the RideEntryDAO. This class is a repository
+ * for logic and query-results parsing; it is meant to be invoked by some other
+ * object in the runtime.
  * 
  * */
 public class RideMatchMaker {
 
+	/*
+	 * This DAO is used to conduct database queries. To clarify: this
+	 * (RideMatchMaker) class itself will never create Sessions directly, it
+	 * will only invoke the DAO and parse the results
+	 */
 	private RideEntryDAO red;
 
 	public RideMatchMaker(RideEntryDAO red) {
-		// setup RideEntryDAO
 		this.red = red;
 	}
 
 	/**
-	 * Match Driver to Passengers
+	 * Match One Driver to many Passenger RideEntries
 	 * 
-	 * @param Driver
-	 *            d : The driver in the system that needs to be matched with
-	 *            Passengers
+	 * @param User
+	 *            driver : The driver in the system that needs to be matched
+	 *            with Passengers
 	 * 
 	 * @return List<RideEntry> : A list of RideEntries that match the parameters
 	 *         of the Driver. The list expresses the Passengers within the
 	 *         system that fit and need the Driver.
 	 * 
 	 * */
-	private List<Object> findPassengersForDriver(User driver) {
-		//Hard-coded SQL query (Hibernate form)
-		
-		/* 
-		 * Process:
-		 *  1) User the RideEntryDAO to get the full list of RideEntries.
-		 *  2) Selectively pick from the RideEntries those that do not have a vehicle ID 
-		 *  3) Discriminate the RideEntries by Group and Location
-		 * 
-		 */  
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		Session session = factory.getSession();
-		String hql = "FROM RideEntry RE WHERE RE.VehicleID == null";
-		Query query = session.createQuery(hql);
-		List<Object> results = query.list();
-		
-		//return result
+	private List<RideEntry> findPassengersForDriver(User driver) {
+
+		List<RideEntry> results = red.selectAll();
+
+		// parse results (destructively modify)
+		// Remove all RideEntry objects that actually have a Vehicle already.
+		// Intuition: RideEntries without Vehicles are simply passengers that
+		// don't have a driver yet.
+		for (RideEntry re : results) {
+			if (re.getVehicle() != null) {
+				results.remove(re);
+			}
+		}
+
 		return results;
 	}
 
-	/* Match Passengers to Drivers */
-	private List<RideEntry> findDriversForPassenger(User p) {
-		
-		//Please reference the findPassengersForDriver method for how to fill this out.
-		return null;
+	/**
+	 * Match One Passenger to many Driver RideEntries
+	 * 
+	 * @param User
+	 *            passenger : The driver in the system that needs to be matched
+	 *            with Passengers
+	 * 
+	 * @return List<RideEntry> : A list of RideEntries that match the parameters
+	 *         of the Passenger. The list expresses the Drivers within the
+	 *         system that fit and need the Passenger.
+	 * 
+	 * */
+	private List<RideEntry> findDriversForPassenger(User passenger) {
+
+		List<RideEntry> results = red.selectAll();
+
+		// parse results (destructively modify)
+		// Remove all RideEntry objects that don't have a Vehicle already.
+		// Intuition: RideEntries with Vehicles are Drivers that are looking for
+		// Passengers
+		for (RideEntry re : results) {
+			if (re.getVehicle() == null) {
+				results.remove(re);
+			}
+		}
+
+		return results;
 	}
 }
