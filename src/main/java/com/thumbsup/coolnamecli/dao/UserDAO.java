@@ -19,9 +19,9 @@ public class UserDAO extends CRUDManager<User, Integer>{
 		s.save(u);
         t.commit();
         s.flush();
-        u = (User)s.get(User.class, u.getUserId());
+        User resultUser = (User)s.get(User.class, u.getUserId());
         s.close();
-        return u;
+        return resultUser;
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class UserDAO extends CRUDManager<User, Integer>{
     	s.delete(user);
     	transaction.commit();
     	s.flush();
-    	user = (User)s.load(User.class, user.getUserName());
+    	user = (User)s.get(User.class, user.getUserId());
     	s.close();
     	return user;
 	}
@@ -62,8 +62,9 @@ public class UserDAO extends CRUDManager<User, Integer>{
     	Transaction transaction = s.beginTransaction();
     	s.update(user);
     	transaction.commit();
-    	user = (User) s.load(User.class, user.getUserName());
+    	s.flush();
+    	User resultUser = (User) s.get(User.class, user.getUserId());
     	s.close();
-    	return user;
+    	return resultUser;
 	}
 }

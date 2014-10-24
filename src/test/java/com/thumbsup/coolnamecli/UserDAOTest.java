@@ -4,14 +4,15 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import com.thumbsup.coolnamecli.dao.UserDAO;
 import com.thumbsup.coolnamecli.entity.User;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserDAOTest {
 	UserDAO dao = new UserDAO();
 	private static User u = new User();
@@ -29,31 +30,34 @@ public class UserDAOTest {
 	}
 	
 	@Test
-	public void testInsertUser() {
+	public void testA_InsertUser() {
 		User insertedUser = dao.insert(u);
 		assertTrue(userIsEquals(u, insertedUser));
+		u.setUserId(insertedUser.getUserId());
 	}
 
 	@Test
-	public void testSelectUser() {
+	public void testB_SelectUser() {
 		User selectedUser = dao.select(u.getUserId());
 		assertTrue(userIsEquals(u, selectedUser));
 	}
 
 	@Test
-	public void testSelectAllUsers() {
+	public void testE_SelectAllUsers() {
 		List<User> result = dao.selectAll();
 		assertTrue(result.size() > 0);
 	}
 
 	@Test
-	public void testUpdateUser() {
-		fail("Not yet implemented");
+	public void testC_UpdateUser() {
+		u.setPhoneNumber("000-0000");
+		User uptadedUser = dao.update(u);
+		assertTrue( userIsEquals(u, uptadedUser));
 	}
 
 	@Test
-	public void testDeleteUser() {
-		fail("Not yet implemented");
+	public void testD_DeleteUser() {
+		assertNull(dao.delete(u));
 	}
 	
 	private boolean userIsEquals(User expected, User actual)
