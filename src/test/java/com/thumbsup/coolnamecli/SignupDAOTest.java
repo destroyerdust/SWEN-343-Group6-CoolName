@@ -56,8 +56,9 @@ public class SignupDAOTest {
 	}
 	
 	@Test
-	public void testDeleteSignup() {
-		fail("Not yet implemented");
+	public void testE_DeleteSignup() {
+		Signup result = dao.delete(entity);
+		assertNull(result);
 	}
 	
 	private boolean signIsEqual(Signup expected, Signup actual)
