@@ -26,6 +26,7 @@
    <mapping resource="User.hbm.xml"/>
    <mapping resource="RideEntry.hbm.xml"/>
    <mapping resource="Vehicle.hbm.xml"/>
+   <mapping resource="Signup.hbm.xml"/>
 
 </session-factory>
 </hibernate-configuration>
