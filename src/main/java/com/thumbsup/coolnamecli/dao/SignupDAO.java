@@ -19,10 +19,10 @@ public class SignupDAO extends CRUDManager<Signup, Integer> {
 		s.save(sign);
         t.commit();
         s.flush();
-        sign = (Signup)s.load(Signup.class, sign);
+        Signup result = (Signup)s.get(Signup.class, sign.getRideOnID());
         s.close();
         
-        return sign;
+        return result;
 	}
 
 	@Override
