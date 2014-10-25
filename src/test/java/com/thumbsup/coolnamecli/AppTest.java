@@ -6,7 +6,9 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ UserDAOTest.class,
-				RideEntryDAOTest.class})
+				RideEntryDAOTest.class,
+				SignupDAOTest.class,
+				VehicleDAOTest.class})
 public class AppTest {
 
 }
