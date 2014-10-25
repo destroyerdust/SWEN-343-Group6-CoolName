@@ -66,9 +66,9 @@ public class RideEntryDAO extends CRUDManager<RideEntry, Integer> {
 		Transaction transaction = s.beginTransaction();
 		s.update(entry);
 		transaction.commit();
-		entry = (RideEntry) s.load(RideEntry.class, entry.getRideEntryID());
+		RideEntry result = (RideEntry) s.get(RideEntry.class, entry.getRideEntryID());
 		s.close();
-		return entry;
+		return result;
 	}
 
 }

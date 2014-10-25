@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -44,28 +45,29 @@ public class RideEntryDAOTest {
 		RideEntry insertedRide = dao.insert(testedRideEntry);
 		assertTrue(rideIsEquals(testedRideEntry, insertedRide));
 		testedRideEntry.setRideEntryID(insertedRide.getRideEntryID());
-		System.out.println(testedRideEntry.getStartTime());
 	}
 
 	@Test
 	public void testB_SelectRideEntry() {
 		RideEntry result = dao.select(testedRideEntry.getRideEntryID());
-		System.out.println(result.getStartTime());
 		assertTrue(rideIsEquals(testedRideEntry, result));
 	}
 
 	@Test
-	public void testSelectAll() {
-		fail("Not yet implemented");
+	public void testC_SelectAllRides() {
+		List<RideEntry> result = dao.selectAll();
+		assertTrue(result.size() > 0);
 	}
 
+	@Test
+	public void testD_UpdateRideEntry() {
+		testedRideEntry.setDestination("Destination Changed");
+		RideEntry updated = dao.update(testedRideEntry);
+		assertTrue(rideIsEquals(testedRideEntry, updated));
+	}
+	
 	@Test
 	public void testDeleteRideEntry() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testUpdateRideEntry() {
 		fail("Not yet implemented");
 	}
 	

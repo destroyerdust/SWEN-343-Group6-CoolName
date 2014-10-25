@@ -43,20 +43,20 @@ public class UserDAOTest {
 	}
 
 	@Test
-	public void testE_SelectAllUsers() {
+	public void testC_SelectAllUsers() {
 		List<User> result = dao.selectAll();
 		assertTrue(result.size() > 0);
 	}
 
 	@Test
-	public void testC_UpdateUser() {
+	public void testD_UpdateUser() {
 		testedUser.setPhoneNumber("000-0000");
 		User uptadedUser = dao.update(testedUser);
 		assertTrue( userIsEquals(testedUser, uptadedUser));
 	}
 
 	@Test
-	public void testD_DeleteUser() {
+	public void testE_DeleteUser() {
 		assertNull(dao.delete(testedUser));
 	}
 	
