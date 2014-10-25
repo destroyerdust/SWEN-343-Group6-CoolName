@@ -67,8 +67,9 @@ public class RideEntryDAOTest {
 	}
 	
 	@Test
-	public void testDeleteRideEntry() {
-		fail("Not yet implemented");
+	public void testE_DeleteRideEntry() {
+		RideEntry result = dao.delete(testedRideEntry);
+		assertNull(result);
 	}
 	
 	private boolean rideIsEquals(RideEntry expected, RideEntry actual)
