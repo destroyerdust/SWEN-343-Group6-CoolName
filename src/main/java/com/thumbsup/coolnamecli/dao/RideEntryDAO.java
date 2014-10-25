@@ -18,17 +18,17 @@ public class RideEntryDAO extends CRUDManager<RideEntry, Integer> {
 		s.save(entry);
 		t.commit();
 		s.flush();
-		entry = (RideEntry) s.load(RideEntry.class, entry);
+		RideEntry insertedRide = (RideEntry) s.get(RideEntry.class, entry.getRideEntryID());
 		s.close();
 
-		return entry;
+		return insertedRide;
 	}
 
 	@Override
 	public RideEntry select(Integer rideEntryID) {
 		SessionFactory factory = SessionFactory.getSessionFactory();
 		Session s = factory.getSession();
-		RideEntry entry = (RideEntry) s.load(RideEntry.class, rideEntryID);
+		RideEntry entry = (RideEntry) s.get(RideEntry.class, rideEntryID);
 		s.close();
 
 		return entry;
