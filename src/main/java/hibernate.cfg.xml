@@ -24,6 +24,7 @@
 
    <!-- List of XML mapping files -->
    <mapping resource="User.hbm.xml"/>
+   <mapping resource="RideEntry.hbm.xml"/>
    <mapping resource="Vehicle.hbm.xml"/>
 
 </session-factory>
