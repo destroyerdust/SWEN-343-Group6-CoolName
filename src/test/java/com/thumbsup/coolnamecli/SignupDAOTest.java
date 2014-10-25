@@ -49,12 +49,14 @@ public class SignupDAOTest {
 	}
 
 	@Test
-	public void testDeleteSignup() {
-		fail("Not yet implemented");
+	public void testD_UpdateSignup() {
+		entity.setUserID(2);
+		Signup result = dao.update(entity);
+		signIsEqual(entity, result);
 	}
-
+	
 	@Test
-	public void testUpdateSignup() {
+	public void testDeleteSignup() {
 		fail("Not yet implemented");
 	}
 	

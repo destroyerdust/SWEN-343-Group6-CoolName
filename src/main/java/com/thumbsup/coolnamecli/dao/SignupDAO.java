@@ -67,9 +67,9 @@ public class SignupDAO extends CRUDManager<Signup, Integer> {
     	Transaction transaction = s.beginTransaction();
     	s.update(sign);
     	transaction.commit();
-    	sign = (Signup) s.load(Signup.class, sign.getRideOnID());
+    	Signup result = (Signup) s.get(Signup.class, sign.getRideOnID());
     	s.close();
-    	return sign;
+    	return result;
 	}
 
 }
