@@ -19,7 +19,7 @@ import com.thumbsup.coolnamecli.entity.Vehicle;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RideEntryDAOTest {
 	private RideEntryDAO dao = new RideEntryDAO();
-	private static RideEntry testedRideEntry = new RideEntry();
+	private static RideEntry entity = new RideEntry();
 	
 	@BeforeClass
 	public static void setUpBeforeClass(){
@@ -27,30 +27,30 @@ public class RideEntryDAOTest {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		cal.set(Calendar.MILLISECOND, 0);
-		testedRideEntry.setCreationTimestamp(new Timestamp(cal.getTime().getTime()));
-		testedRideEntry.setDestination("DestinationTest");
+		entity.setCreationTimestamp(new Timestamp(cal.getTime().getTime()));
+		entity.setDestination("DestinationTest");
 		cal.add(Calendar.HOUR, 2);
-		testedRideEntry.setEndTime(new Timestamp(cal.getTime().getTime()));
-		testedRideEntry.setMapUri("URI TEST");
-		testedRideEntry.setName("Ride Name Test");
-		testedRideEntry.setSource("SourceTest");
-		testedRideEntry.setStartTime(new Timestamp(cal.getTime().getTime()));
+		entity.setEndTime(new Timestamp(cal.getTime().getTime()));
+		entity.setMapUri("URI TEST");
+		entity.setName("Ride Name Test");
+		entity.setSource("SourceTest");
+		entity.setStartTime(new Timestamp(cal.getTime().getTime()));
 		Vehicle v = new Vehicle();
 		v.setVehicleID(1);
-		testedRideEntry.setVehicle(v);
+		entity.setVehicle(v);
 	}
 
 	@Test
 	public void testA_InsertRideEntry() {
-		RideEntry insertedRide = dao.insert(testedRideEntry);
-		assertTrue(rideIsEquals(testedRideEntry, insertedRide));
-		testedRideEntry.setRideEntryID(insertedRide.getRideEntryID());
+		RideEntry insertedRide = dao.insert(entity);
+		assertTrue(rideIsEquals(entity, insertedRide));
+		entity.setRideEntryID(insertedRide.getRideEntryID());
 	}
 
 	@Test
 	public void testB_SelectRideEntry() {
-		RideEntry result = dao.select(testedRideEntry.getRideEntryID());
-		assertTrue(rideIsEquals(testedRideEntry, result));
+		RideEntry result = dao.select(entity.getRideEntryID());
+		assertTrue(rideIsEquals(entity, result));
 	}
 
 	@Test
@@ -61,14 +61,14 @@ public class RideEntryDAOTest {
 
 	@Test
 	public void testD_UpdateRideEntry() {
-		testedRideEntry.setDestination("Destination Changed");
-		RideEntry updated = dao.update(testedRideEntry);
-		assertTrue(rideIsEquals(testedRideEntry, updated));
+		entity.setDestination("Destination Changed");
+		RideEntry updated = dao.update(entity);
+		assertTrue(rideIsEquals(entity, updated));
 	}
 	
 	@Test
 	public void testE_DeleteRideEntry() {
-		RideEntry result = dao.delete(testedRideEntry);
+		RideEntry result = dao.delete(entity);
 		assertNull(result);
 	}
 	

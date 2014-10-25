@@ -11,18 +11,18 @@ import com.thumbsup.coolnamecli.entity.Vehicle;
 
 public class VehicleDAOTest {
 	private VehicleDAO dao = new VehicleDAO();
-	private static Vehicle testedEntity = new Vehicle();
+	private static Vehicle entity = new Vehicle();
 	
 	@BeforeClass
 	public static void setUpBeforeClass(){
-		testedEntity.setName("Car test");
-		testedEntity.setModel("Model Test");
-		testedEntity.setDescription("Description Test");
-		testedEntity.setNumSeats(3);
+		entity.setName("Car test");
+		entity.setModel("Model Test");
+		entity.setDescription("Description Test");
+		entity.setNumSeats(3);
 		User driver = new User();
 		driver.setUserId(1);
 		driver.setUserType(2);
-		testedEntity.setUser(driver);
+		entity.setUser(driver);
 	}
 
 	@Test
