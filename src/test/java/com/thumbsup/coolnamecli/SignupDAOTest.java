@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -42,8 +43,9 @@ public class SignupDAOTest {
 	}
 
 	@Test
-	public void testSelectAll() {
-		fail("Not yet implemented");
+	public void testC_SelectAll() {
+		List<Signup> result = dao.selectAll();
+		assertTrue(result.size() > 0);
 	}
 
 	@Test
