@@ -36,8 +36,9 @@ public class SignupDAOTest {
 	}
 
 	@Test
-	public void testSelectInteger() {
-		fail("Not yet implemented");
+	public void testB_Select() {
+		Signup result = dao.select(entity.getRideOnID());
+		signIsEqual(entity, result);
 	}
 
 	@Test

@@ -29,10 +29,10 @@ public class SignupDAO extends CRUDManager<Signup, Integer> {
 	public Signup select(Integer signupID) {
 		SessionFactory factory = SessionFactory.getSessionFactory();
 		Session s = factory.getSession();
-		Signup sign = (Signup)s.load(Signup.class, signupID);
+		Signup result = (Signup)s.get(Signup.class, signupID);
 		s.close();
 		
-		return sign;
+		return result;
 	}
 
 	@Override
