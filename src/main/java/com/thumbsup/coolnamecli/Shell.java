@@ -5,7 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import com.thumbsup.coolnamecli.entity.RideEntry;
 import com.thumbsup.coolnamecli.entity.User;
 import com.thumbsup.coolnamecli.entity.Vehicle;
 import com.thumbsup.coolnamecli.service.*;
@@ -16,14 +22,14 @@ public class Shell {
 	static VehicleManager vMan;
 	static SignupManager sMan;
 	static RideEntryManager reMan;
-	
+
 	public static void main(String[] args) {
 
 		uMan = new UserManager();
 		vMan = new VehicleManager();
 		sMan = new SignupManager();
 		reMan = new RideEntryManager();
-		
+
 		System.out.println("Initializing ThumpbsUp Version 0.0.1");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		outputInfo();
@@ -31,23 +37,23 @@ public class Shell {
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String strLine = null;
-		
+
 		//Login or Signup
 		//This method will dump a bunch of user info into the Shell runtime
-		
+
 		User authenticatedUser = null;
-		
+
 		//Register a new user or login an existing one
 		try {
 			preconditionUsage();
 			String response = in.readLine();
 			if(response.equals("register")){
-				
+
 				//create a concrete User object from user input
 				//save it to database and return it as authenticatedUser
 				authenticatedUser = createUser();
 			}else if(response.equals("login")){
-				
+
 				//parse user input and bring a User object up from the database
 				authenticatedUser = uMan.login();
 			} else {
@@ -58,7 +64,7 @@ public class Shell {
 		}
 
 		usage();
-		
+
 		//Begin shell loop
 		for (;;) {
 			try {
@@ -100,6 +106,7 @@ public class Shell {
 			break;
 
 		case 3: // Passenger adds a RideEntry
+			passengerAddsRideEntry(authenticatedUser);
 			System.out.println("Passenger has added a RideEntry");
 			break;
 
@@ -144,7 +151,7 @@ public class Shell {
 		System.out.println("register: Register yourself as a new user");
 		System.out.println("login: login as an existsing user");
 	}
-	
+
 	public static void usage() {
 		System.out.println("usage: print this message");
 		System.out.println("exit: exit the system");
@@ -176,17 +183,17 @@ public class Shell {
 	public static void usageInfo() {
 		System.err.println("Please Enter a legitimate command.");
 		System.err
-				.println("Enter 'usage' to see a list of available commands.");
+		.println("Enter 'usage' to see a list of available commands.");
 	}
-	
+
 	// Normal user no car
 	public static User createUser(){
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		
+
 		User u = new User();
 
 		SecureRandom random = new SecureRandom();
-		
+
 		String userName = null;
 		String firstName = null;
 		String lastName = null;
@@ -195,7 +202,7 @@ public class Shell {
 		String passwordSalt = new BigInteger(130, random).toString(32);
 		passwordSalt = passwordSalt.substring(0, 10);
 		int userType = 3;
-		
+
 		try {
 			System.out.println("User Name: ");
 			userName = in.readLine();
@@ -211,22 +218,22 @@ public class Shell {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		u = uMan.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
 		System.out.println("User ID: " + u.getUserId());
 		return u;
-		
+
 	}
-	
+
 	// Driver creation
 	public static void createUserAndVehicle(){
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		
+
 		User u = new User();
 		Vehicle v = new Vehicle();
 
 		SecureRandom random = new SecureRandom();
-		
+
 		String userName = null;
 		String firstName = null;
 		String lastName = null;
@@ -235,12 +242,12 @@ public class Shell {
 		String passwordSalt = new BigInteger(130, random).toString(32);
 		passwordSalt = passwordSalt.substring(0, 10);
 		int userType = 2;
-		
+
 		String name = null;
 		String model = null;
 		String description = null;
 		int numSeats = 0;
-		
+
 		try {
 			System.out.println("User");
 			System.out.println("User Name: ");
@@ -266,12 +273,92 @@ public class Shell {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		u = uMan.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
 		System.out.println("User ID: " + u.getUserId());
 		v = vMan.createVehicle(name, model, description, numSeats, u.getUserId());
 		System.out.println("Vehicle ID: " + v.getVehicleID());
-		
+
+	}
+
+	private static void passengerAddsRideEntry(User user)
+	{
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		DateFormat df = new SimpleDateFormat("HH:MM MM/DD/YYYY");
+
+		String destination;
+		Timestamp endTime;
+		String mapUri;
+		String name;
+		String source;
+		Timestamp startTime;
+
+		try
+		{
+			System.out.println("Ride Entry");
+			System.out.println("Destination:");
+			destination = in.readLine();
+			System.out.println("Map URI:");
+			mapUri = in.readLine();
+			System.out.println("Name:");
+			name = in.readLine();
+			System.out.println("Source:");
+			source = in.readLine();
+			System.out.println("Start Time:");
+			Date date = df.parse(in.readLine());
+			startTime = new Timestamp(date.getTime());
+			
+			int rideEntryId = reMan.createRideEntry(new Timestamp((new Date()).getTime()), destination, null, mapUri, name, source, startTime, null).getRideEntryID();
+			sMan.createSignup(user.getUserId(), rideEntryId, new Timestamp((new Date()).getTime()));
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private static void driverAddsRideEntry(User user)
+	{
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		DateFormat df = new SimpleDateFormat("HH:MM MM/DD/YYYY");
+
+		String destination;
+		Timestamp endTime;
+		String mapUri;
+		String name;
+		String source;
+		Timestamp startTime;
+		Vehicle vehicle;
+
+		try
+		{
+			System.out.println("Ride Entry");
+			System.out.println("Destination:");
+			destination = in.readLine();
+			System.out.println("Map URI:");
+			mapUri = in.readLine();
+			System.out.println("Name:");
+			name = in.readLine();
+			System.out.println("Source:");
+			source = in.readLine();
+			System.out.println("Start Time:");
+			Date date = df.parse(in.readLine());
+			startTime = new Timestamp(date.getTime());
+			vehicle = user.getVehicles().get(0);
+			
+			int rideEntryId = reMan.createRideEntry(new Timestamp((new Date()).getTime()), destination, null, mapUri, name, source, startTime, vehicle).getRideEntryID();
+			sMan.createSignup(user.getUserId(), rideEntryId, new Timestamp((new Date()).getTime()));
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private static void terminate() {

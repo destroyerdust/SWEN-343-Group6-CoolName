@@ -1,13 +1,8 @@
 package com.thumbsup.coolnamecli.service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import com.sun.jmx.snmp.Timestamp;
+import java.sql.Timestamp;
 import com.thumbsup.coolnamecli.dao.SignupDAO;
 import com.thumbsup.coolnamecli.entity.Signup;
-import com.thumbsup.coolnamecli.entity.User;
 
 /**
  * Contributors: Conor Craig
@@ -19,17 +14,16 @@ public class SignupManager {
 
 	private SignupDAO sDAO = new SignupDAO();
 	
-	public int createSignup(int rideOnId, int userId, int rideEntryId,
+	public Signup createSignup(int userId, int rideEntryId,
 			Timestamp time) {
 
-		Signup s = sDAO.select(rideOnId);
-		s.setRideOnID(rideOnId);
+		Signup s = new Signup();
 		s.setUserID(userId);
 		s.setRideEntryID(rideEntryId);
 
-		sDAO.insert(s);
+		s = sDAO.insert(s);
 
-		return rideOnId;
+		return s;
 	}
 
 	public void updateSignup(int rideOnId, int userId, int rideEntryId,

@@ -12,7 +12,7 @@ public class RideEntryManager
 	private RideEntryDAO rideEntryDAO = new RideEntryDAO();
 	
 	//createRideEntry
-	public int createRideEntry(int rideEntryID, Timestamp creationTimestamp, String destination, Timestamp endTime, String mapUri, String name, String source, Timestamp startTime, Vehicle vehicle)
+	public RideEntry createRideEntry(Timestamp creationTimestamp, String destination, Timestamp endTime, String mapUri, String name, String source, Timestamp startTime, Vehicle vehicle)
 	{
 		RideEntry entry = new RideEntry();
 		
@@ -21,14 +21,13 @@ public class RideEntryManager
 		entry.setEndTime(endTime);
 		entry.setMapUri(mapUri);
 		entry.setName(name);
-		entry.setRideEntryID(rideEntryID);
 		entry.setSource(source);
 		entry.setStartTime(startTime);
 		entry.setVehicle(vehicle);
 		
-		rideEntryDAO.insert(entry);
+		entry = rideEntryDAO.insert(entry);
 		
-		return rideEntryID;
+		return entry;
 	}
 	//updateRideEntry
 	public int updateRideEntry(int rideEntryID, Timestamp creationTimestamp, String destination, Timestamp endTime, String mapUri, String name, String source, Timestamp startTime, Vehicle vehicle)
