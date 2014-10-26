@@ -172,7 +172,7 @@ public class Shell {
 		}
 		
 		u = UM.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
-		System.out.println("User ID: " + u.getUserId());
+		System.out.println("DEBUG: User ID: " + u.getUserId());
 		
 	}
 	
@@ -227,9 +227,9 @@ public class Shell {
 		}
 		
 		u = UM.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
-		System.out.println("User ID: " + u.getUserId());
+		System.out.println("DEBUG: User ID: " + u.getUserId());
 		v = VM.createVehicle(name, model, description, numSeats, u.getUserId());
-		System.out.println("Vehicle ID: " + v.getVehicleID());
+		System.out.println("DEBUG: Vehicle ID: " + v.getVehicleID());
 		
 	}
 
