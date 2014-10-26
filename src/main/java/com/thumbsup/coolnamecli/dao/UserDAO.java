@@ -50,6 +50,7 @@ public class UserDAO extends CRUDManager<User, Integer> {
 		SessionFactory factory = SessionFactory.getSessionFactory();
 		Session s = factory.getSession();
 		User u = (User) s.get(User.class, pk);
+		s.close();
 		return u;
 	}
 
@@ -60,6 +61,7 @@ public class UserDAO extends CRUDManager<User, Integer> {
 		Session s = factory.getSession();
 		List<User> u = new ArrayList<User>();
 		u = s.createCriteria(User.class).list();
+		s.close();
 		return u;
 	}
 
