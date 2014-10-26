@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
-
 import org.hibernate.Transaction;
 
 import com.thumbsup.coolnamecli.entity.Vehicle;
@@ -35,6 +34,7 @@ public class VehicleDAO extends CRUDManager<Vehicle, Integer> {
 		return result;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Vehicle> selectAll(){
 		SessionFactory factory = SessionFactory.getSessionFactory();
 		Session s = factory.getSession();
