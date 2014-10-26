@@ -3,6 +3,8 @@ package com.thumbsup.coolnamecli;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
 import com.thumbsup.coolnamecli.entity.User;
 import com.thumbsup.coolnamecli.entity.Vehicle;
@@ -141,13 +143,15 @@ public class Shell {
 		
 		User u = new User();
 		UserManager UM = new UserManager();
+		SecureRandom random = new SecureRandom();
 		
 		String userName = null;
 		String firstName = null;
 		String lastName = null;
 		String password = null;
 		String phoneNumber = null;
-		String passwordSalt = null;
+		String passwordSalt = new BigInteger(130, random).toString(32);
+		passwordSalt = passwordSalt.substring(0, 10);
 		int userType = 2;
 		
 		
@@ -162,8 +166,6 @@ public class Shell {
 			password = in.readLine();
 			System.out.println("Phone Number: ");
 			phoneNumber = in.readLine();
-			System.out.println("Password Salt WE NEED TO FIX THIS: ");
-			passwordSalt = in.readLine();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -182,13 +184,15 @@ public class Shell {
 		Vehicle v = new Vehicle();
 		UserManager UM = new UserManager();
 		VehicleManager VM = new VehicleManager();
+		SecureRandom random = new SecureRandom();
 		
 		String userName = null;
 		String firstName = null;
 		String lastName = null;
 		String password = null;
 		String phoneNumber = null;
-		String passwordSalt = null;
+		String passwordSalt = new BigInteger(130, random).toString(32);
+		passwordSalt = passwordSalt.substring(0, 10);
 		int userType = 2;
 		
 		String name = null;
@@ -208,8 +212,6 @@ public class Shell {
 			password = in.readLine();
 			System.out.println("Phone Number: ");
 			phoneNumber = in.readLine();
-			System.out.println("Password Salt WE NEED TO FIX THIS: ");
-			passwordSalt = in.readLine(); 
 			System.out.println("Vehicle");
 			System.out.println("Name:");
 			name = in.readLine();
