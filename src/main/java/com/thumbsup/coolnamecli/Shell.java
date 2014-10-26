@@ -108,6 +108,7 @@ public class Shell {
 			break;
 
 		case 5: // The matchmaker outputting a list of RideEntries for Rider
+			RideMatchMaker maker = new RideMatchMaker(reMan);
 			break;
 
 		case 6: // The matchmaker outputting a list of RideEntries for Driver

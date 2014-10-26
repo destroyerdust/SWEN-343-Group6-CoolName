@@ -34,7 +34,7 @@ public class RideMatchMaker {
 	 *         system that fit and need the Driver.
 	 * 
 	 * */
-	private List<RideEntry> findPassengersForDriver(User driver) {
+	public List<RideEntry> findPassengersForDriver(User driver) {
 
 		List<RideEntry> results = rem.listRideEntries();
 
@@ -63,7 +63,7 @@ public class RideMatchMaker {
 	 *         system that fit and need the Passenger.
 	 * 
 	 * */
-	private List<RideEntry> findDriversForPassenger(User passenger) {
+	public List<RideEntry> findDriversForPassenger(User passenger) {
 
 		List<RideEntry> results = rem.listRideEntries();
 

@@ -8,7 +8,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ UserDAOTest.class,
 				RideEntryDAOTest.class,
 				SignupDAOTest.class,
-				VehicleDAOTest.class})
+				VehicleDAOTest.class,
+				RideMatchMakerTest.class})
 public class AppTest {
 
 }
