@@ -11,7 +11,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.thumbsup.coolnamecli.entity.RideEntry;
 import com.thumbsup.coolnamecli.entity.User;
 import com.thumbsup.coolnamecli.entity.Vehicle;
 import com.thumbsup.coolnamecli.service.*;
@@ -21,8 +20,9 @@ public class Shell {
 	static UserManager uMan;
 	static VehicleManager vMan;
 	static SignupManager sMan;
-	static RideEntryManager reMan;
-
+	static RideEntryManager reMan;	
+	static User authenticatedUser;
+	
 	public static void main(String[] args) {
 
 		uMan = new UserManager();
@@ -39,10 +39,8 @@ public class Shell {
 		String strLine = null;
 
 		//Login or Signup
-		//This method will dump a bunch of user info into the Shell runtime
-
-		User authenticatedUser = null;
-
+		//This method will dump a bunch of user info into the Shell runtime		
+		authenticatedUser = null;
 		//Register a new user or login an existing one
 		try {
 			preconditionUsage();
@@ -52,10 +50,14 @@ public class Shell {
 				//create a concrete User object from user input
 				//save it to database and return it as authenticatedUser
 				authenticatedUser = createUser();
-			}else if(response.equals("login")){
+			}else if(response.equals("login")){		
+				System.out.println("Login::Username is?");
+				String userName = in.readLine();
+				System.out.println("Login::Password is?");
+				String pass = in.readLine();
 
 				//parse user input and bring a User object up from the database
-				authenticatedUser = uMan.login();
+				authenticatedUser = uMan.login(userName,pass);
 			} else {
 				terminate();
 			}
@@ -63,6 +65,9 @@ public class Shell {
 			e1.printStackTrace();
 		}
 
+		if(authenticatedUser == null){
+			terminate();
+		}
 		usage();
 
 		//Begin shell loop
