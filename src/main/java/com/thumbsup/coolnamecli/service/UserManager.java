@@ -77,4 +77,9 @@ public class UserManager {
 
 	}
 
+	public User login() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

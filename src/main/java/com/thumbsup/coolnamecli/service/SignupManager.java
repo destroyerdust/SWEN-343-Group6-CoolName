@@ -3,6 +3,7 @@ package com.thumbsup.coolnamecli.service;
 import com.sun.jmx.snmp.Timestamp;
 import com.thumbsup.coolnamecli.dao.SignupDAO;
 import com.thumbsup.coolnamecli.entity.Signup;
+import com.thumbsup.coolnamecli.entity.User;
 
 /**
  * Contributors: Conor Craig
@@ -13,7 +14,7 @@ import com.thumbsup.coolnamecli.entity.Signup;
 public class SignupManager {
 
 	private SignupDAO sDAO = new SignupDAO();
-
+	
 	public int createSignup(int rideOnId, int userId, int rideEntryId,
 			Timestamp time) {
 
@@ -46,5 +47,10 @@ public class SignupManager {
 		// Delete User
 		sDAO.delete(s);
 
+	}
+
+	public User registerNewUser() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

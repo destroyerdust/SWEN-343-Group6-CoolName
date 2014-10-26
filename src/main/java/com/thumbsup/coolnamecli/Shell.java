@@ -32,6 +32,19 @@ public class Shell {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String strLine = null;
 		
+		//Login or Signup
+		//This method will dump a bunch of user info into the Shell runtime
+		
+		User authenticatedUser = null;
+		
+		//Register a new user
+		authenticatedUser = sMan.registerNewUser();
+		
+		//If user didn't register
+		if(authenticatedUser == null){
+			authenticatedUser = uMan.login();
+		}
+		
 		usage();
 		
 		//Begin shell loop
