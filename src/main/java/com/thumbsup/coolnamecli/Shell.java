@@ -3,6 +3,7 @@ package com.thumbsup.coolnamecli;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import com.thumbsup.coolnamecli.dao.*;
 
 public class Shell {
 
@@ -119,7 +120,6 @@ public class Shell {
 		System.out.println("7: Add a Vehicle to a Driver's RideEntry");
 
 		// Visual print of RideEntry because the vehicle changed
-
 	}
 
 	public static void usageInfo() {
@@ -131,5 +131,4 @@ public class Shell {
 	private static void terminate() {
 		System.exit(0);
 	}
-
 }
