@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import com.thumbsup.coolnamecli.entity.User;
+import com.thumbsup.coolnamecli.service.UserManager;
+
 public class Shell {
 
 	public static void main(String[] args) {
@@ -49,10 +52,12 @@ public class Shell {
 		switch (command) {
 
 		case 1: // a Rider being created
+			createUser(1);
 			System.out.println("you have added a rider");
 			break;
 
 		case 2: // a Driver being created
+			createUser(2);
 			System.out.println("you have added a driver");
 			break;
 
@@ -126,6 +131,44 @@ public class Shell {
 		System.err.println("Please Enter a legitimate command.");
 		System.err
 				.println("Enter 'usage' to see a list of available commands.");
+	}
+	
+	public static void createUser(int ut){
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		
+		User u = new User();
+		UserManager UM = new UserManager();
+		
+		String userName = null;
+		String firstName = null;
+		String lastName = null;
+		String password = null;
+		String phoneNumber = null;
+		String passwordSalt = null;
+		int userType = ut;
+		
+		
+		try {
+			System.out.println("User Name: ");
+			userName = in.readLine();
+			System.out.println("First Name: ");
+			firstName = in.readLine();
+			System.out.println("Last Name: ");
+			lastName = in.readLine();
+			System.out.println("Password: ");
+			password = in.readLine();
+			System.out.println("Phone Number: ");
+			phoneNumber = in.readLine();
+			System.out.println("Password Salt WE NEED TO FIX THIS: ");
+			passwordSalt = in.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		u = UM.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
+		System.out.println("User ID: " + u.getUserId());
+		
 	}
 
 	private static void terminate() {
