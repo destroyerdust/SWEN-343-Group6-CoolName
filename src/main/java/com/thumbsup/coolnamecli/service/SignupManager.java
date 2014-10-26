@@ -1,5 +1,9 @@
 package com.thumbsup.coolnamecli.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import com.sun.jmx.snmp.Timestamp;
 import com.thumbsup.coolnamecli.dao.SignupDAO;
 import com.thumbsup.coolnamecli.entity.Signup;
@@ -49,8 +53,4 @@ public class SignupManager {
 
 	}
 
-	public User registerNewUser() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

@@ -37,14 +37,26 @@ public class Shell {
 		
 		User authenticatedUser = null;
 		
-		//Register a new user
-		authenticatedUser = sMan.registerNewUser();
-		
-		//If user didn't register
-		if(authenticatedUser == null){
-			authenticatedUser = uMan.login();
+		//Register a new user or login an existing one
+		try {
+			preconditionUsage();
+			String response = in.readLine();
+			if(response.equals("register")){
+				
+				//create a concrete User object from user input
+				//save it to database and return it as authenticatedUser
+				authenticatedUser = createUser();
+			}else if(response.equals("login")){
+				
+				//parse user input and bring a User object up from the database
+				authenticatedUser = uMan.login();
+			} else {
+				terminate();
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
-		
+
 		usage();
 		
 		//Begin shell loop
@@ -124,6 +136,14 @@ public class Shell {
 
 	}
 
+	public static void preconditionUsage(){
+		System.out.println("Are you registering a new user or logging in?");
+		System.out.println();
+		System.out.println("Type the following commands to proceed:");
+		System.out.println("register: Register yourself as a new user");
+		System.out.println("login: login as an existsing user");
+	}
+	
 	public static void usage() {
 		System.out.println("usage: print this message");
 		System.out.println("exit: exit the system");
@@ -159,7 +179,7 @@ public class Shell {
 	}
 	
 	// Normal user no car
-	public static void createUser(){
+	public static User createUser(){
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		
 		User u = new User();
@@ -173,7 +193,7 @@ public class Shell {
 		String phoneNumber = null;
 		String passwordSalt = new BigInteger(130, random).toString(32);
 		passwordSalt = passwordSalt.substring(0, 10);
-		int userType = 2;
+		int userType = 3;
 		
 		try {
 			System.out.println("User Name: ");
@@ -193,6 +213,7 @@ public class Shell {
 		
 		u = uMan.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
 		System.out.println("User ID: " + u.getUserId());
+		return u;
 		
 	}
 	
