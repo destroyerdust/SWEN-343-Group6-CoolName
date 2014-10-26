@@ -19,23 +19,22 @@ public class UserManager {
 	 * @param userType
 	 * @return
 	 */
-	public Integer createUser(String userName, String firstName,
+	public User createUser(String userName, String firstName,
 			String lastName, String password, String passwordSalt,
 			String phoneNumber, int userType) {
-		int userId = 0;
 
 		User u = new User();
 		u.setUserName(userName);
 		u.setFirstName(firstName);
 		u.setLastName(lastName);
 		u.setPassword(password);
-		u.setPasswordSalt(passwordSalt);
 		u.setPhoneNumber(phoneNumber);
+		u.setPasswordSalt(passwordSalt);
 		u.setUserType(userType);
 
-		userDAO.insert(u);
+		u = userDAO.insert(u);
 
-		return userId;
+		return u;
 	}
 
 	/**

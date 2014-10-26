@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import com.thumbsup.coolnamecli.dao.*;
 
+import com.thumbsup.coolnamecli.entity.User;
+import com.thumbsup.coolnamecli.entity.Vehicle;
+import com.thumbsup.coolnamecli.service.UserManager;
+import com.thumbsup.coolnamecli.service.VehicleManager;
+
 public class Shell {
 
 	public static void main(String[] args) {
@@ -50,10 +55,12 @@ public class Shell {
 		switch (command) {
 
 		case 1: // a Rider being created
+			createUser();
 			System.out.println("you have added a rider");
 			break;
 
 		case 2: // a Driver being created
+			createUserAndVehicle();
 			System.out.println("you have added a driver");
 			break;
 
@@ -126,6 +133,102 @@ public class Shell {
 		System.err.println("Please Enter a legitimate command.");
 		System.err
 				.println("Enter 'usage' to see a list of available commands.");
+	}
+	
+	// Normal user no car
+	public static void createUser(){
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		
+		User u = new User();
+		UserManager UM = new UserManager();
+		
+		String userName = null;
+		String firstName = null;
+		String lastName = null;
+		String password = null;
+		String phoneNumber = null;
+		String passwordSalt = null;
+		int userType = 2;
+		
+		
+		try {
+			System.out.println("User Name: ");
+			userName = in.readLine();
+			System.out.println("First Name: ");
+			firstName = in.readLine();
+			System.out.println("Last Name: ");
+			lastName = in.readLine();
+			System.out.println("Password: ");
+			password = in.readLine();
+			System.out.println("Phone Number: ");
+			phoneNumber = in.readLine();
+			System.out.println("Password Salt WE NEED TO FIX THIS: ");
+			passwordSalt = in.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		u = UM.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
+		System.out.println("User ID: " + u.getUserId());
+		
+	}
+	
+	// Driver creation
+	public static void createUserAndVehicle(){
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		
+		User u = new User();
+		Vehicle v = new Vehicle();
+		UserManager UM = new UserManager();
+		VehicleManager VM = new VehicleManager();
+		
+		String userName = null;
+		String firstName = null;
+		String lastName = null;
+		String password = null;
+		String phoneNumber = null;
+		String passwordSalt = null;
+		int userType = 2;
+		
+		String name = null;
+		String model = null;
+		String description = null;
+		int numSeats = 0;
+		
+		try {
+			System.out.println("User");
+			System.out.println("User Name: ");
+			userName = in.readLine();
+			System.out.println("First Name: ");
+			firstName = in.readLine();
+			System.out.println("Last Name: ");
+			lastName = in.readLine();
+			System.out.println("Password: ");
+			password = in.readLine();
+			System.out.println("Phone Number: ");
+			phoneNumber = in.readLine();
+			System.out.println("Password Salt WE NEED TO FIX THIS: ");
+			passwordSalt = in.readLine(); 
+			System.out.println("Vehicle");
+			System.out.println("Name:");
+			name = in.readLine();
+			System.out.println("Model:");
+			model = in.readLine();
+			System.out.println("Description:");
+			description = in.readLine();
+			System.out.println("Number Seats:");
+			numSeats =in.read();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		u = UM.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
+		System.out.println("User ID: " + u.getUserId());
+		v = VM.createVehicle(name, model, description, numSeats, u.getUserId());
+		System.out.println("Vehicle ID: " + v.getVehicleID());
+		
 	}
 
 	private static void terminate() {
