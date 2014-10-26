@@ -3,7 +3,6 @@ package com.thumbsup.coolnamecli.service;
 import com.sun.jmx.snmp.Timestamp;
 import com.thumbsup.coolnamecli.dao.SignupDAO;
 import com.thumbsup.coolnamecli.entity.Signup;
-import com.thumbsup.coolnamecli.entity.User;
 
 /**
  * Contributors: Conor Craig

@@ -8,13 +8,22 @@ import java.security.SecureRandom;
 
 import com.thumbsup.coolnamecli.entity.User;
 import com.thumbsup.coolnamecli.entity.Vehicle;
-import com.thumbsup.coolnamecli.service.UserManager;
-import com.thumbsup.coolnamecli.service.VehicleManager;
+import com.thumbsup.coolnamecli.service.*;
 
 public class Shell {
 
+	static UserManager uMan;
+	static VehicleManager vMan;
+	static SignupManager sMan;
+	static RideEntryManager reMan;
+	
 	public static void main(String[] args) {
 
+		uMan = new UserManager();
+		vMan = new VehicleManager();
+		sMan = new SignupManager();
+		reMan = new RideEntryManager();
+		
 		System.out.println("Initializing ThumpbsUp Version 0.0.1");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		outputInfo();
@@ -128,7 +137,6 @@ public class Shell {
 		System.out.println("7: Add a Vehicle to a Driver's RideEntry");
 
 		// Visual print of RideEntry because the vehicle changed
-
 	}
 
 	public static void usageInfo() {
@@ -142,7 +150,7 @@ public class Shell {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		
 		User u = new User();
-		UserManager UM = new UserManager();
+
 		SecureRandom random = new SecureRandom();
 		
 		String userName = null;
@@ -153,7 +161,6 @@ public class Shell {
 		String passwordSalt = new BigInteger(130, random).toString(32);
 		passwordSalt = passwordSalt.substring(0, 10);
 		int userType = 2;
-		
 		
 		try {
 			System.out.println("User Name: ");
@@ -171,8 +178,13 @@ public class Shell {
 			e.printStackTrace();
 		}
 		
+<<<<<<< HEAD
 		u = UM.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
 		System.out.println("DEBUG: User ID: " + u.getUserId());
+=======
+		u = uMan.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
+		System.out.println("User ID: " + u.getUserId());
+>>>>>>> 209b8228e2c27a3521f607d7a9075ac83316677f
 		
 	}
 	
@@ -182,8 +194,7 @@ public class Shell {
 		
 		User u = new User();
 		Vehicle v = new Vehicle();
-		UserManager UM = new UserManager();
-		VehicleManager VM = new VehicleManager();
+
 		SecureRandom random = new SecureRandom();
 		
 		String userName = null;
@@ -226,15 +237,21 @@ public class Shell {
 			e.printStackTrace();
 		}
 		
+<<<<<<< HEAD
 		u = UM.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
 		System.out.println("DEBUG: User ID: " + u.getUserId());
 		v = VM.createVehicle(name, model, description, numSeats, u.getUserId());
 		System.out.println("DEBUG: Vehicle ID: " + v.getVehicleID());
+=======
+		u = uMan.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
+		System.out.println("User ID: " + u.getUserId());
+		v = vMan.createVehicle(name, model, description, numSeats, u.getUserId());
+		System.out.println("Vehicle ID: " + v.getVehicleID());
+>>>>>>> 209b8228e2c27a3521f607d7a9075ac83316677f
 		
 	}
 
 	private static void terminate() {
 		System.exit(0);
 	}
-
 }
