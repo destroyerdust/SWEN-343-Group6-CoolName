@@ -3,17 +3,25 @@ package com.thumbsup.coolnamecli;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import com.thumbsup.coolnamecli.dao.*;
 
 import com.thumbsup.coolnamecli.entity.User;
 import com.thumbsup.coolnamecli.entity.Vehicle;
-import com.thumbsup.coolnamecli.service.UserManager;
-import com.thumbsup.coolnamecli.service.VehicleManager;
+import com.thumbsup.coolnamecli.service.*;
 
 public class Shell {
 
+	static UserManager uMan;
+	static VehicleManager vMan;
+	static SignupManager sMan;
+	static RideEntryManager reMan;
+	
 	public static void main(String[] args) {
 
+		uMan = new UserManager();
+		vMan = new VehicleManager();
+		sMan = new SignupManager();
+		reMan = new RideEntryManager();
+		
 		System.out.println("Initializing ThumpbsUp Version 0.0.1");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		outputInfo();
@@ -23,6 +31,7 @@ public class Shell {
 		String strLine = null;
 		
 		usage();
+		
 		
 		//Begin shell loop
 		for (;;) {
@@ -140,7 +149,6 @@ public class Shell {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		
 		User u = new User();
-		UserManager UM = new UserManager();
 		
 		String userName = null;
 		String firstName = null;
@@ -169,7 +177,7 @@ public class Shell {
 			e.printStackTrace();
 		}
 		
-		u = UM.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
+		u = uMan.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
 		System.out.println("User ID: " + u.getUserId());
 		
 	}
@@ -180,8 +188,6 @@ public class Shell {
 		
 		User u = new User();
 		Vehicle v = new Vehicle();
-		UserManager UM = new UserManager();
-		VehicleManager VM = new VehicleManager();
 		
 		String userName = null;
 		String firstName = null;
@@ -224,9 +230,9 @@ public class Shell {
 			e.printStackTrace();
 		}
 		
-		u = UM.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
+		u = uMan.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
 		System.out.println("User ID: " + u.getUserId());
-		v = VM.createVehicle(name, model, description, numSeats, u.getUserId());
+		v = vMan.createVehicle(name, model, description, numSeats, u.getUserId());
 		System.out.println("Vehicle ID: " + v.getVehicleID());
 		
 	}
