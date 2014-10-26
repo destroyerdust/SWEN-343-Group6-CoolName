@@ -9,7 +9,7 @@ import com.thumbsup.coolnamecli.entity.Vehicle;
 public class VehicleManager {
 	private VehicleDAO dao = new VehicleDAO();
 	
-	public void createVehicle(String name, String model, String description, int numSeats, int userId)
+	public Vehicle createVehicle(String name, String model, String description, int numSeats, int userId)
 	{
 		Vehicle entity = new Vehicle();
 		entity.setName(name);
@@ -20,7 +20,8 @@ public class VehicleManager {
 		user.setUserId(userId);
 		entity.setUser(user);
 		
-		dao.insert(entity);
+		entity = dao.insert(entity);
+		return entity;
 	}
 	
 	public void deleteVehicle(int vehicleId)
