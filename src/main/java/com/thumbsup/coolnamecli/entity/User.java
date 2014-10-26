@@ -1,6 +1,7 @@
 package com.thumbsup.coolnamecli.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -31,6 +32,10 @@ public class User implements Serializable {
 
 	private int userType;
 
+	//bi-directional many-to-one association to RideEntry
+	@OneToMany(mappedBy="user")
+	private List<Vehicle> vehicles;
+	
 	public User(){}
 	public User(String userName, String firstName,
 			String lastName, String password, String passwordSalt,
@@ -107,6 +112,28 @@ public class User implements Serializable {
 
 	public void setUserType(int userType) {
 		this.userType = userType;
+	}
+	
+	public List<Vehicle> getVehicles() {
+		return this.vehicles;
+	}
+
+	public void setVehicles(List<Vehicle> vehicles) {
+		this.vehicles = vehicles;
+	}
+
+	public Vehicle addVehicle(Vehicle vehicle) {
+		getVehicles().add(vehicle);
+		vehicle.setUser(this);
+
+		return vehicle;
+	}
+
+	public Vehicle removeVehicle(Vehicle vehicle) {
+		getVehicles().remove(vehicle);
+		vehicle.setUser(null);
+
+		return vehicle;
 	}
 
 }

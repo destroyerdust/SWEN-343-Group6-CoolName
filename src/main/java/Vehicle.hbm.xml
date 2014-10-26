@@ -12,6 +12,11 @@
    	<id name="vehicleID" type="int" column="VehicleID">
    		<generator class="native"></generator>
    	</id>
+   	<list name="rideEntries" table="RideEntry" cascade="all" lazy="false">
+   		<key column="VehicleID"></key>
+   		<list-index column="idx"></list-index>
+   		<one-to-many class="com.thumbsup.coolnamecli.entity.RideEntry"/>
+   	</list>
    	<property name="model" column="Model" type="string"/>
    	<property name="name" column="Name" type="string"/>
    	<property name="numSeats" column="NumSeats" type="int"/>
