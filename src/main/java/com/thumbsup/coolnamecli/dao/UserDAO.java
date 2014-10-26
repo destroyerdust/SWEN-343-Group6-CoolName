@@ -27,7 +27,8 @@ public class UserDAO extends CRUDManager<User, Integer> {
 		}
 		u = (User) results.get(0);
 		// return user
-
+		s.flush();
+		s.close();
 		return u;
 	}
 
@@ -78,6 +79,7 @@ public class UserDAO extends CRUDManager<User, Integer> {
 	@Override
 	public User update(User user) {
 		SessionFactory factory = SessionFactory.getSessionFactory();
+		
 		Session s = factory.getSession();
 		Transaction transaction = s.beginTransaction();
 		s.update(user);
