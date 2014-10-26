@@ -111,11 +111,17 @@ public class Shell {
 			break;
 
 		case 3: // Passenger adds a RideEntry
-			passengerAddsRideEntry(authenticatedUser);
+			addRideEntry(authenticatedUser, false);
 			System.out.println("Passenger has added a RideEntry");
 			break;
 
 		case 4: // Driver adds a RideEntry
+			if(authenticatedUser.getUserType() != 3)
+			{
+				System.out.println("You must be a driver in order to perform this action");
+				break;
+			}
+			addRideEntry(authenticatedUser, true);
 			System.out.println("Driver has added a RideEntry");
 			break;
 
@@ -286,52 +292,12 @@ public class Shell {
 
 	}
 
-	private static void passengerAddsRideEntry(User user)
+	private static void addRideEntry(User user, boolean driver)
 	{
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		DateFormat df = new SimpleDateFormat("HH:MM MM/DD/YYYY");
 
 		String destination;
-		Timestamp endTime;
-		String mapUri;
-		String name;
-		String source;
-		Timestamp startTime;
-
-		try
-		{
-			System.out.println("Ride Entry");
-			System.out.println("Destination:");
-			destination = in.readLine();
-			System.out.println("Map URI:");
-			mapUri = in.readLine();
-			System.out.println("Name:");
-			name = in.readLine();
-			System.out.println("Source:");
-			source = in.readLine();
-			System.out.println("Start Time:");
-			Date date = df.parse(in.readLine());
-			startTime = new Timestamp(date.getTime());
-			
-			int rideEntryId = reMan.createRideEntry(new Timestamp((new Date()).getTime()), destination, null, mapUri, name, source, startTime, null).getRideEntryID();
-			sMan.createSignup(user.getUserId(), rideEntryId, new Timestamp((new Date()).getTime()));
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private static void driverAddsRideEntry(User user)
-	{
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		DateFormat df = new SimpleDateFormat("HH:MM MM/DD/YYYY");
-
-		String destination;
-		Timestamp endTime;
 		String mapUri;
 		String name;
 		String source;
@@ -352,7 +318,14 @@ public class Shell {
 			System.out.println("Start Time:");
 			Date date = df.parse(in.readLine());
 			startTime = new Timestamp(date.getTime());
-			vehicle = user.getVehicles().get(0);
+			if(authenticatedUser.getUserType() != 3 || !driver)
+			{
+				vehicle = null;
+			}
+			else
+			{
+				vehicle = user.getVehicles().get(0);
+			}
 			
 			int rideEntryId = reMan.createRideEntry(new Timestamp((new Date()).getTime()), destination, null, mapUri, name, source, startTime, vehicle).getRideEntryID();
 			sMan.createSignup(user.getUserId(), rideEntryId, new Timestamp((new Date()).getTime()));
