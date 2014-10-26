@@ -16,16 +16,16 @@ public class Shell {
 	static VehicleManager vMan;
 	static SignupManager sMan;
 	static RideEntryManager reMan;
-	
+
 	static User authenticatedUser;
-	
+
 	public static void main(String[] args) {
 
 		uMan = new UserManager();
 		vMan = new VehicleManager();
 		sMan = new SignupManager();
 		reMan = new RideEntryManager();
-		
+
 		System.out.println("Initializing ThumpbsUp Version 0.0.1");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		outputInfo();
@@ -33,30 +33,30 @@ public class Shell {
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String strLine = null;
-		
-		//Login or Signup
-		//This method will dump a bunch of user info into the Shell runtime
-		
+
+		// Login or Signup
+		// This method will dump a bunch of user info into the Shell runtime
+
 		authenticatedUser = null;
-		
-		//Register a new user or login an existing one
+
+		// Register a new user or login an existing one
 		try {
 			preconditionUsage();
 			String response = in.readLine();
-			if(response.equals("register")){
-				
-				//create a concrete User object from user input
-				//save it to database and return it as authenticatedUser
+			if (response.equals("register")) {
+
+				// create a concrete User object from user input
+				// save it to database and return it as authenticatedUser
 				authenticatedUser = createUser();
-			}else if(response.equals("login")){
-				
+			} else if (response.equals("login")) {
+
 				System.out.println("Login::Username is?");
 				String userName = in.readLine();
 				System.out.println("Login::Password is?");
 				String pass = in.readLine();
 
-				//parse user input and bring a User object up from the database
-				authenticatedUser = uMan.login(userName,pass);
+				// parse user input and bring a User object up from the database
+				authenticatedUser = uMan.login(userName, pass);
 			} else {
 				terminate();
 			}
@@ -64,12 +64,12 @@ public class Shell {
 			e1.printStackTrace();
 		}
 
-		if(authenticatedUser == null){
+		if (authenticatedUser == null) {
 			terminate();
 		}
 		usage();
-		
-		//Begin shell loop
+
+		// Begin shell loop
 		for (;;) {
 			try {
 				System.out.println("...");
@@ -99,14 +99,14 @@ public class Shell {
 	private static void execute(int command) {
 		switch (command) {
 
-		case 1: // a Rider being created
-			createUser();
-			System.out.println("you have added a rider");
+		case 1: // Declare as Passenger
+			declareAs("passenger", authenticatedUser);
+			System.out.println("You have declared as Passenger");
 			break;
 
-		case 2: // a Driver being created
-			createUserAndVehicle();
-			System.out.println("you have added a driver");
+		case 2: // Declare as Driver
+			declareAs("driver", authenticatedUser);
+			System.out.println("You have delcared as Driver");
 			break;
 
 		case 3: // Passenger adds a RideEntry
@@ -133,6 +133,26 @@ public class Shell {
 		}
 	}
 
+	//declare user as passenger or driver
+	private static void declareAs(String type, User authenticatedUser) {
+
+		int num = -1;
+		if(type.equals("driver")){
+			num = 3;
+		} else if(type.equals("passenger")){
+			num = 2;
+		}
+		// Contact UserManager
+		uMan.updateUser(authenticatedUser.getUserId(),
+				authenticatedUser.getUserName(),
+				authenticatedUser.getFirstName(),
+				authenticatedUser.getLastName(),
+				authenticatedUser.getPassword(),
+				authenticatedUser.getPhoneNumber(), num);
+		authenticatedUser.setUserType(num);
+
+	}
+
 	public static void outputInfo() {
 		System.out.println("ThumbsUp Information:");
 		// Description
@@ -144,26 +164,25 @@ public class Shell {
 		System.out.println("\tAaron Damrau");
 		System.out.println("\tNathan Perry");
 		System.out.println("\tIago Moreiera");
-
 	}
 
-	public static void preconditionUsage(){
+	public static void preconditionUsage() {
 		System.out.println("Are you registering a new user or logging in?");
 		System.out.println();
 		System.out.println("Type the following commands to proceed:");
 		System.out.println("register: Register yourself as a new user");
 		System.out.println("login: login as an existsing user");
 	}
-	
+
 	public static void usage() {
 		System.out.println("usage: print this message");
 		System.out.println("exit: exit the system");
 
-		// a Rider being created
-		System.out.println("1: Add a Passenger");
+		// Declare as Passenger
+		System.out.println("1: Declare as Passenger");
 
-		// a Driver being created
-		System.out.println("2: Add a Driver");
+		// Declare as Driver
+		System.out.println("2: Declare as Driver");
 
 		// a Rider making a RideEntry
 		System.out.println("3: Passenger adds a RideEntry");
@@ -188,15 +207,15 @@ public class Shell {
 		System.err
 				.println("Enter 'usage' to see a list of available commands.");
 	}
-	
+
 	// Normal user no car
-	public static User createUser(){
+	public static User createUser() {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		
+
 		User u = new User();
 
 		SecureRandom random = new SecureRandom();
-		
+
 		String userName = null;
 		String firstName = null;
 		String lastName = null;
@@ -205,7 +224,7 @@ public class Shell {
 		String passwordSalt = new BigInteger(130, random).toString(32);
 		passwordSalt = passwordSalt.substring(0, 10);
 		int userType = 3;
-		
+
 		try {
 			System.out.println("User Name: ");
 			userName = in.readLine();
@@ -221,22 +240,23 @@ public class Shell {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		u = uMan.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
+
+		u = uMan.createUser(userName, firstName, lastName, password,
+				passwordSalt, phoneNumber, userType);
 		System.out.println("User ID: " + u.getUserId());
 		return u;
-		
+
 	}
-	
+
 	// Driver creation
-	public static void createUserAndVehicle(){
+	public static void createUserAndVehicle() {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		
+
 		User u = new User();
 		Vehicle v = new Vehicle();
 
 		SecureRandom random = new SecureRandom();
-		
+
 		String userName = null;
 		String firstName = null;
 		String lastName = null;
@@ -245,12 +265,12 @@ public class Shell {
 		String passwordSalt = new BigInteger(130, random).toString(32);
 		passwordSalt = passwordSalt.substring(0, 10);
 		int userType = 2;
-		
+
 		String name = null;
 		String model = null;
 		String description = null;
 		int numSeats = 0;
-		
+
 		try {
 			System.out.println("User");
 			System.out.println("User Name: ");
@@ -271,17 +291,19 @@ public class Shell {
 			System.out.println("Description:");
 			description = in.readLine();
 			System.out.println("Number Seats:");
-			numSeats =in.read();
+			numSeats = in.read();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		u = uMan.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
+
+		u = uMan.createUser(userName, firstName, lastName, password,
+				passwordSalt, phoneNumber, userType);
 		System.out.println("User ID: " + u.getUserId());
-		v = vMan.createVehicle(name, model, description, numSeats, u.getUserId());
+		v = vMan.createVehicle(name, model, description, numSeats,
+				u.getUserId());
 		System.out.println("Vehicle ID: " + v.getVehicleID());
-		
+
 	}
 
 	private static void terminate() {
