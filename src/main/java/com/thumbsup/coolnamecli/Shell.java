@@ -178,13 +178,8 @@ public class Shell {
 			e.printStackTrace();
 		}
 		
-<<<<<<< HEAD
-		u = UM.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
-		System.out.println("DEBUG: User ID: " + u.getUserId());
-=======
 		u = uMan.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
 		System.out.println("User ID: " + u.getUserId());
->>>>>>> 209b8228e2c27a3521f607d7a9075ac83316677f
 		
 	}
 	
@@ -237,17 +232,10 @@ public class Shell {
 			e.printStackTrace();
 		}
 		
-<<<<<<< HEAD
-		u = UM.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
-		System.out.println("DEBUG: User ID: " + u.getUserId());
-		v = VM.createVehicle(name, model, description, numSeats, u.getUserId());
-		System.out.println("DEBUG: Vehicle ID: " + v.getVehicleID());
-=======
 		u = uMan.createUser(userName, firstName, lastName, password, passwordSalt, phoneNumber, userType);
 		System.out.println("User ID: " + u.getUserId());
 		v = vMan.createVehicle(name, model, description, numSeats, u.getUserId());
 		System.out.println("Vehicle ID: " + v.getVehicleID());
->>>>>>> 209b8228e2c27a3521f607d7a9075ac83316677f
 		
 	}
 
