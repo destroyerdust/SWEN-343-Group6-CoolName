@@ -2,7 +2,6 @@ package com.thumbsup.coolnamecli;
 
 import java.util.List;
 
-import com.thumbsup.coolnamecli.dao.RideEntryDAO;
 import com.thumbsup.coolnamecli.entity.RideEntry;
 import com.thumbsup.coolnamecli.entity.User;
 import com.thumbsup.coolnamecli.service.RideEntryManager;
