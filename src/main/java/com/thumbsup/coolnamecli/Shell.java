@@ -10,7 +10,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import com.thumbsup.coolnamecli.entity.RideEntry;
 import com.thumbsup.coolnamecli.entity.User;
 import com.thumbsup.coolnamecli.entity.Vehicle;
 import com.thumbsup.coolnamecli.service.*;
@@ -134,10 +136,33 @@ public class Shell {
 			break;
 
 		case 5: // The matchmaker outputting a list of RideEntries for Rider
-			RideMatchMaker maker = new RideMatchMaker(reMan);
+			if(authenticatedUser.getUserType() != 2)
+			{
+				System.out.println("You must be a rider in order to perform this action");
+				break;
+			}
+			RideMatchMaker riderMaker = new RideMatchMaker(reMan);
+			List<RideEntry> riderResult = riderMaker.findDriversForPassenger(authenticatedUser);
+			System.out.println("The passenger can join "+ riderResult.size() +" rides");
+			System.out.println("Destination \t Origin \t RideName");
+			for (RideEntry r : riderResult) {
+				System.out.println(r.getDestination() + "\t " + r.getSource() + "\t " + r.getName());
+			}
 			break;
 
 		case 6: // The matchmaker outputting a list of RideEntries for Driver
+			if(authenticatedUser.getUserType() != 3)
+			{
+				System.out.println("You must be a driver in order to perform this action");
+				break;
+			}
+			RideMatchMaker driverMaker = new RideMatchMaker(reMan);
+			List<RideEntry> driverResult = driverMaker.findPassengersForDriver(authenticatedUser);
+			System.out.println("The driver can join "+ driverResult.size() +" rides");
+			System.out.println("Destination \t Origin \t RideName");
+			for (RideEntry r : driverResult) {
+				System.out.println(r.getDestination() + "\t " + r.getSource() + "\t " + r.getName());
+			}
 			break;
 
 		case 7: // Driver adding vehicle to RideEntry
