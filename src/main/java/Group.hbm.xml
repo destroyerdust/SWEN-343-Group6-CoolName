@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name="com.thumbsup.coolnamecli.entity.Group" table="Group">   	
+	   	<meta attribute="class-description">
+	   		"Contains the details on the group entity class."
+	   	</meta>
+	   	<id name="groupID" type="int" column="GroupID">
+	   		<generator class="native"></generator>
+	   	</id>
+	   	<property name="name" column="Name" type="string"/>
+   	</class>   	
+</hibernate-mapping>
