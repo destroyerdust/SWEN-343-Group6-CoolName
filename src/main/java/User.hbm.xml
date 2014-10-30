@@ -11,6 +11,11 @@
       <id name="userId" type="int" column="UserID">
          <generator class="native"/>
       </id>
+      <list name="vehicles" table="Vehicle" cascade="all" lazy="false">
+   		<key column="UserID"></key>
+   		<list-index column="idx"></list-index>
+   		<one-to-many class="com.thumbsup.coolnamecli.entity.Vehicle"/>
+   	</list>
       <property name="userName" column="UserName" type="string"/>
       <property name="userType" column="UserType" type="int"/>
       <property name="firstName" column="FirstName" type="string"/>

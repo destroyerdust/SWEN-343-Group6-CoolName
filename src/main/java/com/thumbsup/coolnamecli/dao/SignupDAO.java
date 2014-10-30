@@ -19,20 +19,20 @@ public class SignupDAO extends CRUDManager<Signup, Integer> {
 		s.save(sign);
         t.commit();
         s.flush();
-        sign = (Signup)s.load(Signup.class, sign);
+        Signup result = (Signup)s.get(Signup.class, sign.getRideOnID());
         s.close();
         
-        return sign;
+        return result;
 	}
 
 	@Override
 	public Signup select(Integer signupID) {
 		SessionFactory factory = SessionFactory.getSessionFactory();
 		Session s = factory.getSession();
-		Signup sign = (Signup)s.load(Signup.class, signupID);
+		Signup result = (Signup)s.get(Signup.class, signupID);
 		s.close();
 		
-		return sign;
+		return result;
 	}
 
 	@Override
@@ -54,10 +54,10 @@ public class SignupDAO extends CRUDManager<Signup, Integer> {
     	s.delete(sign);
     	transaction.commit();
     	s.flush();
-    	sign = (Signup)s.load(Signup.class, sign.getRideOnID());
+    	Signup result = (Signup)s.get(Signup.class, sign.getRideOnID());
     	s.close();
     	
-    	return sign;
+    	return result;
 	}
 
 	@Override
@@ -67,9 +67,9 @@ public class SignupDAO extends CRUDManager<Signup, Integer> {
     	Transaction transaction = s.beginTransaction();
     	s.update(sign);
     	transaction.commit();
-    	sign = (Signup) s.load(Signup.class, sign.getRideOnID());
+    	Signup result = (Signup) s.get(Signup.class, sign.getRideOnID());
     	s.close();
-    	return sign;
+    	return result;
 	}
 
 }

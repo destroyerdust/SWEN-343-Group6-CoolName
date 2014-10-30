@@ -32,7 +32,7 @@ public class Vehicle implements Serializable {
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
-	@JoinColumn(name="UserName")
+	@JoinColumn(name="UserID")
 	private User user;
 
 	public Vehicle() {

@@ -15,49 +15,49 @@ import com.thumbsup.coolnamecli.entity.User;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserDAOTest {
 	UserDAO dao = new UserDAO();
-	private static User testedUser = new User();
+	private static User entity = new User();
 	
 	@BeforeClass
 	public static void setUp()
 	{
-		testedUser.setUserName("MyUserNameTest");
-		testedUser.setFirstName("John");
-		testedUser.setLastName("Tester");
-		testedUser.setPassword("1324");
-		testedUser.setPasswordSalt("saltTest");
-		testedUser.setPhoneNumber("888-8888");
-		testedUser.setUserType(2);
+		entity.setUserName("MyUserNameTest");
+		entity.setFirstName("John");
+		entity.setLastName("Tester");
+		entity.setPassword("1324");
+		entity.setPasswordSalt("saltTest");
+		entity.setPhoneNumber("888-8888");
+		entity.setUserType(2);
 	}
 	
 	@Test
 	public void testA_InsertUser() {
-		User insertedUser = dao.insert(testedUser);
-		assertTrue(userIsEquals(testedUser, insertedUser));
-		testedUser.setUserId(insertedUser.getUserId());
+		User insertedUser = dao.insert(entity);
+		assertTrue(userIsEquals(entity, insertedUser));
+		entity.setUserId(insertedUser.getUserId());
 	}
 
 	@Test
 	public void testB_SelectUser() {
-		User selectedUser = dao.select(testedUser.getUserId());
-		assertTrue(userIsEquals(testedUser, selectedUser));
+		User selectedUser = dao.select(entity.getUserId());
+		assertTrue(userIsEquals(entity, selectedUser));
 	}
 
 	@Test
-	public void testE_SelectAllUsers() {
+	public void testC_SelectAllUsers() {
 		List<User> result = dao.selectAll();
 		assertTrue(result.size() > 0);
 	}
 
 	@Test
-	public void testC_UpdateUser() {
-		testedUser.setPhoneNumber("000-0000");
-		User uptadedUser = dao.update(testedUser);
-		assertTrue( userIsEquals(testedUser, uptadedUser));
+	public void testD_UpdateUser() {
+		entity.setPhoneNumber("000-0000");
+		User uptadedUser = dao.update(entity);
+		assertTrue( userIsEquals(entity, uptadedUser));
 	}
 
 	@Test
-	public void testD_DeleteUser() {
-		assertNull(dao.delete(testedUser));
+	public void testE_DeleteUser() {
+		assertNull(dao.delete(entity));
 	}
 	
 	private boolean userIsEquals(User expected, User actual)

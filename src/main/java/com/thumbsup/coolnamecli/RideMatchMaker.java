@@ -2,28 +2,23 @@ package com.thumbsup.coolnamecli;
 
 import java.util.List;
 
-import com.thumbsup.coolnamecli.dao.RideEntryDAO;
 import com.thumbsup.coolnamecli.entity.RideEntry;
 import com.thumbsup.coolnamecli.entity.User;
+import com.thumbsup.coolnamecli.service.RideEntryManager;
 
 /**
  * This class contains methods that match Drivers with Passengers. This class
- * has access to and will invoke the RideEntryDAO. This class is a repository
+ * has access to and will invoke the RideEntryManger. This class is a repository
  * for logic and query-results parsing; it is meant to be invoked by some other
  * object in the runtime.
  * 
  * */
 public class RideMatchMaker {
 
-	/*
-	 * This DAO is used to conduct database queries. To clarify: this
-	 * (RideMatchMaker) class itself will never create Sessions directly, it
-	 * will only invoke the DAO and parse the results
-	 */
-	private RideEntryDAO red;
+	private RideEntryManager rem;
 
-	public RideMatchMaker(RideEntryDAO red) {
-		this.red = red;
+	public RideMatchMaker(RideEntryManager rem) {
+		this.rem = rem;
 	}
 
 	/**
@@ -38,9 +33,9 @@ public class RideMatchMaker {
 	 *         system that fit and need the Driver.
 	 * 
 	 * */
-	private List<RideEntry> findPassengersForDriver(User driver) {
+	public List<RideEntry> findPassengersForDriver(User driver) {
 
-		List<RideEntry> results = red.selectAll();
+		List<RideEntry> results = rem.listRideEntries();
 
 		// parse results (destructively modify)
 		// Remove all RideEntry objects that actually have a Vehicle already.
@@ -67,9 +62,9 @@ public class RideMatchMaker {
 	 *         system that fit and need the Passenger.
 	 * 
 	 * */
-	private List<RideEntry> findDriversForPassenger(User passenger) {
+	public List<RideEntry> findDriversForPassenger(User passenger) {
 
-		List<RideEntry> results = red.selectAll();
+		List<RideEntry> results = rem.listRideEntries();
 
 		// parse results (destructively modify)
 		// Remove all RideEntry objects that don't have a Vehicle already.

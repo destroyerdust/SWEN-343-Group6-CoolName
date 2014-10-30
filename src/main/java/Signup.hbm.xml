@@ -4,7 +4,7 @@
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
 
 <hibernate-mapping>
-   <class name="com.thumbsup.coolnamecli.Signup" table="Signup">
+   <class name="com.thumbsup.coolnamecli.entity.Signup" table="Signup">
       <meta attribute="class-description">
          This class contains the signup detail. 
       </meta>
