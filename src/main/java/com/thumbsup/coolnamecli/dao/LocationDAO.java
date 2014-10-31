@@ -7,9 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.thumbsup.coolnamecli.dao.SessionFactory;
-import com.thumbsup.coolnamecli.entity.Group;
 import com.thumbsup.coolnamecli.entity.Location;
-import com.thumbsup.coolnamecli.entity.User;
 
 public class LocationDAO extends CRUDManager<Location, Integer> {
 
@@ -34,6 +32,7 @@ public class LocationDAO extends CRUDManager<Location, Integer> {
 		return l;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Location> selectAll() {
 		SessionFactory factory = SessionFactory.getSessionFactory();

@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.thumbsup.coolnamecli.entity.Signup;
-import com.thumbsup.coolnamecli.entity.Vehicle;
 
 public class SignupDAO extends CRUDManager<Signup, Integer> {
 
@@ -35,6 +34,7 @@ public class SignupDAO extends CRUDManager<Signup, Integer> {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Signup> selectAll() {
 		SessionFactory factory = SessionFactory.getSessionFactory();

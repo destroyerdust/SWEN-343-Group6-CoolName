@@ -34,6 +34,7 @@ public class RideEntryDAO extends CRUDManager<RideEntry, Integer> {
 		return entry;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<RideEntry> selectAll() {
 		SessionFactory factory = SessionFactory.getSessionFactory();

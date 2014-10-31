@@ -3,11 +3,9 @@ package com.thumbsup.coolnamecli.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.thumbsup.coolnamecli.entity.User;
 import com.thumbsup.coolnamecli.entity.User_Group;
 
 public class User_GroupDAO extends CRUDManager<User_Group, Integer>{
@@ -34,6 +32,7 @@ public class User_GroupDAO extends CRUDManager<User_Group, Integer>{
 		return ug;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User_Group> selectAll() {
 		SessionFactory factory = SessionFactory.getSessionFactory();

@@ -3,7 +3,6 @@ package com.thumbsup.coolnamecli.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -33,6 +32,7 @@ public class RideEntry_GroupDAO extends CRUDManager<RideEntry_Group, Integer>{
 		return rg;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<RideEntry_Group> selectAll() {
 		SessionFactory factory = SessionFactory.getSessionFactory();

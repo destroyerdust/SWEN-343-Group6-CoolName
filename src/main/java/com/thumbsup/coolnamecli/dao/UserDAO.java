@@ -11,6 +11,7 @@ import com.thumbsup.coolnamecli.entity.User;
 
 public class UserDAO extends CRUDManager<User, Integer> {
 
+	@SuppressWarnings("rawtypes")
 	public User login(String userName, String pass) {
 		User u;
 		SessionFactory factory = SessionFactory.getSessionFactory();
