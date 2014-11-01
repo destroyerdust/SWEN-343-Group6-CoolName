@@ -14,7 +14,7 @@ import com.thumbsup.coolnamecli.entity.User_Group;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class User_GroupDAOTest {
-	private static User_GroupDAO dao = new User_GroupDAO();
+	private User_GroupDAO dao = new User_GroupDAO();
 	private static User_Group entity = new User_Group();
 	
 	@BeforeClass

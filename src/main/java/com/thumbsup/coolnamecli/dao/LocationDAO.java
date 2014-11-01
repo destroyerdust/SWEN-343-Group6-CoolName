@@ -19,7 +19,7 @@ public class LocationDAO extends CRUDManager<Location, Integer> {
 		s.save(location);
         t.commit();
         s.flush();
-        Location resultLocation = (Location)s.get(Location.class, location.getGroupID());
+        Location resultLocation = (Location)s.get(Location.class, location.getIdLocation());
         s.close();
         return resultLocation;
 	}

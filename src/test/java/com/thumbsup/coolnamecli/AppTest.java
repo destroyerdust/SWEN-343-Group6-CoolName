@@ -11,7 +11,8 @@ import org.junit.runners.Suite.SuiteClasses;
 				VehicleDAOTest.class,
 				RideMatchMakerTest.class,
 				User_GroupDAOTest.class,
-				RideEntry_GroupDAOTest.class})
+				RideEntry_GroupDAOTest.class,
+				LocationDAOTest.class})
 public class AppTest {
 
 }

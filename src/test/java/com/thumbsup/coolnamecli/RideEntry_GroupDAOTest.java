@@ -14,7 +14,7 @@ import com.thumbsup.coolnamecli.entity.RideEntry_Group;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RideEntry_GroupDAOTest {
-	private static RideEntry_GroupDAO dao = new RideEntry_GroupDAO();
+	private RideEntry_GroupDAO dao = new RideEntry_GroupDAO();
 	private static RideEntry_Group entity = new RideEntry_Group();
 	
 	@BeforeClass
