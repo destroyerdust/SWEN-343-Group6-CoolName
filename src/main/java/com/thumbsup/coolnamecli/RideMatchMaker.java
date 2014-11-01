@@ -41,9 +41,9 @@ public class RideMatchMaker {
 		// Remove all RideEntry objects that actually have a Vehicle already.
 		// Intuition: RideEntries without Vehicles are simply passengers that
 		// don't have a driver yet.
-		for (RideEntry re : results) {
-			if (re.getVehicle() != null) {
-				results.remove(re);
+		for (int i = 0; i < results.size(); i++) {
+			if (results.get(i).getVehicle() != null) {
+				results.remove(i);
 			}
 		}
 
