@@ -30,7 +30,7 @@ public class LocationDAOTest {
 	}
 
 	@Test
-	public void testB_SelectInteger() {
+	public void testB_SelectLocation() {
 		Location result = dao.select(entity.getIdLocation());
 		assertTrue(locationIsEquals(entity, result));
 	}

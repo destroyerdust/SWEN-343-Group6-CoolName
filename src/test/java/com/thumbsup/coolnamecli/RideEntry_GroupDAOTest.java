@@ -30,7 +30,7 @@ public class RideEntry_GroupDAOTest {
 	}
 
 	@Test
-	public void testB_SelectInteger() {
+	public void testB_SelectRideEntry_Group() {
 		RideEntry_Group result = dao.select(entity.getRideEntry_GroupID());
 		assertTrue(rideEntry_groupIsEquals(entity, result));
 	}

@@ -30,7 +30,7 @@ public class User_GroupDAOTest {
 	}
 
 	@Test
-	public void testB_SelectInteger() {
+	public void testB_SelectUser_Group() {
 		User_Group result = dao.select(entity.getUser_GroupID());
 		assertTrue(user_groupIsEquals(entity, result));
 	}

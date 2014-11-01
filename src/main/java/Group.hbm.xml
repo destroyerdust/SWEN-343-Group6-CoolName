@@ -4,7 +4,7 @@
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
 
 <hibernate-mapping>
-   <class name="com.thumbsup.coolnamecli.entity.Group" table="Group">   	
+   <class name="com.thumbsup.coolnamecli.entity.Group" table="test.Group">   	
 	   	<meta attribute="class-description">
 	   		"Contains the details on the group entity class."
 	   	</meta>
