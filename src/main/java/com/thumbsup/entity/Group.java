@@ -1,4 +1,4 @@
-package com.thumbsup.coolnamecli.entity;
+package com.thumbsup.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;

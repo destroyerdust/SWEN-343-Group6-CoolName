@@ -1,4 +1,4 @@
-package com.thumbsup.coolnamecli.dao;
+package com.thumbsup.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.thumbsup.coolnamecli.dao.SessionFactory;
-import com.thumbsup.coolnamecli.entity.Location;
+import com.thumbsup.dao.SessionFactory;
+import com.thumbsup.entity.Location;
 
 public class LocationDAO extends CRUDManager<Location, Integer> {
 

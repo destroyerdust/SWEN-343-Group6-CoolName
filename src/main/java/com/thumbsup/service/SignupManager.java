@@ -1,8 +1,9 @@
-package com.thumbsup.coolnamecli.service;
+package com.thumbsup.service;
 
 import java.sql.Timestamp;
-import com.thumbsup.coolnamecli.dao.SignupDAO;
-import com.thumbsup.coolnamecli.entity.Signup;
+
+import com.thumbsup.dao.SignupDAO;
+import com.thumbsup.entity.Signup;
 
 /**
  * Contributors: Conor Craig

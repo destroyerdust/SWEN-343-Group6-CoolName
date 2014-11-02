@@ -11,8 +11,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.thumbsup.coolnamecli.dao.SignupDAO;
-import com.thumbsup.coolnamecli.entity.Signup;
+import com.thumbsup.dao.SignupDAO;
+import com.thumbsup.entity.Signup;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SignupDAOTest {

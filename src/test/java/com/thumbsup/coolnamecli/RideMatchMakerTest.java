@@ -7,9 +7,10 @@ import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.thumbsup.coolnamecli.entity.RideEntry;
-import com.thumbsup.coolnamecli.entity.User;
-import com.thumbsup.coolnamecli.service.RideEntryManager;
+import com.thumbsup.RideMatchMaker;
+import com.thumbsup.entity.RideEntry;
+import com.thumbsup.entity.User;
+import com.thumbsup.service.RideEntryManager;
 
 public class RideMatchMakerTest {
 	private static User entity = new User();

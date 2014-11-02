@@ -1,4 +1,4 @@
-package com.thumbsup.coolnamecli;
+package com.thumbsup;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,10 +12,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import com.thumbsup.coolnamecli.entity.RideEntry;
-import com.thumbsup.coolnamecli.entity.User;
-import com.thumbsup.coolnamecli.entity.Vehicle;
-import com.thumbsup.coolnamecli.service.*;
+import com.thumbsup.entity.RideEntry;
+import com.thumbsup.entity.User;
+import com.thumbsup.entity.Vehicle;
+import com.thumbsup.service.*;
 
 public class Shell {
 

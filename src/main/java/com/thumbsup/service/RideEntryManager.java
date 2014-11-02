@@ -1,11 +1,11 @@
-package com.thumbsup.coolnamecli.service;
+package com.thumbsup.service;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.thumbsup.coolnamecli.dao.RideEntryDAO;
-import com.thumbsup.coolnamecli.entity.RideEntry;
-import com.thumbsup.coolnamecli.entity.Vehicle;
+import com.thumbsup.dao.RideEntryDAO;
+import com.thumbsup.entity.RideEntry;
+import com.thumbsup.entity.Vehicle;
 
 public class RideEntryManager 
 {

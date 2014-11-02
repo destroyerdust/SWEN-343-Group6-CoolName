@@ -1,4 +1,4 @@
-package com.thumbsup.coolnamecli.dao;
+package com.thumbsup.dao;
 
 import org.hibernate.Session;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

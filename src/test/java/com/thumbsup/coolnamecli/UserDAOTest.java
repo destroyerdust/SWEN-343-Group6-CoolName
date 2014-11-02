@@ -9,8 +9,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.thumbsup.coolnamecli.dao.UserDAO;
-import com.thumbsup.coolnamecli.entity.User;
+import com.thumbsup.dao.UserDAO;
+import com.thumbsup.entity.User;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserDAOTest {

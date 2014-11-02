@@ -1,10 +1,10 @@
-package com.thumbsup.coolnamecli;
+package com.thumbsup;
 
 import java.util.List;
 
-import com.thumbsup.coolnamecli.entity.RideEntry;
-import com.thumbsup.coolnamecli.entity.User;
-import com.thumbsup.coolnamecli.service.RideEntryManager;
+import com.thumbsup.entity.RideEntry;
+import com.thumbsup.entity.User;
+import com.thumbsup.service.RideEntryManager;
 
 /**
  * This class contains methods that match Drivers with Passengers. This class

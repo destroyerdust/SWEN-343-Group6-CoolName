@@ -1,10 +1,10 @@
-package com.thumbsup.coolnamecli.service;
+package com.thumbsup.service;
 
 import java.util.List;
 
-import com.thumbsup.coolnamecli.dao.VehicleDAO;
-import com.thumbsup.coolnamecli.entity.User;
-import com.thumbsup.coolnamecli.entity.Vehicle;
+import com.thumbsup.dao.VehicleDAO;
+import com.thumbsup.entity.User;
+import com.thumbsup.entity.Vehicle;
 
 public class VehicleManager {
 	private VehicleDAO dao = new VehicleDAO();

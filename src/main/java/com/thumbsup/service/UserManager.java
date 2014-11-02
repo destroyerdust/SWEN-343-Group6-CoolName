@@ -1,7 +1,7 @@
-package com.thumbsup.coolnamecli.service;
+package com.thumbsup.service;
 
-import com.thumbsup.coolnamecli.dao.UserDAO;
-import com.thumbsup.coolnamecli.entity.User;
+import com.thumbsup.dao.UserDAO;
+import com.thumbsup.entity.User;
 
 public class UserManager {
 

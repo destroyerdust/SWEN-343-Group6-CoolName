@@ -1,4 +1,4 @@
-package com.thumbsup.coolnamecli.dao;
+package com.thumbsup.dao;
 
 import java.util.List;
 

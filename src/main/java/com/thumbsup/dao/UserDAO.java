@@ -1,4 +1,4 @@
-package com.thumbsup.coolnamecli.dao;
+package com.thumbsup.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.thumbsup.coolnamecli.entity.User;
+import com.thumbsup.entity.User;
 
 public class UserDAO extends CRUDManager<User, Integer> {
 

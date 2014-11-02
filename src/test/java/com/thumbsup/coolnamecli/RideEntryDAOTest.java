@@ -12,9 +12,9 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.thumbsup.coolnamecli.dao.RideEntryDAO;
-import com.thumbsup.coolnamecli.entity.RideEntry;
-import com.thumbsup.coolnamecli.entity.Vehicle;
+import com.thumbsup.dao.RideEntryDAO;
+import com.thumbsup.entity.RideEntry;
+import com.thumbsup.entity.Vehicle;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RideEntryDAOTest {

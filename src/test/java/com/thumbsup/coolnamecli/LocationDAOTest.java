@@ -9,8 +9,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.thumbsup.coolnamecli.dao.LocationDAO;
-import com.thumbsup.coolnamecli.entity.Location;
+import com.thumbsup.dao.LocationDAO;
+import com.thumbsup.entity.Location;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LocationDAOTest {
