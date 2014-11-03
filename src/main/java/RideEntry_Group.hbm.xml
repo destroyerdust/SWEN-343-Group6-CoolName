@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name="com.thumbsup.coolnamecli.entity.RideEntry_Group" table="RideEntry_Group">
+      <meta attribute="class-description">
+         This class contains the RideEntry_Group detail. 
+      </meta>
+      <id name="rideEntry_GroupID" type="int" column="RideEntry_GroupID">
+         <generator class="native"/>
+      </id>
+      <property name="rideEntryID" column="RideEntryID" type="int"/>
+      <property name="groupID" column="GroupID" type="int"/>      
+   </class>
+</hibernate-mapping>
