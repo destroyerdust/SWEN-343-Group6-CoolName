@@ -23,15 +23,23 @@ public class RideController {
 	 * TODO
 	 */
 	@RequestMapping(value = "/ride/create", method = RequestMethod.GET)
-	public String CreateRide(Locale locale, Model model) {
-		logger.info("Welcome ride! The client locale is {}.", locale);
+	public String GetCreateRide( Model model) {
+		logger.info("GET: Creating new ride! The current use is");
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
-		String formattedDate = dateFormat.format(date);
 		
-		model.addAttribute("serverTime", formattedDate );
+		//model.addAttribute("serverTime", formattedDate );
+		
+		return "rideCreate";
+	}
+	
+	@RequestMapping(value = "/ride/create", method = RequestMethod.POST)
+	public String PostCreateRide( Model model) {
+		logger.info("POST: Creating new ride! The current use is");
+		
+		
+		
+		//model.addAttribute("serverTime", formattedDate );
 		
 		return "rideCreate";
 	}
