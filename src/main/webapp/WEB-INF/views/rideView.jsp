@@ -12,22 +12,13 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Thumbsup - Delicious</title>
+<title>Ride</title>
 <%@ include file="/WEB-INF/views/header.jsp" %>
 </head>
 <body>
-<div class="container">
-	<div>Find Your Perfect Ride</div>
-	<form class="form-inline" role="form">
-		<input id="start-location" class="form-control">
-		<input id="end-location" class="form-control">
-		<input id="departure-time" type="datetime-local" class="form-control">
-		<input id="arrival-time" type="datetime-local" class="form-control">
-		<button id="find-button" type="button" class="btn btn-primary btn-md">Find a ride</button>
-	</form>
+	<div></div>
 	<div>
-		<br><button id="create-button" type="button" class="btn btn-primary btn-md">Create a New Ride</button>
+		Driver Name: <bdi></bdi>
 	</div>
-</div>
 </body>
 </html>

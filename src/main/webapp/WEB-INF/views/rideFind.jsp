@@ -18,15 +18,15 @@
 <body>
 <div class="container">
 	<div>Find Your Perfect Ride</div>
-	<form class="form-inline" role="form">
-		<input id="start-location" class="form-control">
-		<input id="end-location" class="form-control">
-		<input id="departure-time" type="datetime-local" class="form-control">
-		<input id="arrival-time" type="datetime-local" class="form-control">
-		<button id="find-button" type="button" class="btn btn-primary btn-md">Find a ride</button>
-	</form>
 	<div>
-		<br><button id="create-button" type="button" class="btn btn-primary btn-md">Create a New Ride</button>
+		<input id="start-location">
+		<input id="end-location">
+		<input id="departure-time" type="datetime-local">
+		<input id="arrival-time" type="datetime-local">
+		<button id="find-button">Find a ride</button>
+	</div>
+	<div>
+		<button>Create a New Ride</button>
 	</div>
 </div>
 </body>
