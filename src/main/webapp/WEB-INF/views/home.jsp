@@ -10,7 +10,7 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <head>
-	<title>Home</title>
+<%@ include file="/WEB-INF/views/header.jsp" %>
 </head>
 <body>
 
