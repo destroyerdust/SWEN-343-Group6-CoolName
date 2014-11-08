@@ -13,6 +13,8 @@
 		<!-- Includes all of the content within header.jsp-->
 		<%@ include file="/WEB-INF/views/header.jsp" %>
 	</div>
+	<div>${serverTime}</div>
+</html>
 	<!-- End Header -->
 	
 	<body>
