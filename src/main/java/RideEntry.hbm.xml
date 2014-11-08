@@ -19,6 +19,7 @@
    	<property name="name" column="Name" type="string"/>
    	<property name="source" column="Source" type="string"/>
    	<property name="startTime" column="StartTime" type="timestamp"/>
+   	<property name="numSeats" column="numSeats" type="int"/>
    	<many-to-one name="vehicle" column="VehicleID" class="com.thumbsup.coolnamecli.entity.Vehicle"/>
    </class>
 </hibernate-mapping>
