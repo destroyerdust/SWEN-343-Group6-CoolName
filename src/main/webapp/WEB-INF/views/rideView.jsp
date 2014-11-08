@@ -18,7 +18,12 @@
 <body>
 	<div></div>
 	<div>
-		Driver Name: <bdi></bdi>
+		Driver Name: <bdi id="driver-name">${rideEntry.getVehicle().getUser().getName()}</bdi><br>
+		Destination: <bdi id="destination">${rideEntry.getDestination()}</bdi><br>
+		Origin: <bdi id="origin">${rideEntry.getSource()}</bdi><br>
+		Departure time: <time id="departure-time"><br>
+		Available Seats: <bdi id="avail-seats">${rideEntry.getVehicle().getNumSeats()}</bdi><br>
+		Car Model: <bdi id="car-model">${rideEntry.getVehicle().getModel()}<br>
 	</div>
 </body>
 </html>

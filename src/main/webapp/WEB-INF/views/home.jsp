@@ -28,6 +28,7 @@
 	<div>
 		<br><button id="create-button" type="button" class="btn btn-primary btn-md">Create a New Ride</button>
 	</div>
+	<div>${serverTime}</div>
 </div>
 </body>
 </html>

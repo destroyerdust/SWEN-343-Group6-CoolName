@@ -61,4 +61,9 @@ public class RideEntryManager
 		
 		return entries;
 	}
+	
+	public RideEntry selectRideEntry(int rideEntryID)
+	{
+		return rideEntryDAO.select(rideEntryID);
+	}
 }
