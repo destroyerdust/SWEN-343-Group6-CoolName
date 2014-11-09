@@ -36,18 +36,27 @@
 		<div class="form-group">
 			<input type="text" id="cell" class="form-control" name="cell" placeholder="Cell Phone Number">
 		</div>
-		<div>
+		<div class="form-group">
 			<p>Have a car?</p>
-			<input type="radio" value="Yes" id="caryes" name="caraswr">
-			<input type="radio" value="No" id="carno" name="caraswr">
-			<label>Model</label>
-			<input type="text" id="model" name="model">
-			<label>Seats</label>
-			<input type="number" id="seats" name="seats" min="0" max="10" step="1" value="4">
-			<label>Vehicle description</label>
-			<textarea rows="4" cols="5" id="desc" name="desc"></textarea>
-			<input type="submit" value="Submit">
+			<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary">
+					<input type="radio" value="Yes" id="caryes" name="caraswr"> Yes
+				</label>
+				<label class="btn btn-primary">
+					<input type="radio" value="No" id="carno" name="caraswr"> No
+				</label>
+			</div>
 		</div>
+		<div class="form-group">
+			<input type="text" id="model" class="form-control" name="model" placeholder="Model">
+		</div>
+		<div class="form-group">
+			<input type="number" id="seats" class="form-control" name="seats" min="0" max="10" step="1" value="4" placeholder="Number Seats">
+		</div>
+		<div class="form-group">
+			<textarea class="form-control" rows="4" id="desc" name="desc" placeholder="Vehicle Description"></textarea>
+		</div>
+		<button type="submit" class="btn btn-default">Submit</button>
 	</form>
 	</div>
 	<div class="col-md-3"></div>

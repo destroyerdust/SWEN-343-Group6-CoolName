@@ -32,7 +32,7 @@ public class SignupController {
 							@RequestParam(value="caraswr", required=true, defaultValue="") String carAnswer,
 							@RequestParam(value="model", required=false) String model,
 							@RequestParam(value="seats", required=false) String seats,
-							@RequestParam(value="desc", required=true, defaultValue="") String description,
+							@RequestParam(value="desc", required=false, defaultValue="") String description,
 							HttpServletRequest request)
 	{
 		String page = "";
