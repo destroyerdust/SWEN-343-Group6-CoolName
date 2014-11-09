@@ -54,4 +54,10 @@ public class LoginController {
 		
 		return new ModelAndView(page);
 	}
+	
+	@RequestMapping(value="/account/logout", method=RequestMethod.GET)
+	public String fireLogout(HttpServletRequest request){
+		request.getSession().invalidate();
+	    return "home";
+	}
 }
