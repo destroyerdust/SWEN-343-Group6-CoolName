@@ -21,7 +21,7 @@
 	<div class="row">
 		<div class="col-md-3"></div>	
 		<div class="col-md-6">
-			<form role="form">
+			<form role="form" method="POST">
 				<div class="form-group">
 					<h3 class="text-center">Create your ride request</h3>
 				</div>
@@ -58,7 +58,7 @@
 						</select>
 					</div>
 				</fieldset>
-				<input type="submit" class="btn btn-default btn-lg">Submit</button>
+				<button type="submit" class="btn btn-default btn-lg">Submit</button>
 			</form>
 		</div>
 	
