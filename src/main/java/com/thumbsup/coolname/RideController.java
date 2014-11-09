@@ -3,6 +3,10 @@ package com.thumbsup.coolname;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -43,12 +47,19 @@ public class RideController {
 	}
 	
 	@RequestMapping(value = "/ride/history", method = RequestMethod.GET)
-	public String CreateRideHistory(Locale locale, Model model) {
+	public String CreateRideHistory(Locale locale, Model model, HttpServletRequest req) {
 		logger.info("Welcome ride! The client locale is {}.", locale);
 		
 		//Retrieve a list of ride entries
 		RideEntryManager red = new RideEntryManager();
+		HttpSession s = req.getSession();
 		int userPK = 1;
+		
+		//Get the userID
+		if(s.getAttribute("auth") != null){
+			userPK = Integer.parseInt((String) s.getAttribute("Auth"));
+		}
+		
 		List<RideEntry> myRideEntries = red.getRideHistoryForUser(userPK);
 		
 		//add relevant data attributes to the model

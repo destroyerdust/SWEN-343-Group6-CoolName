@@ -14,15 +14,15 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-       	<li><a href="#">Ride</a></li>
-        <li><a href="#">Drive</a></li>
+       	<li><a href="/coolname/ride/create">Create</a></li>
+        <li><a href="/coolname">Find</a></li>
+        <li><a href="/coolname/ride/history">History</a></li>
         <li><a href="#">Map</a></li>
-        <li><a href="#">History</a></li>
       </ul>
      
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Login</a></li>
-        <li><a href="#">Sign Up</a></li>
+        <li><a href="/coolname/account/login">Login</a></li>
+        <li><a href="/coolname/account/signup">Sign Up</a></li>
        
       </ul>
     </div><!-- /.navbar-collapse -->
