@@ -29,7 +29,7 @@ public class HomeController {
 		RideEntryManager rem = new RideEntryManager();
 		List<RideEntry> listRideEntry = rem.listRideEntries();
 		
-		System.out.println("listRideEntry Size: " + listRideEntry.size());
+		//System.out.println("listRideEntry Size: " + listRideEntry.size());
 	
 		model.addAttribute("listRideEntrys", listRideEntry);
 		

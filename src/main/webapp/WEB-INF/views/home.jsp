@@ -6,28 +6,20 @@
 <%@ page session="false" %>
 
 <html>
-	<%@ include file="/WEB-INF/views/includes.jsp" %>
-
+	<head>
+		<title>Home - Ride Entries</title>
+		<%@ include file="/WEB-INF/views/includes.jsp" %>
+	</head>
+	
 	<!-- Begin Header -->
 	<div id="head" >
 		<!-- Includes all of the content within header.jsp-->
 		<%@ include file="/WEB-INF/views/header.jsp" %>
 	</div>
-	<p>${serverTime}</p>
 	<!-- End Header -->
 	<body>
 		<div class="container">
 			<h1>Home page! Delicious.</h1>
-			<!-- 
-			<form class="form-inline" role="form">
-				<input id="start-location" class="form-control">
-				<input id="end-location" class="form-control">
-				<input id="departure-time" type="datetime-local" class="form-control">
-				<input id="arrival-time" type="datetime-local" class="form-control">
-				<button id="find-button" type="button" class="btn btn-primary btn-md">Find a ride</button>
-			</form>
-			<button id="create-button" type="button" class="btn btn-primary btn-md">Create a New Ride</button><br>
-		 -->
 	<c:if test="${!empty listRideEntrys}">
 		<table id="rideListTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
