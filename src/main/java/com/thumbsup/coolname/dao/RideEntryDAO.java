@@ -78,15 +78,16 @@ public class RideEntryDAO extends CRUDManager<RideEntry, Integer> {
 
 	// Method takes a UserID and returns a collection of RideEntries that are
 	// associated with it
-	public List<RideEntry> findRideHistoryForUser(int userPrimaryKeyID) {
+	public List<RideEntry> findRideHistoryForUser(Integer userPrimaryKeyID) {
 
 		SessionFactory factory = SessionFactory.getSessionFactory();
 		Session s = factory.getSession();
 
 		Query query = s
-				.createQuery("from Signup as s, RideEntry as re where s.UserID = :userId and re.RideEntryID = s.RideEntryID");
-
-		query.setParameter("userId", userPrimaryKeyID);
+				//.createQuery("from Signup as s, RideEntry as re where s.UserID = :UserID and re.RideEntryID = s.RideEntryID");
+				.createQuery("select re from Signup signup, RideEntry re where signup.userID = :userID and re.rideEntryID = signup.rideEntryID");
+		query.setParameter(""
+				+ "userID", userPrimaryKeyID);
 		List<RideEntry> relatedRideEntries = query.list();
 
 		s.flush();
