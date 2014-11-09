@@ -84,7 +84,7 @@ public class RideEntryDAO extends CRUDManager<RideEntry, Integer> {
 		Session s = factory.getSession();
 
 		Query query = s
-				//.createQuery("from Signup as s, RideEntry as re where s.UserID = :UserID and re.RideEntryID = s.RideEntryID");
+				//.createQuery("from Signup as s, RideEntry as re where s.userID = :userID and re.rideEntryID = s.rideEntryID");
 				.createQuery("select re from Signup signup, RideEntry re where signup.userID = :userID and re.rideEntryID = signup.rideEntryID");
 		query.setParameter(""
 				+ "userID", userPrimaryKeyID);
@@ -94,5 +94,4 @@ public class RideEntryDAO extends CRUDManager<RideEntry, Integer> {
 		s.close();
 		return relatedRideEntries;
 	}
-
 }

@@ -54,7 +54,7 @@ public class RideController {
 		//add relevant data attributes to the model
 
 		//model.addAttribute("serverTime", formattedDate );
-		model.addAllAttributes(myRideEntries);
+		model.addAttribute("myRides", myRideEntries);
 		//return the page
 		
 		return "rideHistory";
