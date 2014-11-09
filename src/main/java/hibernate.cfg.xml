@@ -16,10 +16,10 @@
       jdbc:mysql://vm343f.se.rit.edu/test
    </property>
    <property name="hibernate.connection.username">
-      username
+      adamrau
    </property>
    <property name="hibernate.connection.password">
-      password
+      Welcome123
    </property>
 
    <!-- List of XML mapping files -->

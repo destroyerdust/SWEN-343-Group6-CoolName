@@ -16,14 +16,13 @@
 <%@ include file="/WEB-INF/views/header.jsp" %>
 </head>
 <body>
-	<div></div>
 	<div>
-		Driver Name: <bdi id="driver-name">${rideEntry.getVehicle().getUser().getName()}</bdi><br>
-		Destination: <bdi id="destination">${rideEntry.getDestination()}</bdi><br>
-		Origin: <bdi id="origin">${rideEntry.getSource()}</bdi><br>
+		Driver Name: ${driver.getFirstName()} ${driver.getLastName()}<br>
+		Destination: ${rideEntry.getDestination()}<br>
+		Origin: ${rideEntry.getSource()}<br>
 		Departure time: <time id="departure-time"><br>
-		Available Seats: <bdi id="avail-seats">${rideEntry.getVehicle().getNumSeats()}</bdi><br>
-		Car Model: <bdi id="car-model">${rideEntry.getVehicle().getModel()}<br>
+		Available Seats: ${rideEntry.getNumSeats()}<br>
+		Car Model: ${vehicleModel}<br>
 	</div>
 </body>
 </html>

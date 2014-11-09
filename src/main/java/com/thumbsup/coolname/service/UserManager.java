@@ -101,4 +101,8 @@ public class UserManager {
 		return dao.getSalt(username);
 	}
 
+	public User selectUser(int userID)
+	{
+		return userDAO.select(userID);
+	}
 }
