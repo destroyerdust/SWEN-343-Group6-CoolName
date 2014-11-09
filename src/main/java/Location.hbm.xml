@@ -4,7 +4,7 @@
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
 
 <hibernate-mapping>
-   <class name="com.thumbsup.coolnamecli.entity.Location" table="Location">
+   <class name="com.thumbsup.coolname.entity.Location" table="Location">
    	
    	<meta attribute="class-description">
    		"Contains the details on the location entity class."

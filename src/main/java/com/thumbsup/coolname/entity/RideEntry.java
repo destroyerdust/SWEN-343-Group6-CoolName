@@ -106,20 +106,20 @@ public class RideEntry implements Serializable {
 		this.startTime = startTime;
 	}
 
-	public int getNumSeats() {
-		return numSeats;
-	}
-
-	public void setNumSeats(int numSeats) {
-		this.numSeats = numSeats;
-	}
-
 	public Vehicle getVehicle() {
 		return this.vehicle;
 	}
 
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
+	}
+	
+	public int getNumSeats() {
+		return numSeats;
+	}
+
+	public void setNumSeats(int numSeats) {
+		this.numSeats = numSeats;
 	}
 
 }

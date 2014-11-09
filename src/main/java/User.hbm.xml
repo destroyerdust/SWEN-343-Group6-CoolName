@@ -4,7 +4,7 @@
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
 
 <hibernate-mapping>
-   <class name="com.thumbsup.coolnamecli.entity.User" table="User">
+   <class name="com.thumbsup.coolname.entity.User" table="User">
       <meta attribute="class-description">
          This class contains the user detail. 
       </meta>
@@ -14,7 +14,7 @@
       <list name="vehicles" table="Vehicle" cascade="all" lazy="false">
    		<key column="UserID"></key>
    		<list-index column="idx"></list-index>
-   		<one-to-many class="com.thumbsup.coolnamecli.entity.Vehicle"/>
+   		<one-to-many class="com.thumbsup.coolname.entity.Vehicle"/>
    	</list>
       <property name="userName" column="UserName" type="string"/>
       <property name="userType" column="UserType" type="int"/>
