@@ -3,9 +3,11 @@ package com.thumbsup.coolname.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import com.thumbsup.coolname.entity.User;
 
@@ -31,6 +33,19 @@ public class UserDAO extends CRUDManager<User, Integer> {
 		s.flush();
 		s.close();
 		return u;
+	}
+	
+	public String getSalt(String username)
+	{
+		String salt = null;
+		SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
+		Criteria criteria = s.createCriteria(User.class);
+		User u = (User) criteria.add(Restrictions.eq("userName", username))
+		                             .uniqueResult();
+		if( u != null)
+			salt = u.getPasswordSalt();
+		return salt;
 	}
 
 	@Override

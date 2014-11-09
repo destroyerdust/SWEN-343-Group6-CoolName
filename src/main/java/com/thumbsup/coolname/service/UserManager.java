@@ -1,5 +1,7 @@
 package com.thumbsup.coolname.service;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 import com.thumbsup.coolname.dao.UserDAO;
 import com.thumbsup.coolname.entity.User;
 
@@ -20,16 +22,21 @@ public class UserManager {
 	 * @return
 	 */
 	public User createUser(String userName, String firstName,
-			String lastName, String password, String passwordSalt,
+			String lastName, String password,
 			String phoneNumber, int userType) {
-
+		
+		String passSalt = BCrypt.gensalt();
+		String encryptedPass = BCrypt.hashpw(password, passSalt);
+		password = null;
+		System.out.println(encryptedPass);
+		System.out.println(passSalt);
 		User u = new User();
 		u.setUserName(userName);
 		u.setFirstName(firstName);
 		u.setLastName(lastName);
-		u.setPassword(password);
+		u.setPassword(encryptedPass);
 		u.setPhoneNumber(phoneNumber);
-		u.setPasswordSalt(passwordSalt);
+		u.setPasswordSalt(passSalt);
 		u.setUserType(userType);
 
 		u = userDAO.insert(u);
@@ -78,7 +85,20 @@ public class UserManager {
 	}
 
 	public User login(String userName, String pass) {
-		return userDAO.login(userName, pass);
+		User u = null;
+		String salt =userDAO.getSalt(userName);
+		if(salt != null)
+		{
+			pass = BCrypt.hashpw(pass, salt);
+			userDAO.login(userName, pass);
+		}
+		return u;
+	}
+	
+	public String getSalt(String username)
+	{
+		UserDAO dao = new UserDAO();
+		return dao.getSalt(username);
 	}
 
 }

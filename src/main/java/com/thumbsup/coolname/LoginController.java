@@ -26,17 +26,17 @@ public class LoginController {
 			HttpServletResponse response)
 	{
 		String page = "";
+		Cookie cookie = null; 
 		if(username.equals("") || password.equals(""))
 		{
 			page = "login";
+			cookie = new Cookie("auth","");
 		}
 		else
 		{
-			
-//			String encryptedPass = 
-			Cookie cookie = null;
 			UserManager manager = new UserManager();
 			User u = manager.login(username, password);
+			password = null;
 			if( u == null)
 			{
 				page = "login";
@@ -47,8 +47,8 @@ public class LoginController {
 				cookie = new Cookie("auth", u.getUserId().toString());
 				page = "home";
 			}
-			response.addCookie(cookie);
 		}
+		response.addCookie(cookie);
 		return page;
 	}
 }
