@@ -11,10 +11,9 @@
 </head>
 <body>
 <h1>LOGIN PAGE</h1>
-<c:if test="${cookie.containsKey('auth')}">
+<c:if test="${not l}">
 	<div>USERNAME OR PASSWORD INCORRECT</div>
 </c:if>
-<div></div>
 <form action="login" method="POST">
 	
 	<label>Username</label>

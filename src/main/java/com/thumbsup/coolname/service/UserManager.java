@@ -90,7 +90,7 @@ public class UserManager {
 		if(salt != null)
 		{
 			pass = BCrypt.hashpw(pass, salt);
-			userDAO.login(userName, pass);
+			u = userDAO.login(userName, pass);
 		}
 		return u;
 	}
