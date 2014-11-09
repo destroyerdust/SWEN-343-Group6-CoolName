@@ -12,21 +12,30 @@
 	<p>${serverTime}</p>
 	<!-- End Header -->
 <body>
+<div class="container">
 <c:if test="${not s}">
 	<div>INCORRECT INFORMATION</div>
 </c:if>
-<h1>SIGNUP PAGE</h1>
+	<div class="row">
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+	<h1>Sign Up</h1>
 	<form action="signup" method="POST">
-		<label>Username</label>
-		<input type="text" id="usr" name="usr">
-		<label>Password</label>
-		<input type="password" id="psw" name="psw">
-		<label>Name</label>
-		<input type="text" id="name" name="name">
-		<label>Last name</label>
-		<input type="text" id="lstn" name="lstn">
-		<label>Cellphone number</label>
-		<input type="text" id="cell" name="cell">
+		<div class="form-group">
+			<input type="text" id="usr" class="form-control" name="usr" placeholder="User Name">
+		</div>
+		<div class="form-group">
+			<input type="password" id="psw" class="form-control" name="psw" placeholder="Password">
+		</div>
+		<div class="form-group">
+			<input type="text" id="name" class="form-control" name="name" placeholder="First Name">
+		</div>
+		<div class="form-group">
+			<input type="text" id="lstn" class="form-control" name="lstn" placeholder="Last Name">
+		</div>
+		<div class="form-group">
+			<input type="text" id="cell" class="form-control" name="cell" placeholder="Cell Phone Number">
+		</div>
 		<div>
 			<p>Have a car?</p>
 			<input type="radio" value="Yes" id="caryes" name="caraswr">
@@ -40,5 +49,9 @@
 			<input type="submit" value="Submit">
 		</div>
 	</form>
+	</div>
+	<div class="col-md-3"></div>
+	</div><!-- Row End -->
+	</div><!-- Container End -->
 </body>
 </html>
