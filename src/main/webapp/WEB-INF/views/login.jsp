@@ -19,22 +19,20 @@
 	<div class="container">
 			<div class="row">
 				<div class="col-md-3"></div>	
-				<div class="col-md-offset-5">
+				<div class="col-md-6">
 					<div>
-						<h1>LOGIN PAGE</h1>
-							<c:if test="${not l}">
-								<div>USERNAME OR PASSWORD INCORRECT</div>
-							</c:if>
+						<h1>Login</h1>
+						<c:if test="${not l}">
+							<div>USERNAME OR PASSWORD INCORRECT</div>
+						</c:if>
 					</div>
 					<form action="login" method="POST">
 						<div class="form-group">
-							<label>Username</label>
-							<input type="text" name="usr">
+							<input type="text" class="form-control" name="usr" placeholder="User Name">
 						</div>
 						
 						<div class="form-group">
-							<label>Password</label>
-							<input type="password" name="psw">
+							<input type="password" class="form-control" name="psw" placeholder="Password">
 						</div>
 						
 						<input class="btn btn-primary" type="submit" value="Login">

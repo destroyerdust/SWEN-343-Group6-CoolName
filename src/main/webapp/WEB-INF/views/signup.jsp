@@ -13,13 +13,13 @@
 	<!-- End Header -->
 <body>
 <div class="container">
-<c:if test="${not s}">
-	<div>INCORRECT INFORMATION</div>
-</c:if>
 	<div class="row">
 	<div class="col-md-3"></div>
 	<div class="col-md-6">
 	<h1>Sign Up</h1>
+	<c:if test="${not s}">
+		<div>INCORRECT INFORMATION</div>
+	</c:if>
 	<form action="signup" method="POST">
 		<div class="form-group">
 			<input type="text" id="usr" class="form-control" name="usr" placeholder="User Name">
