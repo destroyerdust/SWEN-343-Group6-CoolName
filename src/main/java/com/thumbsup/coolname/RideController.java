@@ -1,10 +1,14 @@
 package com.thumbsup.coolname;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -13,9 +17,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.thumbsup.coolname.entity.RideEntry;
+import com.thumbsup.coolname.entity.User;
+import com.thumbsup.coolname.entity.Vehicle;
 import com.thumbsup.coolname.service.RideEntryManager;
+import com.thumbsup.coolname.service.UserManager;
+import com.thumbsup.coolname.service.VehicleManager;
 
 /**
  * Handles requests for the application ride page.
@@ -29,21 +39,73 @@ public class RideController {
 	 * TODO
 	 */
 	@RequestMapping(value = "/ride/create", method = RequestMethod.GET)
-	public String GetCreateRide( Model model) {
+	public ModelAndView GetCreateRide( Model model, HttpServletRequest request) {
 		logger.info("GET: Creating new ride! The current use is");
+		logger.info("Logged in userID:" + request.getSession().getAttribute("auth"));
 		
-		//model.addAttribute("serverTime", formattedDate );
+		if(request.getSession().getAttribute("auth")==null){
+			//redirect to login			
+			logger.info("user is not authenticated, redirecting to log in");
+			return new ModelAndView("redirect:/account/login");
+		}
 		
-		return "rideCreate";
+		//Need to get the authenticated user's vehicles
+		UserManager um = new UserManager();
+		
+		
+		return new ModelAndView("rideCreate");
 	}
 	
 	@RequestMapping(value = "/ride/create", method = RequestMethod.POST)
-	public String PostCreateRide( Model model) {
+	public ModelAndView PostCreateRide( 
+			@RequestParam(value="name", required=true, defaultValue="NULL") String name,
+			@RequestParam(value="destination", required=true, defaultValue="NULL") String destination,
+			@RequestParam(value="orgin", required=true, defaultValue="NULL") String orgin,
+			@RequestParam(value="depatureTime", required=true, defaultValue="NULL") String depatureTime,
+			@RequestParam(value="selectCar", required=false, defaultValue="NULL") String selectCar,
+			@RequestParam(value="numSeats", required=false, defaultValue="NULL") String numSeats,			
+			HttpServletRequest request,
+			Model model) {
 		logger.info("POST: Creating new ride! The current use is");
+		logger.info("Logged in userID:" + request.getSession().getAttribute("auth"));
 		
-		//model.addAttribute("serverTime", formattedDate );
 		
-		return "rideCreate";
+		if(request.getSession().getAttribute("auth")==null){
+			//redirect to login			
+		}
+		else{
+			int userPK = (Integer) request.getSession().getAttribute("auth");
+			
+			UserManager um = new UserManager();						
+			User currentUser = um.selectUser(userPK);			
+			
+			//get selected vehicle
+			VehicleManager vm = new VehicleManager();
+			//vm.selectVehicle(selectCar);
+			
+			//convert times to correctly formatted datetime
+			java.util.Date date= new java.util.Date();
+			
+			/*Timestamp creationTimestamp = new Timestamp(date.getDate());
+				
+			Timestamp departTime = new Timestamp(depatureTime);
+			
+			RideEntryManager rem = new RideEntryManager();
+			
+			rem.createRideEntry(creationTimestamp, 
+					destination, 
+					null, 
+					null, 
+					name, 
+					orgin, 
+					departTime, 
+					selectCar);
+			*/
+			
+			return new ModelAndView("redirect:/");
+		}
+		
+		return new ModelAndView("rideCreate");
 	}
 	
 	@RequestMapping(value = "/ride/history", method = RequestMethod.GET)
