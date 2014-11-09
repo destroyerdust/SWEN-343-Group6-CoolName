@@ -37,7 +37,7 @@ public class SignupController {
 	{
 		String page = "";
 		if(userName.equals("") || password.equals("") || name.equals("") || lastName.equals("") ||
-				cellPhone.equals("") || carAnswer.equals("") || description.equals(""))
+				cellPhone.equals("") || carAnswer.equals(""))
 		{
 			page = "signup";
 			request.setAttribute("s", false);
