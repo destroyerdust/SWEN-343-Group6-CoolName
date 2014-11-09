@@ -8,15 +8,28 @@
 </head>
 <body>
 <h1>SIGNUP PAGE</h1>
-	<form action="SignupController" method="POST">
-		<input type="text" value="Username" id="usr" name="usr">
-		<input type="password" value="Password" id="psw" name="psw">
-		<input type="text" value="Name" id="name" name="name">
-		<input type="text" value="Last name" id="lstn" name="lstn">
-		<input type="text" value="Cellphone number" id="cell" name="cell">
+	<form action="signup" method="POST">
+		<label>Username</label>
+		<input type="text" id="usr" name="usr">
+		<label>Password</label>
+		<input type="password" id="psw" name="psw">
+		<label>Name</label>
+		<input type="text" id="name" name="name">
+		<label>Last name</label>
+		<input type="text" id="lstn" name="lstn">
+		<label>Cellphone number</label>
+		<input type="text" id="cell" name="cell">
 		<div>
 			<p>Have a car?</p>
-			
+			<input type="radio" value="Yes" id="caryes" name="caraswr">
+			<input type="radio" value="No" id="carno" name="caraswr">
+			<label>Model</label>
+			<input type="text" id="model" name="model">
+			<label>Seats</label>
+			<input type="number" id="seats" name="seats" min="0" max="10" step="1" value="4">
+			<label>Vehicle description</label>
+			<textarea rows="4" cols="5" id="desc" name="desc"></textarea>
+			<input type="submit" value="Submit">
 		</div>
 	</form>
 </body>
