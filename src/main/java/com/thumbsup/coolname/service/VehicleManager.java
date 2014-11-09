@@ -46,6 +46,9 @@ public class VehicleManager {
 	{
 		return dao.selectAll();
 	}
+	
+	public Vehicle selectVehicle(int vehicleID)
+	{
+		return dao.select(vehicleID);
+	}
 }
-
-
