@@ -16,7 +16,6 @@
 	<div>${serverTime}</div>
 </html>
 	<!-- End Header -->
-	
 	<body>
 		<div class="container">
 			<h1>

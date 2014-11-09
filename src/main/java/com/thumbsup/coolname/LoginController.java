@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.thumbsup.coolname.entity.User;
 import com.thumbsup.coolname.service.UserManager;
@@ -23,7 +24,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/account/login", method=RequestMethod.POST)
-	public String postLogin(@RequestParam(value="usr", required=true, defaultValue="") String username,
+	public ModelAndView postLogin(@RequestParam(value="usr", required=true, defaultValue="") String username,
 			@RequestParam(value="psw", required=true, defaultValue="") String password,
 			HttpServletResponse response, HttpServletRequest request)
 	{
@@ -45,12 +46,12 @@ public class LoginController {
 			}
 			else
 			{
-				page = "home";
+				page = "redirect:/";
 				HttpSession session = request.getSession();
 				session.setAttribute("auth", u.getUserId());
 			}
 		}
 		
-		return page;
+		return new ModelAndView(page);
 	}
 }
