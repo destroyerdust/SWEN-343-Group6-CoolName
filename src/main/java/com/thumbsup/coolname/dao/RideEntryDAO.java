@@ -3,6 +3,7 @@ package com.thumbsup.coolname.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -18,7 +19,8 @@ public class RideEntryDAO extends CRUDManager<RideEntry, Integer> {
 		s.save(entry);
 		t.commit();
 		s.flush();
-		RideEntry insertedRide = (RideEntry) s.get(RideEntry.class, entry.getRideEntryID());
+		RideEntry insertedRide = (RideEntry) s.get(RideEntry.class,
+				entry.getRideEntryID());
 		s.close();
 
 		return insertedRide;
@@ -54,7 +56,8 @@ public class RideEntryDAO extends CRUDManager<RideEntry, Integer> {
 		s.delete(entry);
 		transaction.commit();
 		s.flush();
-		RideEntry result = (RideEntry) s.get(RideEntry.class, entry.getRideEntryID());
+		RideEntry result = (RideEntry) s.get(RideEntry.class,
+				entry.getRideEntryID());
 		s.close();
 
 		return result;
@@ -67,9 +70,28 @@ public class RideEntryDAO extends CRUDManager<RideEntry, Integer> {
 		Transaction transaction = s.beginTransaction();
 		s.update(entry);
 		transaction.commit();
-		RideEntry result = (RideEntry) s.get(RideEntry.class, entry.getRideEntryID());
+		RideEntry result = (RideEntry) s.get(RideEntry.class,
+				entry.getRideEntryID());
 		s.close();
 		return result;
+	}
+
+	// Method takes a UserID and returns a collection of RideEntries that are
+	// associated with it
+	public List<RideEntry> findRideHistoryForUser(int userPrimaryKeyID) {
+
+		SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
+
+		Query query = s
+				.createQuery("from Signup as s, RideEntry as re where s.UserID = :userId and re.RideEntryID = s.RideEntryID");
+
+		query.setParameter("userId", userPrimaryKeyID);
+		List<RideEntry> relatedRideEntries = query.list();
+
+		s.flush();
+		s.close();
+		return relatedRideEntries;
 	}
 
 }
