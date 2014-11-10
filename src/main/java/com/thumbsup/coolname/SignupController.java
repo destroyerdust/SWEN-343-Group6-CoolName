@@ -17,8 +17,9 @@ import com.thumbsup.coolname.service.UserManager;
 public class SignupController {
 
 	@RequestMapping(value="account/signup", method=RequestMethod.GET)
-	public String getSignup()
+	public String getSignup(HttpServletRequest request)
 	{
+		request.setAttribute("s", true);
 		return "signup";
 	}
 	
