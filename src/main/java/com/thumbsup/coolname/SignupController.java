@@ -63,7 +63,8 @@ public class SignupController {
 			else
 			{
 				page = "redirect:/";
-				u = manager.login(u.getUserName(), u.getPassword());
+				u = manager.login(userName, password);
+				password = null;
 				HttpSession session = request.getSession();
 				session.setAttribute("auth", u.getUserId());
 			}

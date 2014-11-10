@@ -45,6 +45,7 @@ public class UserDAO extends CRUDManager<User, Integer> {
 		                             .uniqueResult();
 		if( u != null)
 			salt = u.getPasswordSalt();
+		s.close();
 		return salt;
 	}
 

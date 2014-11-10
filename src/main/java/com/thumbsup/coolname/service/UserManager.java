@@ -41,8 +41,10 @@ public class UserManager {
 		u.setUserType(userType);
 		if(vehicle != null)
 			u.addVehicle(vehicle);
-
-		u = userDAO.insert(u);
+		if(getSalt(userName) != null)
+			u = null;
+		else
+			u = userDAO.insert(u);
 
 		return u;
 	}
