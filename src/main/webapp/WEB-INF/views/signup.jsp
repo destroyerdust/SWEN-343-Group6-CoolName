@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+<c:if test="${not l}">
+	<div>INCORRECT INFORMATION</div>
+</c:if>
 <h1>SIGNUP PAGE</h1>
 	<form action="signup" method="POST">
 		<label>Username</label>

@@ -4,6 +4,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import com.thumbsup.coolname.dao.UserDAO;
 import com.thumbsup.coolname.entity.User;
+import com.thumbsup.coolname.entity.Vehicle;
 
 public class UserManager {
 
@@ -23,7 +24,7 @@ public class UserManager {
 	 */
 	public User createUser(String userName, String firstName,
 			String lastName, String password,
-			String phoneNumber, int userType) {
+			String phoneNumber, int userType, Vehicle vehicle) {
 		
 		String passSalt = BCrypt.gensalt();
 		String encryptedPass = BCrypt.hashpw(password, passSalt);
@@ -38,6 +39,8 @@ public class UserManager {
 		u.setPhoneNumber(phoneNumber);
 		u.setPasswordSalt(passSalt);
 		u.setUserType(userType);
+		if(vehicle != null)
+			u.addVehicle(vehicle);
 
 		u = userDAO.insert(u);
 

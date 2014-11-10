@@ -26,7 +26,7 @@ public class LoginController {
 	@RequestMapping(value="/account/login", method=RequestMethod.POST)
 	public ModelAndView postLogin(@RequestParam(value="usr", required=true, defaultValue="") String username,
 			@RequestParam(value="psw", required=true, defaultValue="") String password,
-			HttpServletResponse response, HttpServletRequest request)
+			HttpServletRequest request)
 	{
 		String page = "";
 		if(username.equals("") || password.equals(""))
