@@ -47,11 +47,9 @@ public class LoginController {
 
 		return new ModelAndView(page);
 	}
-
-	@RequestMapping(value = "/account/logout", method = RequestMethod.GET)
-	public ModelAndView fireLogout(HttpServletRequest request) {
+	@RequestMapping(value="/account/logout", method=RequestMethod.GET)
+	public ModelAndView fireLogout(HttpServletRequest request){
 		request.getSession().invalidate();
-
 		return new ModelAndView("redirect:/");
 	}
 }
