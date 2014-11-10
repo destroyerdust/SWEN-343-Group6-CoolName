@@ -82,12 +82,12 @@
 
 <script>
 
-	$("#Car").change(function() {
-		var str = "";
-		$("#Car option:selected").each(function(){
-			//str = "Vehicle Id is:" + $(this).val() + ","+ $(this).text();			
-		});
-		alert(str);
+// 	$("#Car").change(function() {
+// 		var str = "";
+// 		$("#Car option:selected").each(function(){
+// 			//str = "Vehicle Id is:" + $(this).val() + ","+ $(this).text();			
+// 		});
+// 		//alert(str);
 		
 // 		$.ajax({
 // 			type: "GET",
