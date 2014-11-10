@@ -62,5 +62,13 @@
 	<div class="col-md-3"></div>
 	</div><!-- Row End -->
 	</div><!-- Container End -->
+	<script>
+	var phoneInput = document.getElementById('cell');
+    if (phoneInput) {
+      new Formatter(phoneInput, {
+          'pattern': '({{999}}) {{999}}-{{9999}}'
+      });
+    }
+    </script>
 </body>
 </html>

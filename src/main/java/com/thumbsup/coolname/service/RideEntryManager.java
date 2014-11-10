@@ -70,5 +70,6 @@ public class RideEntryManager
 	//Method takes a UserID and returns a collection of RideEntries that are associated with it
 	public List<RideEntry> getRideHistoryForUser(int userPrimaryKeyID){
 		return rideEntryDAO.findRideHistoryForUser(userPrimaryKeyID);
-	}
+	}	
+
 }
