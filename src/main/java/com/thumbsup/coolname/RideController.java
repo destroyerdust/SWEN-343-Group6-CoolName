@@ -103,9 +103,9 @@ public class RideController {
 			Vehicle vehicle = null;
 			if(currentUser.getVehicles().size()>0){
 			
-			//get selected vehicle
-			VehicleManager vm = new VehicleManager();
-			//vm.selectVehicle(selectCar);
+				//get selected vehicle
+				VehicleManager vm = new VehicleManager();
+				vm.selectVehicle((Integer)selectCar);
 			}
 		
 			//convert times to correctly formatted datetime
