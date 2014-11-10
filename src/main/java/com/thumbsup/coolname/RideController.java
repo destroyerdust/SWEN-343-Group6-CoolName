@@ -82,7 +82,7 @@ public class RideController {
 			@RequestParam(value="name", required=true, defaultValue="NULL") String name,
 			@RequestParam(value="destination", required=true, defaultValue="NULL") String destination,
 			@RequestParam(value="orgin", required=true, defaultValue="NULL") String orgin,
-			@RequestParam(value="depatureTime", required=true, defaultValue="NULL") long depatureTime,
+			@RequestParam(value="depatureTime", required=true, defaultValue="NULL") String depatureTime,
 			@RequestParam(value="selectCar", required=false, defaultValue="NULL") String selectCar,
 			@RequestParam(value="numSeats", required=false, defaultValue="NULL") String numSeats,			
 			HttpServletRequest request,
@@ -101,19 +101,19 @@ public class RideController {
 			User currentUser = um.selectUser(userPK);
 
 			Vehicle vehicle = null;
-			if(currentUser.getVehicles().size()>0){
+			if(currentUser.getVehicles().size()>0 && !selectCar.equals("NULL")){
 			
 				//get selected vehicle
 				VehicleManager vm = new VehicleManager();
-				vm.selectVehicle((Integer)selectCar);
+				vm.selectVehicle(Integer.parseInt(selectCar));
 			}
 		
 			//convert times to correctly formatted datetime
 			java.util.Date date= new java.util.Date();
 			
-			Timestamp creationTimestamp = new Timestamp(date.getDate());
+			Timestamp creationTimestamp = new Timestamp(date.getTime());
 				
-			Timestamp departTime = new Timestamp(depatureTime);
+			Timestamp departTime = new Timestamp(date.getTime());
 			
 			RideEntryManager rem = new RideEntryManager();
 			
