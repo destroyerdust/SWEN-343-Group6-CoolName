@@ -1,8 +1,11 @@
 package com.thumbsup.coolname;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
@@ -12,11 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.thumbsup.coolname.entity.RideEntry;
+import com.thumbsup.coolname.entity.Signup;
 import com.thumbsup.coolname.entity.User;
 import com.thumbsup.coolname.entity.Vehicle;
 import com.thumbsup.coolname.service.RideEntryManager;
+import com.thumbsup.coolname.service.SignupManager;
 import com.thumbsup.coolname.service.UserManager;
 import com.thumbsup.coolname.service.VehicleManager;
 
@@ -54,5 +60,21 @@ public class RideViewController
 		model.addAttribute("driver", driver);
 
 		return "rideView";
+	}
+	
+	@RequestMapping(value = "/ride/{rideEntryID}/join", method = RequestMethod.GET)
+	public ModelAndView join(Locale locale, Model model, @PathVariable int rideEntryID, HttpServletRequest request)
+	{
+		Integer userID = (Integer)request.getSession().getAttribute("auth");
+		if(userID == null)
+		{
+			//Do nothing
+		}
+		else
+		{
+			SignupManager sum = new SignupManager();
+			sum.createSignup(userID, rideEntryID, new Timestamp(new Date().getTime()));
+		}
+		return new ModelAndView("redirect:/");
 	}
 }

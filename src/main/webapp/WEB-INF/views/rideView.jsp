@@ -13,8 +13,7 @@
 <!-- Latest compiled and minified JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<head></head>
-
+<head>
 <script
 	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
 	
@@ -33,12 +32,18 @@
 	google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
+<style>
+	div.inline{float:left;}
+</style>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Ride</title>
 <%@ include file="/WEB-INF/views/header.jsp"%>
 </head>
 <body>
-	<table data-toggle="table" data-cache="false" data-height="299">
+	<button class="btn btn-default" onclick="location.href='/coolname/ride/${rideEntryID}/join'">Join Ride</button>
+	<div class="inline">
+	<table class="table">
 		<thead>
 			<tr>
 				<th>Driver Name:</th>
@@ -66,6 +71,7 @@
 			</tr>
 		</thead>
 	</table>
-	<div id="map" style="height: 450px; width: 450px;"></div>
+	<div id="map" style="height: 325px; width: 450px;"></div>
+	</div>
 </body>
 </html>
