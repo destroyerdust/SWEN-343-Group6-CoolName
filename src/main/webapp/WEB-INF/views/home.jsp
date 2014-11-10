@@ -19,7 +19,13 @@
 	<!-- End Header -->
 	<body>
 		<div class="container">
-			<h1>Home page! Delicious.</h1>
+			<h1>ThumbsUp - Find your <bdi id="perfect" onclick="delicious()">perfect</bdi> ride.</h1>
+			<script>
+			function delicious()
+			{
+				document.getElementById("perfect").innerHTML = "delicious";
+			}
+			</script>
 	<c:if test="${!empty listRideEntrys}">
 		<table id="rideListTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
