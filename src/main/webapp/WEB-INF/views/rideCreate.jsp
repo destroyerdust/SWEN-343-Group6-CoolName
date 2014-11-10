@@ -45,28 +45,30 @@
 				</div>
 				
 				<!-- Note that the fieldset should only be viewable if a user has a car -->
-				<fieldset>				
-					<h3 class="text-center">Which car would you like to use?</h3>
-					<div class="form-group">
-						<label for="selectCar" class="control-label">Vehicle</label>
-					    <select name="selectCar" class="form-control">
-					      <option value="" selected disabled>Select your Vehicle</option>
-						  <option>car 1</option>
-						  <option>car 2</option>				 
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="numSeats" class="control-label">Available seats</label>
-						<select name="numSeats" class="form-control">
-						  <option value="" selected disabled>Select # of Available seats</option>
-						  <option>1</option>
-						  <option>2</option>
-						  <option>3</option>
-						  <option>4</option>
-						  <option>5</option>
-						</select>
-					</div>
-				</fieldset>
+				
+				<c:if test="${isDriver}">				
+					<fieldset>				
+						<h3 class="text-center">Which car would you like to use?</h3>
+						<div class="form-group">
+							<label for="selectCar" class="control-label">Vehicle</label>
+						    <select name="selectCar" class="form-control">
+						      <option value="" selected disabled>Select your Vehicle</option>
+							  ${cars}				 
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="numSeats" class="control-label">Available seats</label>
+							<select name="numSeats" class="form-control">
+							  <option value="" selected disabled>Select # of Available seats</option>
+							  <option>1</option>
+							  <option>2</option>
+							  <option>3</option>
+							  <option>4</option>
+							  <option>5</option>
+							</select>
+						</div>
+					</fieldset>
+				</c:if>
 				<button type="submit" class="btn btn-primary btn-lg">Submit</button>
 			</form>
 		</div>

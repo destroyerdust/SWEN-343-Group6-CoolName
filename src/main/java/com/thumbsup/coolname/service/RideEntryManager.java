@@ -71,4 +71,23 @@ public class RideEntryManager
 	public List<RideEntry> getRideHistoryForUser(int userPrimaryKeyID){
 		return rideEntryDAO.findRideHistoryForUser(userPrimaryKeyID);
 	}
+	public RideEntry createRideEntry(Timestamp creationTimestamp,
+			String source, Object endTime, Object mapUri, String name,
+			String orgin, Timestamp startTime, Vehicle selectCar) {
+		// TODO Auto-generated method stub
+RideEntry entry = new RideEntry();
+		
+		entry.setCreationTimestamp(creationTimestamp);
+		entry.setDestination(source);
+		entry.setEndTime(null);
+		entry.setMapUri(null);
+		entry.setName(name);
+		entry.setSource(source);
+		entry.setStartTime(startTime);
+		entry.setVehicle(selectCar);
+		
+		entry = rideEntryDAO.insert(entry);
+		
+		return entry;
+	}
 }

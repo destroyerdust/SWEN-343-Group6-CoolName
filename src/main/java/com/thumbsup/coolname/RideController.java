@@ -49,8 +49,29 @@ public class RideController {
 			return new ModelAndView("redirect:/account/login");
 		}
 		
-		//Need to get the authenticated user's vehicles
+		//Need to get the authenticated user's vehicles and send the list to the view
 		UserManager um = new UserManager();
+		
+		User currentUser = um.selectUser( Integer.parseInt(request.getSession().getAttribute("auth").toString()));
+		
+		List<Vehicle> cars = currentUser.getVehicles();
+	
+		Boolean isDriver = false;
+		String carChoice = "";
+		
+		//if user is a driver
+		if(cars.size()!=0){				
+			isDriver = true;
+			for(Vehicle v : cars){
+				carChoice+="<option value=\"" + v.getVehicleID() + "\" >" + v.getName() + "</option>\n";			
+			}
+			logger.info(carChoice);
+		
+		}
+		request.setAttribute("isDriver", isDriver);
+		request.setAttribute("carChoice", carChoice);		
+		
+		
 		
 		
 		return new ModelAndView("rideCreate");
@@ -61,7 +82,7 @@ public class RideController {
 			@RequestParam(value="name", required=true, defaultValue="NULL") String name,
 			@RequestParam(value="destination", required=true, defaultValue="NULL") String destination,
 			@RequestParam(value="orgin", required=true, defaultValue="NULL") String orgin,
-			@RequestParam(value="depatureTime", required=true, defaultValue="NULL") String depatureTime,
+			@RequestParam(value="depatureTime", required=true, defaultValue="NULL") long depatureTime,
 			@RequestParam(value="selectCar", required=false, defaultValue="NULL") String selectCar,
 			@RequestParam(value="numSeats", required=false, defaultValue="NULL") String numSeats,			
 			HttpServletRequest request,
@@ -86,22 +107,21 @@ public class RideController {
 			//convert times to correctly formatted datetime
 			java.util.Date date= new java.util.Date();
 			
-			/*Timestamp creationTimestamp = new Timestamp(date.getDate());
+			Timestamp creationTimestamp = new Timestamp(date.getDate());
 				
 			Timestamp departTime = new Timestamp(depatureTime);
 			
 			RideEntryManager rem = new RideEntryManager();
 			
-			rem.createRideEntry(creationTimestamp, 
+			/*rem.createRideEntry(creationTimestamp, 
 					destination, 
 					null, 
 					null, 
 					name, 
 					orgin, 
 					departTime, 
-					selectCar);
+					selectCar);			
 			*/
-			
 			return new ModelAndView("redirect:/");
 		}
 		
