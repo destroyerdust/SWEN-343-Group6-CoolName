@@ -98,12 +98,16 @@ public class RideController {
 			int userPK = (Integer) request.getSession().getAttribute("auth");
 			
 			UserManager um = new UserManager();						
-			User currentUser = um.selectUser(userPK);			
+			User currentUser = um.selectUser(userPK);
+
+			Vehicle vehicle = null;
+			if(currentUser.getVehicles().size()>0){
 			
 			//get selected vehicle
 			VehicleManager vm = new VehicleManager();
 			//vm.selectVehicle(selectCar);
-			
+			}
+		
 			//convert times to correctly formatted datetime
 			java.util.Date date= new java.util.Date();
 			
@@ -113,15 +117,15 @@ public class RideController {
 			
 			RideEntryManager rem = new RideEntryManager();
 			
-			/*rem.createRideEntry(creationTimestamp, 
+			rem.createRideEntry(creationTimestamp, 
 					destination, 
 					null, 
 					null, 
 					name, 
 					orgin, 
 					departTime, 
-					selectCar);			
-			*/
+					vehicle);			
+			
 			return new ModelAndView("redirect:/");
 		}
 		
