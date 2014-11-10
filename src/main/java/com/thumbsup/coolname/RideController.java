@@ -2,6 +2,8 @@ package com.thumbsup.coolname;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -82,7 +84,7 @@ public class RideController {
 			@RequestParam(value="name", required=true, defaultValue="NULL") String name,
 			@RequestParam(value="destination", required=true, defaultValue="NULL") String destination,
 			@RequestParam(value="orgin", required=true, defaultValue="NULL") String orgin,
-			@RequestParam(value="depatureTime", required=true, defaultValue="NULL") String depatureTime,
+			@RequestParam(value="departureTime", required=true, defaultValue="NULL") String departureTime,
 			@RequestParam(value="selectCar", required=false, defaultValue="NULL") String selectCar,
 			@RequestParam(value="numSeats", required=false, defaultValue="NULL") String numSeats,			
 			HttpServletRequest request,
@@ -109,11 +111,24 @@ public class RideController {
 			}
 		
 			//convert times to correctly formatted datetime
-			java.util.Date date= new java.util.Date();
+			System.out.println(departureTime);
+			departureTime = departureTime.replace("T", " ");
+			System.out.println(departureTime);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+			Timestamp departTime = null;
+			try
+			{
+				departTime = new Timestamp(sdf.parse(departureTime).getTime());
+			}
+			catch (ParseException e)
+			{
+				e.printStackTrace();
+				java.util.Date date= new java.util.Date();
+				departTime = new Timestamp(date.getTime());
+			}
 			
+			java.util.Date date= new java.util.Date();
 			Timestamp creationTimestamp = new Timestamp(date.getTime());
-				
-			Timestamp departTime = new Timestamp(date.getTime());
 			
 			RideEntryManager rem = new RideEntryManager();
 			

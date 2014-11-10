@@ -40,8 +40,8 @@
 					<input name="orgin" type="text" class="form-control" placeholder="Orgin">
 				</div>
 				<div class="form-group">
-					<label for="depatureTime" class="control-label">Departure Time</label>
-					<input name="depatureTime" type="datetime-local" class="form-control" placeholder="Depature Time">
+					<label for="departureTime" class="control-label">Departure Time</label>
+					<input name="departureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
 				</div>
 				
 				<!-- Note that the fieldset should only be viewable if a user has a car -->

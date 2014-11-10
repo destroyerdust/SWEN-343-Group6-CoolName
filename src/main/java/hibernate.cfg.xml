@@ -16,7 +16,7 @@
       jdbc:mysql://vm343f.se.rit.edu/test
    </property>
    <property name="hibernate.connection.username">
-      ccraig
+      adamrau
    </property>
    <property name="hibernate.connection.password">
       Welcome123
