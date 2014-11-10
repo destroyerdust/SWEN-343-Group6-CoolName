@@ -133,7 +133,7 @@ public class RideController {
 			
 			RideEntryManager rem = new RideEntryManager();
 			
-			rem.createRideEntry(creationTimestamp, 
+			RideEntry createdRide = rem.createRideEntry(creationTimestamp, 
 					destination, 
 					null, 
 					null, 
@@ -141,6 +141,9 @@ public class RideController {
 					orgin, 
 					departTime, 
 					vehicle);			
+			
+			SignupManager sum = new SignupManager();
+			sum.createSignup(currentUser.getUserId(), createdRide.getRideEntryID(), new Timestamp(new java.util.Date().getTime()));
 			
 			return new ModelAndView("redirect:/");
 		}
