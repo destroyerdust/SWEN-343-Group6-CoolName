@@ -107,7 +107,7 @@ public class RideController {
 			
 				//get selected vehicle
 				VehicleManager vm = new VehicleManager();
-				vm.selectVehicle(Integer.parseInt(selectCar));
+				vehicle = vm.selectVehicle(Integer.parseInt(selectCar));
 			}
 		
 			//convert times to correctly formatted datetime
