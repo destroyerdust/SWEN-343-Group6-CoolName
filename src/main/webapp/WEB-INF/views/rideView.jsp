@@ -47,7 +47,7 @@
 		<thead>
 			<tr>
 				<th>Driver Name:</th>
-				<td>${driver.getFirstName()}${driver.getLastName()}</td>
+				<td>${driverName}</td>
 			</tr>
 			<tr>
 				<th>Destination:</th>

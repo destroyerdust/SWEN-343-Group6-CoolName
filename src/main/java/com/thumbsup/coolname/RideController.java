@@ -208,17 +208,26 @@ public class RideController {
 		RideEntryManager rem = new RideEntryManager();
 		RideEntry re = rem.selectRideEntry(rideEntryID);
 		
-		VehicleManager vm = new VehicleManager();
-		int vehicleID = re.getVehicle().getVehicleID();
-		Vehicle v = vm.selectVehicle(vehicleID);
-		
-		UserManager um = new UserManager();
-		int userID = v.getUser().getUserId();
-		User driver = um.selectUser(vehicleID);
-		
-		model.addAttribute("rideEntry", re);
-		model.addAttribute("vehicleModel", v.getModel());
-		model.addAttribute("driver", driver);
+		if(re.getVehicle() != null)
+		{
+			VehicleManager vm = new VehicleManager();
+			int vehicleID = re.getVehicle().getVehicleID();
+			Vehicle v = vm.selectVehicle(vehicleID);
+			
+			UserManager um = new UserManager();
+			int userID = v.getUser().getUserId();
+			User driver = um.selectUser(userID);
+			
+			model.addAttribute("rideEntry", re);
+			model.addAttribute("vehicleModel", v.getModel());
+			model.addAttribute("driverName", driver.getFirstName() + " " + driver.getLastName());
+		}
+		else
+		{
+			model.addAttribute("rideEntry", re);
+			model.addAttribute("vehicleModel", "No vehicle");
+			model.addAttribute("driverName", "No driver");
+		}
 
 		return "rideView";
 	}
