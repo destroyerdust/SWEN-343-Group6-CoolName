@@ -1,5 +1,6 @@
 package com.thumbsup.coolname;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
