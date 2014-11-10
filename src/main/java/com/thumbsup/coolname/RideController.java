@@ -23,6 +23,7 @@ import com.thumbsup.coolname.entity.RideEntry;
 import com.thumbsup.coolname.entity.User;
 import com.thumbsup.coolname.entity.Vehicle;
 import com.thumbsup.coolname.service.RideEntryManager;
+import com.thumbsup.coolname.service.SignupManager;
 import com.thumbsup.coolname.service.UserManager;
 import com.thumbsup.coolname.service.VehicleManager;
 
@@ -190,5 +191,29 @@ public class RideController {
 		model.addAttribute("driver", driver);
 
 		return "rideView";
+	}
+	
+	/**
+	 * ToDO
+	 * @param locale
+	 * @param model
+	 * @param rideEntryID
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/ride/{rideEntryID}/join", method = RequestMethod.GET)
+	public ModelAndView join(Locale locale, Model model, @PathVariable int rideEntryID, HttpServletRequest request)
+	{
+		Integer userID = (Integer)request.getSession().getAttribute("auth");
+		if(userID == null)
+		{
+			//Do nothing
+		}
+		else
+		{
+			SignupManager sum = new SignupManager();
+			sum.createSignup(userID, rideEntryID, new Timestamp(new Date().getTime()));
+		}
+		return new ModelAndView("redirect:/");
 	}
 }
