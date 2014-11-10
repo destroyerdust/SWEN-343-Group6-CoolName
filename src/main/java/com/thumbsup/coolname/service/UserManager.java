@@ -1,5 +1,7 @@
 package com.thumbsup.coolname.service;
 
+import java.util.ArrayList;
+
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import com.thumbsup.coolname.dao.UserDAO;
@@ -40,6 +42,7 @@ public class UserManager {
 		u.setPasswordSalt(passSalt);
 		u.setUserType(userType);
 		if(vehicle != null)
+			u.setVehicles(new ArrayList<Vehicle>());
 			u.addVehicle(vehicle);
 		if(getSalt(userName) != null)
 			u = null;
