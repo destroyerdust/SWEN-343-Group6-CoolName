@@ -9,6 +9,8 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 <head>
 <%@ include file="/WEB-INF/views/includes.jsp" %>
 
@@ -51,14 +53,14 @@
 						<h3 class="text-center">Which car would you like to use?</h3>
 						<div class="form-group">
 							<label for="selectCar" class="control-label">Vehicle</label>
-						    <select name="selectCar" class="form-control">
+						    <select id="Car" name="selectCar" class="form-control">
 						      <option value="" selected disabled>Select your Vehicle</option>
 							  ${carChoice}				 
 							</select>
 						</div>
 						<div class="form-group">
 							<label for="numSeats" class="control-label">Available seats</label>
-							<select name="numSeats" class="form-control">
+							<select id="numSeats" name="numSeats" class="form-control">
 							  <option value="" selected disabled>Select # of Available seats</option>
 							  <option>1</option>
 							  <option>2</option>
@@ -77,5 +79,28 @@
 </div>
 
 </body>
+
+<script>
+
+	$("#Car").change(function() {
+		var str = "";
+		$("#Car option:selected").each(function(){
+			//str = "Vehicle Id is:" + $(this).val() + ","+ $(this).text();			
+		});
+		alert(str);
+		
+// 		$.ajax({
+// 			type: "GET",
+// 			url:  "/ride/create/seats",
+// 			data: {selectCar: $("#Car").val() },
+// 			success:	function(data){
+// 					alert("test");
+// 					$("#numSeats").empty().append( data.list );
+// 				}				
+// 		});
+		
+	});
+
+</script>
 
 </html>
