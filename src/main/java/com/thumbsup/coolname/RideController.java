@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.thumbsup.coolname.entity.RideEntry;
@@ -147,20 +146,6 @@ public class RideController {
 		
 		return new ModelAndView("rideCreate");
 	}
-	
-	@RequestMapping(value = "/ride/create/seats", method = RequestMethod.POST)
-	public String GetMaxNumSeats(@RequestParam String selectCar) {
-		
-		String result ="";
-		VehicleManager vm = new VehicleManager();
-		
-		for(int x=1; x<vm.selectVehicle(Integer.parseInt(selectCar)).getNumSeats(); x++){
-			result += "<option value=\"" + x + "\" >" + x + "</option>\n";
-		}
-		
-		return result;		
-	}
-	
 	
 	@RequestMapping(value = "/ride/history", method = RequestMethod.GET)
 	public String CreateRideHistory(Locale locale, Model model, HttpServletRequest req) {
