@@ -53,7 +53,7 @@
 							<label for="selectCar" class="control-label">Vehicle</label>
 						    <select name="selectCar" class="form-control">
 						      <option value="" selected disabled>Select your Vehicle</option>
-							  ${cars}				 
+							  ${carChoice}				 
 							</select>
 						</div>
 						<div class="form-group">
@@ -64,7 +64,6 @@
 							  <option>2</option>
 							  <option>3</option>
 							  <option>4</option>
-							  <option>5</option>
 							</select>
 						</div>
 					</fieldset>
