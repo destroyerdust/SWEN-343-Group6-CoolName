@@ -1,20 +1,18 @@
 package com.thumbsup.coolname;
 
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -136,5 +134,36 @@ public class RideController {
 		}
 		
 		return "rideHistory";
+	}
+	
+	/**
+	 * Select ride viewer
+	 */
+	@RequestMapping(value = "/ride/{rideEntryID}/view", method = RequestMethod.GET)
+	public String view(Locale locale, Model model, @PathVariable int rideEntryID) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+
+		String formattedDate = dateFormat.format(date);
+		model.addAttribute("serverTime", formattedDate);
+		
+		RideEntryManager rem = new RideEntryManager();
+		RideEntry re = rem.selectRideEntry(rideEntryID);
+		
+		VehicleManager vm = new VehicleManager();
+		int vehicleID = re.getVehicle().getVehicleID();
+		Vehicle v = vm.selectVehicle(vehicleID);
+		
+		UserManager um = new UserManager();
+		int userID = v.getUser().getUserId();
+		User driver = um.selectUser(vehicleID);
+		
+		model.addAttribute("rideEntry", re);
+		model.addAttribute("vehicleModel", v.getModel());
+		model.addAttribute("driver", driver);
+
+		return "rideView";
 	}
 }
