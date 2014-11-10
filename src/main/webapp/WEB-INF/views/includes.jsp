@@ -15,3 +15,5 @@
 
 <!-- DataTables BootStrap JS -->
 <script src="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+<script type="text/javascript" src="<c:url value="/resources/js/formatter.js" />"> </script>
