@@ -18,23 +18,30 @@
 
 <body>
 	<div class="container">
-		<p>Ride Entry History</p>
-		<c:if test="${not empty myRides}">
-			<table class="table">
-				<tr>
-					<th>Name</th>
-					<th>Source</th>
-					<th>Destination</th>
-				</tr>
-				<c:forEach items="${myRides}" var="entry">
+		<h1>Ride Entry History</h1>
+		<c:choose> 
+			<c:when test="${not empty myRides}">
+				<table class="table">
 					<tr>
-						<td>${entry.getName()}</td>
-						<td>${entry.getSource()}</td>
-						<td>${entry.getDestination()}</td>
+						<th>Name</th>
+						<th>Source</th>
+						<th>Destination</th>
 					</tr>
-				</c:forEach>
-			</table>
-		</c:if>
+					<c:forEach items="${myRides}" var="entry">
+						<tr>
+							<td>${entry.getName()}</td>
+							<td>${entry.getSource()}</td>
+							<td>${entry.getDestination()}</td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:when>
+			<c:otherwise>
+				<p>
+					The ride history is empty.
+				</p>
+			</c:otherwise>
+		</c:choose>
 	</div>
 </body>
 </html>

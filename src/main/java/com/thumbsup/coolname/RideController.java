@@ -115,11 +115,15 @@ public class RideController {
 		//Retrieve a list of ride entries
 		RideEntryManager red = new RideEntryManager();
 		HttpSession s = req.getSession();
-		int userPK = 1;
-		
+		int userPK;
 		//Get the userID
-		if(s.getAttribute("auth") != null){
-			userPK = Integer.parseInt((String) s.getAttribute("Auth"));
+		if(s.getAttribute("auth") == null){
+			return "rideHistory";
+		} else {
+			//verbose for error checking
+			Object authObj = s.getAttribute("auth");
+			int temp = Integer.parseInt(authObj.toString());
+			userPK = temp;
 		}
 		
 		List<RideEntry> myRideEntries = red.getRideHistoryForUser(userPK);
@@ -127,8 +131,9 @@ public class RideController {
 		//add relevant data attributes to the model
 
 		//model.addAttribute("serverTime", formattedDate );
-		model.addAttribute("myRides", myRideEntries);
-		//return the page
+		if(myRideEntries.size() >= 0){
+			model.addAttribute("myRides", myRideEntries);
+		}
 		
 		return "rideHistory";
 	}
