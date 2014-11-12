@@ -20,7 +20,7 @@
 	<c:if test="${not s}">
 		<div>INCORRECT INFORMATION</div>
 	</c:if>
-	<form action="signup" method="POST">
+	<form class="signUpForm" action="signup" method="POST">
 		<div class="form-group">
 			<input type="text" id="usr" class="form-control" name="usr" placeholder="User Name">
 		</div>
@@ -69,6 +69,37 @@
           'pattern': '({{999}}) {{999}}-{{9999}}'
       });
     }
+    </script>
+    <script>
+    $(document).ready(function() {
+        $('.signUpForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+            	usr: {
+                    message: 'The username is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'The username is required and cannot be empty'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: 'The username must be more than 6 and less than 30 characters long'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_]+$/,
+                            message: 'The username can only consist of alphabetical, number and underscore'
+                        }
+                    }
+                }
+            }
+        });
+    });
     </script>
 </body>
 </html>
