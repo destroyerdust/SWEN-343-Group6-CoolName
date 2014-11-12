@@ -31,8 +31,6 @@ public class UserManager {
 		String passSalt = BCrypt.gensalt();
 		String encryptedPass = BCrypt.hashpw(password, passSalt);
 		password = null;
-		System.out.println(encryptedPass);
-		System.out.println(passSalt);
 		User u = new User();
 		u.setUserName(userName);
 		u.setFirstName(firstName);
@@ -42,8 +40,10 @@ public class UserManager {
 		u.setPasswordSalt(passSalt);
 		u.setUserType(userType);
 		if(vehicle != null)
+		{
 			u.setVehicles(new ArrayList<Vehicle>());
 			u.addVehicle(vehicle);
+		}
 		if(getSalt(userName) != null)
 			u = null;
 		else
