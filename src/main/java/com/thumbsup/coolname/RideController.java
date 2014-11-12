@@ -66,7 +66,7 @@ public class RideController {
 		if(cars.size()!=0){				
 			isDriver = true;
 			for(Vehicle v : cars){
-				if(v.getName().equals(null)){
+				if(v.getName() != null){
 					carChoice+="<option value=\"" + v.getVehicleID() + "\" >" + v.getName() + "</option>\n";
 				}else{
 					carChoice+="<option value=\"" + v.getVehicleID() + "\" >" + v.getModel() + "</option>\n";
