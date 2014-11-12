@@ -20,7 +20,7 @@
 	<c:if test="${not s}">
 		<div>INCORRECT INFORMATION</div>
 	</c:if>
-	<form action="signup" method="POST">
+	<form class="signUpForm" action="signup" method="POST">
 		<div class="form-group">
 			<input type="text" id="usr" class="form-control" name="usr" placeholder="User Name">
 		</div>
@@ -69,6 +69,89 @@
           'pattern': '({{999}}) {{999}}-{{9999}}'
       });
     }
+    </script>
+    <script>
+    $(document).ready(function() {
+        $('.signUpForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+            	usr: {
+                    message: 'The username is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'The username is required and cannot be empty'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: 'The username must be more than 6 and less than 30 characters long'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_]+$/,
+                            message: 'The username can only consist of alphabetical, number and underscore'
+                        },
+                        different: {
+                            field: 'psw',
+                            message: 'The username and password cannot be the same as each other'
+                        }
+                    }
+                },
+                psw: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The password is required and cannot be empty'
+                        },
+                        different: {
+                            field: 'usr',
+                            message: 'The password cannot be the same as username'
+                        },
+                        stringLength: {
+                            min: 8,
+                            message: 'The password must have at least 8 characters'
+                        }
+                    }
+                },
+                caraswr: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The vehicle selection is required'
+                        }
+                    }
+                },
+                name: {
+                	validators: {
+                		notEmpty: {
+                			message: 'The first name is required'
+                		}
+                	}
+                },
+                lstn: {
+                	validators: {
+                		notEmpty: {
+                			message: 'The last name is required'
+                		}
+                	}
+                },
+                cell: {
+                	validators: {
+                		notEmpty: {
+                			message: 'The phone number is required'
+                		},
+                		regexp: {
+                            regexp: /^\(\d{3}\)\s\d{3}-\d{4}/,
+                            message: 'The phone number can only be (555) 555-5555 format'
+                        },
+                		
+                	}
+                }
+            }
+        });
+    });
     </script>
 </body>
 </html>
