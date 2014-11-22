@@ -11,6 +11,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -153,17 +154,20 @@ public class RideController {
 		return new ModelAndView("rideCreate");
 	}
 	
-	@RequestMapping(value = "/ride/create/seats", method = RequestMethod.POST)
-	public String GetMaxNumSeats(@RequestParam String selectCar) {
-		
+	//TODO THIS url is working incorrectly, I will work to resolve this at a later date 
+	// however the AJAX is working as is
+	@RequestMapping(value = "/ride/coolname/ride/create/seats", method = RequestMethod.GET)
+	public String GetMaxNumSeats(Model model) {		
 		String result ="";
 		VehicleManager vm = new VehicleManager();
-		
-		for(int x=1; x<vm.selectVehicle(Integer.parseInt(selectCar)).getNumSeats(); x++){
+		int number = vm.selectVehicle(Integer.parseInt("143")).getNumSeats();
+		result += "<option value=\"\" selected disabled>Select # of Available seats</option>\n";
+		for(int x=1; x<=number; x++){
 			result += "<option value=\"" + x + "\" >" + x + "</option>\n";
 		}
 		
-		return result;		
+		model.addAttribute("data", result);
+		return "rideCoolnameRideCreateSeats";		
 	}
 	
 	

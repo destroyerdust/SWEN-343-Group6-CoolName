@@ -65,7 +65,7 @@
 							  <option>1</option>
 							  <option>2</option>
 							  <option>3</option>
-							  <option>4</option>
+							  <option>99</option>
 							</select>
 						</div>
 					</fieldset>
@@ -82,24 +82,27 @@
 
 <script>
 
-// 	$("#Car").change(function() {
-// 		var str = "";
-// 		$("#Car option:selected").each(function(){
-// 			//str = "Vehicle Id is:" + $(this).val() + ","+ $(this).text();			
-// 		});
-// 		//alert(str);
+	$("#Car").change(function() {
+		var str = "";		
 		
-// 		$.ajax({
-// 			type: "GET",
-// 			url:  "/ride/create/seats",
-// 			data: {selectCar: $("#Car").val() },
-// 			success:	function(data){
-// 					alert("test");
-// 					$("#numSeats").empty().append( data.list );
-// 				}				
-// 		});
+		$.ajax({
+			type: "GET",
+			url:  "coolname/ride/create/seats",
+			dataType: "text",
+			success:	
+				function(data){
+					alert("test");
+					$("#numSeats").empty().append( data);
+				},
+			error: function(jqxhr,textStatus,errorThrown)
+            {
+                console.log(jqxhr);
+                console.log(textStatus);
+                console.log(errorThrown);
+            }
+		});
 		
-	});
+ });
 
 </script>
 
