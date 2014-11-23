@@ -17,6 +17,7 @@
        	<li><a href="/coolname/ride/create">Create</a></li>
         <li><a href="/coolname">Find</a></li>
         <li><a href="/coolname/ride/history">History</a></li>
+        <li><a href="/coolname/group/list">Groups</a></li>
         <li><a href="#">Map</a></li>
       </ul>
       
