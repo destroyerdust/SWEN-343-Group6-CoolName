@@ -51,10 +51,10 @@
 					<h4 class="text-center">Would you like to drive?</h4>
 					<div id="WantsToDrive" class="btn-group" data-toggle="buttons">
 						<label class="btn btn-primary">
-							<input type="radio" value="Yes" id="DriveCar" name="caraswr">Yes
+							<input type="radio" value="Yes" name="DriveCar">Yes
 						</label>
 						<label class="btn btn-primary">
-							<input type="radio" value="No" id="NoDriveCar" name="caraswr">No
+							<input type="radio" value="No" name="DriveCar">No
 						</label>
 					</div>
 				</div>
@@ -94,10 +94,10 @@
 
 <script>
 	$("#WantsToDrive").change(function(){
-		if($(this).val() == "Yes"){
-			$("Driving").show();
+		if($('input[name=DriveCar]:checked').val() == "Yes"){
+			$("#Driving").show();
 		}else{
-			$("Driving").hide();
+			$("#Driving").hide('fast');
 		}
 	});
 
