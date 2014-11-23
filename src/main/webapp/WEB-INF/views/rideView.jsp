@@ -19,9 +19,13 @@
 <%@ include file="/WEB-INF/views/header.jsp"%>
 </head>
 <body>
-	<button class="btn btn-default" onclick="location.href='/coolname/ride/${rideEntryID}/join'">Join Ride</button>
-	<div class="inline">
-	<table class="table">
+	<h1>${rideEntry.getName()}
+		<span style="float:right;"><button class="btn btn-primary" onclick="location.href='/coolname/ride/${rideEntryID}/join'">Join Ride</button></span>
+	</h1>
+	<div>
+		<div  id="map" style="height: 310px; width: 100%;float:center;"></div>
+		<span>
+		<table class="table table-bordered">
 		<thead>
 			<tr>
 				<th>Driver Name:</th>
@@ -47,9 +51,9 @@
 				<th>Car Model:</th>
 				<td>${vehicleModel}</td>
 			</tr>
-		</thead>
-	</table>
-	<div id="map" style="height: 325px; width: 450px;"></div>
+			</thead>
+			<span>
+		</table>
 	</div>
 </body>
 </html>
