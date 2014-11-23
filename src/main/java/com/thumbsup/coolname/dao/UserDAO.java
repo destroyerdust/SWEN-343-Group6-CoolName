@@ -9,6 +9,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import com.thumbsup.coolname.entity.Group;
+import com.thumbsup.coolname.entity.RideEntry;
 import com.thumbsup.coolname.entity.User;
 
 public class UserDAO extends CRUDManager<User, Integer> {
@@ -108,4 +110,37 @@ public class UserDAO extends CRUDManager<User, Integer> {
 		s.close();
 		return resultUser;
 	}
+	
+	public List<Group> findGroupForUser(int userPrimaryKeyID)
+	{
+		SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
+
+		Query query = s.createQuery("select g from User_Group user_group, Group g where user_group.userID = :userID and g.groupID = user_group.groupID");
+		query.setParameter("" + "userID", userPrimaryKeyID);
+		List<Group> relatedGroups = query.list();
+
+		s.flush();
+		s.close();
+		return relatedGroups;
+	}
+	
+	// Method takes a UserID and returns a collection of RideEntries that are
+		// associated with it
+		public List<RideEntry> findRideHistoryForUser(Integer userPrimaryKeyID) {
+
+			SessionFactory factory = SessionFactory.getSessionFactory();
+			Session s = factory.getSession();
+
+			Query query = s
+					//.createQuery("from Signup as s, RideEntry as re where s.userID = :userID and re.rideEntryID = s.rideEntryID");
+					.createQuery("select re from Signup signup, RideEntry re where signup.userID = :userID and re.rideEntryID = signup.rideEntryID");
+			query.setParameter(""
+					+ "userID", userPrimaryKeyID);
+			List<RideEntry> relatedRideEntries = query.list();
+
+			s.flush();
+			s.close();
+			return relatedRideEntries;
+		}
 }

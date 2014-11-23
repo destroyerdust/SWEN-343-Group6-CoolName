@@ -172,7 +172,7 @@ public class RideController {
 		logger.info("Welcome ride! The client locale is {}.", locale);
 		
 		//Retrieve a list of ride entries
-		RideEntryManager red = new RideEntryManager();
+		UserManager um = new UserManager();
 		HttpSession s = req.getSession();
 		int userPK;
 		//Get the userID
@@ -185,7 +185,7 @@ public class RideController {
 			userPK = temp;
 		}
 		
-		List<RideEntry> myRideEntries = red.getRideHistoryForUser(userPK);
+		List<RideEntry> myRideEntries = um.getRideHistoryForUser(userPK);
 		
 		//add relevant data attributes to the model
 
@@ -202,8 +202,6 @@ public class RideController {
 	 */
 	@RequestMapping(value = "/ride/{rideEntryID}/view", method = RequestMethod.GET)
 	public String view(Locale locale, Model model, @PathVariable int rideEntryID) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
