@@ -3,49 +3,58 @@ package com.thumbsup.coolname.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
 /**
  * The persistent class for the Location database table.
  * 
  */
 @Entity
-@NamedQuery(name="Location.findAll", query="SELECT l FROM Location l")
+@NamedQuery(name = "Location.findAll", query = "SELECT l FROM Location l")
 public class Location implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int idLocation;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int locationID;
 
-	private String area;
+	private double longitude;
 
-	private int groupID;
+	private double latitude;
+
+	private int rideEntryID;
 
 	public Location() {
 	}
 
-	public int getIdLocation() {
-		return this.idLocation;
+	public int getLocationID() {
+		return this.locationID;
 	}
 
-	public void setIdLocation(int idLocation) {
-		this.idLocation = idLocation;
+	public void setLocationID(int locationID) {
+		this.locationID = locationID;
 	}
 
-	public String getArea() {
-		return this.area;
+	public double getLatitude() {
+		return this.latitude;
 	}
 
-	public void setArea(String area) {
-		this.area = area;
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
 	}
 
-	public int getGroupID() {
-		return this.groupID;
+	public double getLongitude() {
+		return this.longitude;
 	}
 
-	public void setGroupID(int groupID) {
-		this.groupID = groupID;
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public int getRideEntryID() {
+		return this.rideEntryID;
+	}
+
+	public void setRideEntryID(int rideEntryID) {
+		this.rideEntryID = rideEntryID;
 	}
 
 }

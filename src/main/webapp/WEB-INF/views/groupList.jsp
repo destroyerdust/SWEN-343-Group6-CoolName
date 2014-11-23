@@ -19,13 +19,20 @@
 	<!-- End Header -->
 	<body>
 		<div class="container">
-			<h1>Groups - Find the right <bdi id="group" onclick="gerp()">group</bdi> for you.</h1>
+			
+			<h1>
+				Groups - Find the right <bdi id="group" onclick="gerp()">group</bdi> for you.
+				<span style = "float:right;">
+					<button type="button" class="btn btn-primary" id="create-group" onclick="location.href='/coolname/group/create'">Create Group</button>
+				</span>
+			</h1>
 			<script>
 			function gerp()
 			{
 				document.getElementById("group").innerHTML = "gerp";
 			}
 			</script>
+			
 	<c:if test="${!empty groupList}">
 		<table id="groupTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>

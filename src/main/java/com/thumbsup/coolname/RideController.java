@@ -151,18 +151,15 @@ public class RideController {
 	}
 	
 	@RequestMapping(value = "/ride/coolname/ride/create/seats", method = RequestMethod.GET)
-	public String GetMaxNumSeats(Model model, @RequestParam(value="selectCar") String selectCar) {		
-		String result ="<option value=\"\" selected disabled>Select # of Available seats</option>\n";
+	public String GetMaxNumSeats(Model model) {		
+		String result ="";
 		VehicleManager vm = new VehicleManager();
-		try{
-			int number = vm.selectVehicle(Integer.parseInt(selectCar)).getNumSeats();
-			
-			for(int x=1; x<=number; x++){
-				result += "<option value=\"" + x + "\" >" + x + "</option>\n";
-			}
-		}catch(Exception ex){
-			System.err.println(ex);
+		int number = vm.selectVehicle(Integer.parseInt("143")).getNumSeats();
+		result += "<option value=\"\" selected disabled>Select # of Available seats</option>\n";
+		for(int x=1; x<=number; x++){
+			result += "<option value=\"" + x + "\" >" + x + "</option>\n";
 		}
+		
 		model.addAttribute("data", result);
 		return "rideCoolnameRideCreateSeats";		
 	}

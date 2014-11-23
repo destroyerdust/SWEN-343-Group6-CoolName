@@ -2,34 +2,25 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
-
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<head>
-<script
-	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
-	
-</script>
+	<%@ include file="/WEB-INF/views/includes.jsp"%>
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/RideViewMap.js" />"> </script>
 
 <script>
-	function initialize() {
-		var mapProp = {
-			center : new google.maps.LatLng(43.0758, -77.6647),
-			zoom : 10,
-			mapTypeId : google.maps.MapTypeId.ROADMAP
-		};
-		var map = new google.maps.Map(document.getElementById("map"), mapProp);
-	}
-
-	google.maps.event.addDomListener(window, 'load', initialize);
+	var center_lat = 43.0758;
+	var center_long = -77.6647;
+	
+	var src_lat = 43.0758;
+	var src_long = -77.6647;
+	
+	var dest_lat = 44.0758;
+	var dest_long = -78.6647;
+	
+	google.maps.event.addDomListener(window, 'load', function(){
+		initialize(center_lat, center_long, 
+				src_lat, src_long, 
+				dest_lat, dest_long);
+		});
 </script>
 
 <style>
@@ -41,9 +32,13 @@
 <%@ include file="/WEB-INF/views/header.jsp"%>
 </head>
 <body>
-	<button class="btn btn-default" onclick="location.href='/coolname/ride/${rideEntryID}/join'">Join Ride</button>
-	<div class="inline">
-	<table class="table">
+	<h1>${rideEntry.getName()}
+		<span style="float:right;"><button class="btn btn-primary" onclick="location.href='/coolname/ride/${rideEntryID}/join'">Join Ride</button></span>
+	</h1>
+	<div>
+		<div  id="map" style="height: 310px; width: 100%;float:center;"></div>
+		<span>
+		<table class="table table-bordered">
 		<thead>
 			<tr>
 				<th>Driver Name:</th>
@@ -69,9 +64,9 @@
 				<th>Car Model:</th>
 				<td>${vehicleModel}</td>
 			</tr>
-		</thead>
-	</table>
-	<div id="map" style="height: 325px; width: 450px;"></div>
+			</thead>
+			<span>
+		</table>
 	</div>
 </body>
 </html>
