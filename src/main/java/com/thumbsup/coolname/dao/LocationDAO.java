@@ -19,7 +19,7 @@ public class LocationDAO extends CRUDManager<Location, Integer> {
 		s.save(location);
         t.commit();
         s.flush();
-        Location resultLocation = (Location)s.get(Location.class, location.getIdLocation());
+        Location resultLocation = (Location)s.get(Location.class, location.getLocationID());
         s.close();
         return resultLocation;
 	}
@@ -50,7 +50,7 @@ public class LocationDAO extends CRUDManager<Location, Integer> {
     	s.delete(location);
     	transaction.commit();
     	s.flush();
-    	location = (Location)s.get(Location.class, location.getIdLocation());
+    	location = (Location)s.get(Location.class, location.getLocationID());
     	s.close();
     	return location;
 	}
@@ -63,7 +63,7 @@ public class LocationDAO extends CRUDManager<Location, Integer> {
     	s.update(location);
     	transaction.commit();
     	s.flush();
-    	Location resultLocation = (Location) s.get(Location.class, location.getIdLocation());
+    	Location resultLocation = (Location) s.get(Location.class, location.getLocationID());
     	s.close();
     	return resultLocation;
 	}
