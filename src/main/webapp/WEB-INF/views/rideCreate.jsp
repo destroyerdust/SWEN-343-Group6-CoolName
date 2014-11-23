@@ -46,7 +46,45 @@
 					<input name="departureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
 				</div>
 				
-				<!-- Note that the fieldset should only be viewable if a user has a car -->
+				<!-- This section for creating recurring Rides -->
+				<div class="form-group text-center">
+					<h4 class="text-center">Is this a recurring ride?</h4>
+					<div id="WantsToDrive" class="btn-group" data-toggle="buttons">
+						<label class="btn btn-primary">
+							<input type="radio" value="Yes" name="DriveCar">Yes
+						</label>
+						<label class="btn btn-primary">
+							<input type="radio" value="No" name="DriveCar">No
+						</label>
+					</div>
+				</div>
+				
+				<div id="RecurringRide" class="btn-group">
+					<label class="btn btn-primary">
+						<input type="radio" value="Sunday" name="Day">Sunday
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" value="Monday" name="Day">Monday
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" value="Tuesday" name="Day">Tuesday
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" value="Wednesday" name="Day">Wednesday
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" value="Thursday" name="Day">Thursday
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" value="Friday" name="Day">Friday
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" value="Saturday" name="Day">Saturday
+					</label>
+				</div>
+				
+				
+				<!-- Note that the fieldset should only be viewable if a driver does not want to drive -->
 				<div class="form-group text-center">
 					<h4 class="text-center">Would you like to drive?</h4>
 					<div id="WantsToDrive" class="btn-group" data-toggle="buttons">
@@ -58,6 +96,8 @@
 						</label>
 					</div>
 				</div>
+				
+				<!-- Note that the fieldset should only be viewable if a user has a car -->
 				<div id="Driving">
 					<c:if test="${isDriver}">				
 						<fieldset>				
@@ -100,7 +140,7 @@
 			$("#Driving").hide('fast');
 		}
 	});
-
+	
 	$("#Car").change(function() {		
 		$.ajax({
 			type: "GET",

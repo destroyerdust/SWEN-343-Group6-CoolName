@@ -38,9 +38,6 @@ public class RideController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(RideController.class);
 	
-	/**
-	 * TODO
-	 */
 	@RequestMapping(value = "/ride/create", method = RequestMethod.GET)
 	public ModelAndView GetCreateRide( Model model, HttpServletRequest request) {
 		logger.info("GET: Creating new ride! The current use is");
@@ -153,8 +150,6 @@ public class RideController {
 		return new ModelAndView("rideCreate");
 	}
 	
-	//TODO THIS url is working incorrectly, I will work to resolve this at a later date 
-	// however the AJAX is working as is
 	@RequestMapping(value = "/ride/coolname/ride/create/seats", method = RequestMethod.GET)
 	public String GetMaxNumSeats(Model model, @RequestParam(value="selectCar") String selectCar) {		
 		String result ="<option value=\"\" selected disabled>Select # of Available seats</option>\n";
