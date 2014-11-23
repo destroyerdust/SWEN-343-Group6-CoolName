@@ -47,29 +47,41 @@
 				</div>
 				
 				<!-- Note that the fieldset should only be viewable if a user has a car -->
-				
-				<c:if test="${isDriver}">				
-					<fieldset>				
-						<h3 class="text-center">Which car would you like to use?</h3>
-						<div class="form-group">
-							<label for="selectCar" class="control-label">Vehicle</label>
-						    <select id="Car" name="selectCar" class="form-control">
-						      <option value="" selected disabled>Select your Vehicle</option>
-							  ${carChoice}				 
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="numSeats" class="control-label">Available seats</label>
-							<select id="numSeats" name="numSeats" class="form-control">
-							  <option value="" selected disabled>Select # of Available seats</option>
-							  <option>1</option>
-							  <option>2</option>
-							  <option>3</option>
-							  <option>99</option>
-							</select>
-						</div>
-					</fieldset>
-				</c:if>
+				<div class="form-group text-center">
+					<h4 class="text-center">Would you like to drive?</h4>
+					<div id="WantsToDrive" class="btn-group" data-toggle="buttons">
+						<label class="btn btn-primary">
+							<input type="radio" value="Yes" id="DriveCar" name="caraswr">Yes
+						</label>
+						<label class="btn btn-primary">
+							<input type="radio" value="No" id="NoDriveCar" name="caraswr">No
+						</label>
+					</div>
+				</div>
+				<div id="Driving">
+					<c:if test="${isDriver}">				
+						<fieldset>				
+							<h3 class="text-center">Which car would you like to use?</h3>
+							<div class="form-group">
+								<label for="selectCar" class="control-label">Vehicle</label>
+							    <select id="Car" name="selectCar" class="form-control">
+							      <option value="" selected disabled>Select your Vehicle</option>
+								  ${carChoice}				 
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="numSeats" class="control-label">Available seats</label>
+								<select id="numSeats" name="numSeats" class="form-control">
+								  <option value="" selected disabled>Select # of Available seats</option>
+								  <option>1</option>
+								  <option>2</option>
+								  <option>3</option>
+								  <option>99</option>
+								</select>
+							</div>
+						</fieldset>
+					</c:if>
+				</div>
 				<button type="submit" class="btn btn-primary btn-lg">Submit</button>
 			</form>
 		</div>
@@ -81,17 +93,24 @@
 </body>
 
 <script>
+	$("#WantsToDrive").change(function(){
+		if($(this).val() == "Yes"){
+			$("Driving").show();
+		}else{
+			$("Driving").hide();
+		}
+	});
 
-	$("#Car").change(function() {
-		var str = "";		
-		
+	$("#Car").change(function() {		
 		$.ajax({
 			type: "GET",
 			url:  "coolname/ride/create/seats",
+			data:{
+				selectCar: $("#Car").val()		
+			},
 			dataType: "text",
 			success:	
-				function(data){
-					alert("test");
+				function(data1){					
 					$("#numSeats").empty().append( data);
 				},
 			error: function(jqxhr,textStatus,errorThrown)
@@ -100,9 +119,8 @@
                 console.log(textStatus);
                 console.log(errorThrown);
             }
-		});
-		
- });
+		});		
+ 	});
 
 </script>
 
