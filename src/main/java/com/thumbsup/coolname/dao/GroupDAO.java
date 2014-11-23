@@ -3,10 +3,12 @@ package com.thumbsup.coolname.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.thumbsup.coolname.entity.Group;
+import com.thumbsup.coolname.entity.RideEntry;
 
 public class GroupDAO extends CRUDManager<Group, Integer>{
     
@@ -66,4 +68,5 @@ public class GroupDAO extends CRUDManager<Group, Integer>{
     	s.close();
     	return resultGroup;
 	}
+
 }

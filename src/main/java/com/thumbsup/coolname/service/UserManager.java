@@ -1,10 +1,13 @@
 package com.thumbsup.coolname.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import com.thumbsup.coolname.dao.UserDAO;
+import com.thumbsup.coolname.entity.Group;
+import com.thumbsup.coolname.entity.RideEntry;
 import com.thumbsup.coolname.entity.User;
 import com.thumbsup.coolname.entity.Vehicle;
 
@@ -112,5 +115,15 @@ public class UserManager {
 	public User selectUser(int userID)
 	{
 		return userDAO.select(userID);
+	}
+	
+	public List<Group> getGroupsForUser(int userPrimaryKeyID)
+	{
+		return userDAO.findGroupForUser(userPrimaryKeyID);
+	}
+	
+	public List<RideEntry> getRideHistoryForUser(int userPrimaryKeyID)
+	{
+		return userDAO.findRideHistoryForUser(userPrimaryKeyID);
 	}
 }

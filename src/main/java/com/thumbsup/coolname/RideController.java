@@ -11,7 +11,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -157,15 +156,18 @@ public class RideController {
 	//TODO THIS url is working incorrectly, I will work to resolve this at a later date 
 	// however the AJAX is working as is
 	@RequestMapping(value = "/ride/coolname/ride/create/seats", method = RequestMethod.GET)
-	public String GetMaxNumSeats(Model model) {		
-		String result ="";
+	public String GetMaxNumSeats(Model model, @RequestParam(value="selectCar") String selectCar) {		
+		String result ="<option value=\"\" selected disabled>Select # of Available seats</option>\n";
 		VehicleManager vm = new VehicleManager();
-		int number = vm.selectVehicle(Integer.parseInt("143")).getNumSeats();
-		result += "<option value=\"\" selected disabled>Select # of Available seats</option>\n";
-		for(int x=1; x<=number; x++){
-			result += "<option value=\"" + x + "\" >" + x + "</option>\n";
+		try{
+			int number = vm.selectVehicle(Integer.parseInt(selectCar)).getNumSeats();
+			
+			for(int x=1; x<=number; x++){
+				result += "<option value=\"" + x + "\" >" + x + "</option>\n";
+			}
+		}catch(Exception ex){
+			System.err.println(ex);
 		}
-		
 		model.addAttribute("data", result);
 		return "rideCoolnameRideCreateSeats";		
 	}
@@ -176,7 +178,7 @@ public class RideController {
 		logger.info("Welcome ride! The client locale is {}.", locale);
 		
 		//Retrieve a list of ride entries
-		RideEntryManager red = new RideEntryManager();
+		UserManager um = new UserManager();
 		HttpSession s = req.getSession();
 		int userPK;
 		//Get the userID
@@ -189,7 +191,7 @@ public class RideController {
 			userPK = temp;
 		}
 		
-		List<RideEntry> myRideEntries = red.getRideHistoryForUser(userPK);
+		List<RideEntry> myRideEntries = um.getRideHistoryForUser(userPK);
 		
 		//add relevant data attributes to the model
 
@@ -206,8 +208,6 @@ public class RideController {
 	 */
 	@RequestMapping(value = "/ride/{rideEntryID}/view", method = RequestMethod.GET)
 	public String view(Locale locale, Model model, @PathVariable int rideEntryID) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
