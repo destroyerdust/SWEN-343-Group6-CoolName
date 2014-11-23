@@ -29,7 +29,7 @@ public class Location implements Serializable {
 		return this.locationID;
 	}
 
-	public void setIdLocation(int locationID) {
+	public void setLocationID(int locationID) {
 		this.locationID = locationID;
 	}
 
