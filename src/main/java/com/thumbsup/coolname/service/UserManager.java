@@ -79,6 +79,11 @@ public class UserManager {
 		
 		userDAO.update(u);
 	}
+	
+	public void updateUser(User user)
+	{
+		userDAO.update(user);
+	}
 
 	/**
 	 * Selects the user based off the userId and tells the userDAO to delete

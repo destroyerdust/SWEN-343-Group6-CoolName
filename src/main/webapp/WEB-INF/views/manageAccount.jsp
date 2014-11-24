@@ -46,18 +46,32 @@
 					<div>
 						<span>${v.model}</span>
 						<span style="float: right">
-							<a href="" onclick="editVehicle(${v.vehicleID});" style="margin-right: 25px;">Edit</a>
-							<a href="" onclick="deleteVehicle(${v.vehicleID});">Delete</a>
+							<span class="vehicleID" style="display:none">${v.vehicleID}</span>
+							<button type="button" class="editbtn" style="margin-right: 25px;">Edit</button>
+							<button type="button" class="deletebtn" >Delete</button>
 						</span>
 					</div>
 				</c:forEach>
 				<c:forEach items="${user.vehicles}" var="vehicle" varStatus="status">
-					<div class="${vehicle.vehicleID}" style="display: none">
+					<div class="${vehicle.vehicleID}" class="form-group" style="display: none">
 						<form:hidden path="vehicles[${status.index}].vehicleID" name="vehicleID" value="${vehicle.vehicleID}"/>
-						<form:input path="vehicles[${status.index}].model" name="model" value="${vehicle.model}" />
-						<form:input path="vehicles[${status.index}].name" name="name" value="${vehicle.name}" />
-						<form:input path="vehicles[${status.index}].description" name="description" value="${vehicle.description}" />
-						<form:input path="vehicles[${status.index}].numSeats" name="numSeats" value="${vehicle.numSeats}" />
+						<label>Model: </label>
+						<div class="form-group">
+							<form:input class="form-control" path="vehicles[${status.index}].model" name="model" value="${vehicle.model}" />
+						</div>
+						<label>Name: </label>
+						<div class="form-group">
+							<form:input class="form-control" path="vehicles[${status.index}].name" name="name" value="${vehicle.name}" />
+						</div>
+						<label>Seats:</label>
+						<div class="form-group">
+							<form:input class="form-control" path="vehicles[${status.index}].numSeats" name="numSeats" value="${vehicle.numSeats}" />
+						</div>
+						<label>Description:</label>
+						<div class="form-group">
+							<form:textarea class="form-control" path="vehicles[${status.index}].description" name="description" value="${vehicle.description}" />
+						</div>
+						<button type="button" class="vehicleSavebtn btn btn-primary">Save</button>
 					</div>
 				</c:forEach>
 			</div>
@@ -77,19 +91,25 @@
       });
     }
     </script>
-    <script type="text/javascript">
-	    /* $( "#" ).click(function() {
-	    	  $( "p" ).show( "slow" );
-	    	}); */
-	    	function editVehicle(id)
-	    	{
-	    		alert(id);
-	    	}
-	    	
-	    	function deleteVehicle(id)
-	    	{
-	    		alert("delete:" + id);
-	    	}
+    <script>
+	    $(document).ready(function(){
+		    $(".vehicleSavebtn").click(function(){
+		    	$(this).parent().hide("slow");
+		  	});
+	    });
+	    
+	    $(document).ready(function(){
+		    $(".editbtn").click(function(){
+		    	var vehicleId = $(this).parent().children(".vehicleID").text();
+		  	 	$( "."+ vehicleId ).show( "slow" );
+		  	});
+	    });
+	    
+	    $(document).ready(function(){
+	    	$(".deletebtn").click(function(){
+	    		
+	    	});
+	    });
     </script>
 </body>
 </html>

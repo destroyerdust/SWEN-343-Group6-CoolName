@@ -113,21 +113,25 @@ public class AccountController {
 			oldUser.setLastName(updatedUser.getLastName());
 		if(phoneNumber != null && !phoneNumber.equals(""))
 			oldUser.setPhoneNumber(updatedUser.getPhoneNumber());
-		for (Vehicle vehicle : oldUser.getVehicles()) {
-			boolean delete = true;
-			for (Vehicle v : updatedUser.getVehicles()) {
-				if(vehicle.getVehicleID() == v.getVehicleID())
-				{
-					delete = false;
-					vehicle.setName(v.getName());
-					vehicle.setModel(v.getModel());
-					vehicle.setNumSeats(v.getNumSeats());
-					vehicle.setDescription(v.getDescription());
-					break;
+		if(updatedUser.getVehicles() != null)
+		{
+			for (Vehicle vehicle : oldUser.getVehicles()) {
+				boolean delete = true;
+				for (Vehicle v : updatedUser.getVehicles()) {
+					if(vehicle.getVehicleID() == v.getVehicleID())
+					{
+						delete = false;
+						vehicle.setName(v.getName());
+						vehicle.setModel(v.getModel());
+						vehicle.setNumSeats(v.getNumSeats());
+						vehicle.setDescription(v.getDescription());
+						break;
+					}
 				}
+				if(delete)
+					oldUser.getVehicles().remove(vehicle);
 			}
-			if(delete)
-				oldUser.getVehicles().remove(vehicle);
+			services.updateUser(oldUser);
 		}
 		return new ModelAndView("home");
 	}
