@@ -14,12 +14,13 @@ public class GroupManager
 	private GroupDAO groupDAO = new GroupDAO();
 	
 	//createGroup
-	public Group createGroup(String name, String description)
+	public Group createGroup(String name, String description, int ownerID)
 	{
 		Group group = new Group();
 		
 		group.setName(name);
 		group.setDescription(description);
+		group.setOwnerID(ownerID);
 		
 		group = groupDAO.insert(group);
 		

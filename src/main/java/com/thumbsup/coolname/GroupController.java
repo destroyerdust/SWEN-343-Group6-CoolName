@@ -1,6 +1,7 @@
 package com.thumbsup.coolname;
 
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Locale;
 
@@ -20,9 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.thumbsup.coolname.entity.Group;
 import com.thumbsup.coolname.entity.User;
+import com.thumbsup.coolname.entity.User_Group;
 import com.thumbsup.coolname.entity.Vehicle;
 import com.thumbsup.coolname.service.GroupManager;
 import com.thumbsup.coolname.service.SignupManager;
+import com.thumbsup.coolname.service.UserGroupManager;
 import com.thumbsup.coolname.service.UserManager;
 import com.thumbsup.coolname.service.VehicleManager;
 
@@ -56,7 +59,14 @@ public class GroupController {
 			HttpServletRequest request,
 			Model model)
 	{
-		return new ModelAndView("redirect:/");
+		
+		GroupManager gm = new GroupManager();
+		Group group = gm.createGroup(name, description, ((Integer)request.getSession().getAttribute("auth")).intValue());
+		
+		UserGroupManager ugm = new UserGroupManager();
+		User_Group ug = ugm.createSignup(((Integer)request.getSession().getAttribute("auth")).intValue(), group.getGroupID(), new Timestamp(new java.util.Date().getTime()));
+		
+		return new ModelAndView("redirect:/group/list");
 	}
 	
 	@RequestMapping(value = "/group/list", method = RequestMethod.GET)
