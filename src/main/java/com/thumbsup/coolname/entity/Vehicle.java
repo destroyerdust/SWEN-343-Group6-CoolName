@@ -1,7 +1,9 @@
 package com.thumbsup.coolname.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -37,6 +39,20 @@ public class Vehicle implements Serializable {
 
 	public Vehicle() {
 	}
+	
+	public Vehicle(int vehicleID, String description, String model,
+			String name, int numSeats, List<RideEntry> rideEntries, User user) {
+		super();
+		this.vehicleID = vehicleID;
+		this.description = description;
+		this.model = model;
+		this.name = name;
+		this.numSeats = numSeats;
+		this.rideEntries = rideEntries;
+		this.user = user;
+	}
+
+
 
 	public int getVehicleID() {
 		return this.vehicleID;
