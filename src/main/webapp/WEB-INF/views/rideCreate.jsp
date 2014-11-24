@@ -46,20 +46,59 @@
 					<input name="departureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
 				</div>
 				
-				<!-- Note that the fieldset should only be viewable if a user has a car -->
+				<!-- This section for creating recurring Rides -->
 				<div class="form-group text-center">
-					<h4 class="text-center">Would you like to drive?</h4>
-					<div id="WantsToDrive" class="btn-group" data-toggle="buttons">
+					<h4 class="text-center">Is this a recurring ride?</h4>
+					<div id="WantsRecurringRide" class="btn-group" data-toggle="buttons">
 						<label class="btn btn-primary">
-							<input type="radio" value="Yes" name="DriveCar">Yes
+							<input type="radio" value="Yes" name="RecurringRideChoice">Yes
 						</label>
 						<label class="btn btn-primary">
-							<input type="radio" value="No" name="DriveCar">No
+							<input type="radio" value="No" name="RecurringRideChoice">No
 						</label>
 					</div>
 				</div>
-				<div id="Driving">
-					<c:if test="${isDriver}">				
+				
+				<div id="RecurringRide" class="form-group text-center">
+					<label class="btn btn-primary">
+						<input type="radio" value="Sunday" name="Day">Sun
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" value="Monday" name="Day">Mon
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" value="Tuesday" name="Day">Tue
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" value="Wednesday" name="Day">Wed
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" value="Thursday" name="Day">Thu
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" value="Friday" name="Day">Fri
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" value="Saturday" name="Day">Sat
+					</label>
+				</div>
+															
+				<!-- Note that the fieldset should only be viewable if a user has a car -->
+				<c:if test="${isDriver}">
+					<!-- Note that the fieldset should only be viewable if a driver wants to drive -->
+					<div class="form-group text-center">
+						<h4 class="text-center">Would you like to drive?</h4>
+						<div id="WantsToDrive" class="btn-group" data-toggle="buttons">
+							<label class="btn btn-primary">
+								<input type="radio" value="Yes" name="DriveCar">Yes
+							</label>
+							<label class="btn btn-primary">
+								<input type="radio" value="No" name="DriveCar">No
+							</label>
+						</div>
+					</div>
+					
+					<div id="Driving">								
 						<fieldset>				
 							<h3 class="text-center">Which car would you like to use?</h3>
 							<div class="form-group">
@@ -79,9 +118,9 @@
 								  <option>99</option>
 								</select>
 							</div>
-						</fieldset>
-					</c:if>
-				</div>
+						</fieldset>					
+					</div>
+				</c:if>
 				<button type="submit" class="btn btn-primary btn-lg">Submit</button>
 			</form>
 		</div>
@@ -93,6 +132,20 @@
 </body>
 
 <script>
+	$(document).ready(function(){
+		$("#RecurringRide").hide();
+		$("#Driving").hide();		
+	});
+
+
+	$("#WantsRecurringRide").change(function(){
+		if($('input[name=RecurringRideChoice]:checked').val() == "Yes"){
+			$("#RecurringRide").show();
+		}else{
+			$("#RecurringRide").hide();
+		}
+	});
+
 	$("#WantsToDrive").change(function(){
 		if($('input[name=DriveCar]:checked').val() == "Yes"){
 			$("#Driving").show();
@@ -100,7 +153,7 @@
 			$("#Driving").hide('fast');
 		}
 	});
-
+	
 	$("#Car").change(function() {		
 		$.ajax({
 			type: "GET",
@@ -110,7 +163,7 @@
 			},
 			dataType: "text",
 			success:	
-				function(data1){					
+				function(data){				
 					$("#numSeats").empty().append( data);
 				},
 			error: function(jqxhr,textStatus,errorThrown)

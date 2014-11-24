@@ -7,7 +7,20 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/RideViewMap.js" />"> </script>
 
 <script>
-	google.maps.event.addDomListener(window, 'load', initialize);
+	var center_lat = 43.0758;
+	var center_long = -77.6647;
+	
+	var src_lat = 43.0758;
+	var src_long = -77.6647;
+	
+	var dest_lat = 44.0758;
+	var dest_long = -78.6647;
+	
+	google.maps.event.addDomListener(window, 'load', function(){
+		initialize(center_lat, center_long, 
+				src_lat, src_long, 
+				dest_lat, dest_long);
+		});
 </script>
 
 <style>
