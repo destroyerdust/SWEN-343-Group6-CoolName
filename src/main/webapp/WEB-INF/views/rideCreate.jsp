@@ -134,7 +134,7 @@
 <script>
 	$(document).ready(function(){
 		$("#RecurringRide").hide();
-		$("#Driving").hide();
+		$("#Driving").hide();		
 	});
 
 
@@ -163,7 +163,8 @@
 			},
 			dataType: "text",
 			success:	
-				function(data){					
+				function(data){				
+					alert(data);
 					$("#numSeats").empty().append( data);
 				},
 			error: function(jqxhr,textStatus,errorThrown)

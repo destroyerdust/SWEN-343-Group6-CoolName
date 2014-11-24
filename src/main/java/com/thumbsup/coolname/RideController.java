@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -150,18 +151,19 @@ public class RideController {
 		return new ModelAndView("rideCreate");
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "/ride/coolname/ride/create/seats", method = RequestMethod.GET)
-	public String GetMaxNumSeats(Model model) {		
+	public String GetMaxNumSeats(Model model, @RequestParam(value="selectCar") String selectCar) {		
 		String result ="";
 		VehicleManager vm = new VehicleManager();
-		int number = vm.selectVehicle(Integer.parseInt("143")).getNumSeats();
+		int number = vm.selectVehicle(Integer.parseInt(selectCar)).getNumSeats();
+		logger.info("The number of seats in the selected vehicle is: " + number);
 		result += "<option value=\"\" selected disabled>Select # of Available seats</option>\n";
 		for(int x=1; x<=number; x++){
 			result += "<option value=\"" + x + "\" >" + x + "</option>\n";
 		}
-		
-		model.addAttribute("data", result);
-		return "rideCoolnameRideCreateSeats";		
+
+		return result;
 	}
 	
 	
