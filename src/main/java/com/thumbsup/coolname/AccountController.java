@@ -131,8 +131,12 @@ public class AccountController {
 				if(delete)
 					oldUser.getVehicles().remove(vehicle);
 			}
-			services.updateUser(oldUser);
 		}
+		else
+		{
+			oldUser.getVehicles().removeAll(oldUser.getVehicles());
+		}
+		services.updateUser(oldUser);
 		return new ModelAndView("home");
 	}
 	

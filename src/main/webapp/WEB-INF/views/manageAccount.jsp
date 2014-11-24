@@ -43,7 +43,7 @@
 			<label>Vehicles:</label>
 			<div >
 				<c:forEach items="${user.vehicles}" var="v">
-					<div>
+					<div class="${v.vehicleID}">
 						<span>${v.model}</span>
 						<span style="float: right">
 							<span class="vehicleID" style="display:none">${v.vehicleID}</span>
@@ -107,7 +107,10 @@
 	    
 	    $(document).ready(function(){
 	    	$(".deletebtn").click(function(){
-	    		
+	    		var vehicleID = $(this).parent().children(".vehicleID").text();
+	    		$("."+vehicleID).hide("slow", function(){
+	    			$("."+vehicleID).remove();
+	    		});
 	    	});
 	    });
     </script>
