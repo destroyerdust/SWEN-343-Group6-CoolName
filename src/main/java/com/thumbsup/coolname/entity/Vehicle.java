@@ -23,6 +23,8 @@ public class Vehicle implements Serializable {
 	private String description;
 
 	private String model;
+	
+	private String licensePlate;
 
 	private String name;
 
@@ -76,6 +78,14 @@ public class Vehicle implements Serializable {
 
 	public void setModel(String model) {
 		this.model = model;
+	}
+	
+	public String getLicensePlate() {
+		return licensePlate;
+	}
+
+	public void setLicensePlate(String licensePlate) {
+		this.licensePlate = licensePlate;
 	}
 
 	public String getName() {
