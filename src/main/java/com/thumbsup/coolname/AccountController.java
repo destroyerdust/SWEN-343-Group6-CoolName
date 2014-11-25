@@ -1,5 +1,8 @@
 package com.thumbsup.coolname;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -9,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.thumbsup.coolname.dao.UserDAO;
 import com.thumbsup.coolname.entity.User;
@@ -166,6 +168,7 @@ public class AccountController {
 	{
 		UserManager services = new UserManager();
 		User oldUser = services.selectUser((Integer) request.getSession().getAttribute("auth"));
+		List<Vehicle> toDelete = new ArrayList<Vehicle>();
 		if(updatedUser.getVehicles() != null)
 		{
 			if(oldUser.getVehicles().size() > updatedUser.getVehicles().size())
@@ -182,7 +185,10 @@ public class AccountController {
 						}
 					}
 					if(delete)
-						oldUser.getVehicles().remove(vehicle);
+						toDelete.add(vehicle);
+				}
+				for (Vehicle vehicle : toDelete) {
+					oldUser.removeVehicle(vehicle);
 				}
 			}
 			else

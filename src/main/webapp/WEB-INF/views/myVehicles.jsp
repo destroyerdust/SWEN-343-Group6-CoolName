@@ -19,19 +19,19 @@
 	<div class="row">
 	<div class="col-md-3"></div>
 	<div class="col-md-6">
-	<h1>Sign Up</h1>
+	<h1>My vehicles</h1>
 	<form:form action="edit" method="POST" modelAttribute="user">
 		<div class="form-group">
-			<label>Vehicles:</label>
 			<div >
+				<button style="margin-bottom: 10px;" class="btn btn-primary" type="button" onclick="location.href='/coolname/account/vehicle/create'">Create new vehicle</button>
 				<c:forEach items="${user.vehicles}" var="v">
-					<div class="${v.vehicleID}">
-						<span>${v.model}</span>
-						<span style="float: right">
+					<div class="${v.vehicleID}" style="margin-bottom: 10px">
+						<div style="float: left;width: 300px;">${v.model}</div>
+						<div style="margin-left: 50px;">
 							<span class="vehicleID" style="display:none">${v.vehicleID}</span>
-							<button type="button" class="editbtn" style="margin-right: 25px;">Edit</button>
-							<button type="button" class="deletebtn" >Delete</button>
-						</span>
+							<button type="button" class="editbtn btn btn-primary" style="margin-right: 25px;">Edit</button>
+							<button type="button" class="deletebtn btn btn-primary" >Delete</button>
+						</div>
 					</div>
 				</c:forEach>
 				<c:forEach items="${user.vehicles}" var="vehicle" varStatus="status">
@@ -56,7 +56,6 @@
 						<button type="button" class="vehicleSavebtn btn btn-primary">Save</button>
 					</div>
 				</c:forEach>
-				<button type="button" onclick="location.href='/coolname/account/vehicle/create'">Create new vehicle</button>
 			</div>
 		</div>
 		
