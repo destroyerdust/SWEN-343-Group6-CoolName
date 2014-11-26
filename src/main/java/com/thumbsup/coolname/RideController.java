@@ -88,7 +88,7 @@ public class RideController {
 			@RequestParam(value="departureTime", required=true, defaultValue="NULL") String departureTime,
 			@RequestParam(value="RoundtripRideChoice") String roundtrip,
 			@RequestParam(value="RecurringRideChoice") String recurring,
-			@RequestParam(value="DriveCar") String wantsToDrive,
+			@RequestParam(value="DriveCar", required=false) String wantsToDrive,
 			@RequestParam(value="selectCar", required=false, defaultValue="NULL") String selectCar,
 			@RequestParam(value="numSeats", required=false, defaultValue="NULL") String numSeats,			
 			HttpServletRequest request,
@@ -105,27 +105,12 @@ public class RideController {
 			
 			UserManager um = new UserManager();						
 			User currentUser = um.selectUser(userPK);
-
-			//if the driver wants to drive
-			if(wantsToDrive == "Yes"){
-				//if the current user has vehicles and they selected one to drive then drive
-				Vehicle vehicle = null;			
-				if(currentUser.getVehicles().size()>0 && !selectCar.equals("NULL")){
-				
-					//get selected vehicle
-					VehicleManager vm = new VehicleManager();
-					vehicle = vm.selectVehicle(Integer.parseInt(selectCar));
-				}
-				//if the number of seats chosen was null then
-				if(numSeats != "NULL"){
-					int numseats=Integer.parseInt(numSeats);
-				}
-			}
-		
+			Integer numseats = null;
+			Vehicle vehicle = null;
+			
+			
 			//convert times to correctly formatted datetime for the depature time
-			System.out.println(departureTime);
-			departureTime = departureTime.replace("T", " ");
-			System.out.println(departureTime);
+			departureTime = departureTime.replace("T", " ");			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 			Timestamp departTime = null;
 			try
@@ -142,13 +127,46 @@ public class RideController {
 			java.util.Date date= new java.util.Date();
 			Timestamp creationTimestamp = new Timestamp(date.getTime());
 			
+			//if the rideentry is going to be a round trip 
+			//TODO add the logic here
+			if(roundtrip == "Yes"){
+				
+			}
+			
+			//if a ride entry is recurring
+			//TODO add the logic here
+			if(recurring == "Yes"){
+				
+			}
+			
+			//if the driver wants to drive
+			if(wantsToDrive == "Yes"){
+				//if the current user has vehicles and they selected one to drive then drive						
+				if(currentUser.getVehicles().size()>0 && !selectCar.equals("NULL")){
+				
+					//get selected vehicle
+					VehicleManager vm = new VehicleManager();
+					vehicle = vm.selectVehicle(Integer.parseInt(selectCar));
+				}
+				//if the number of seats chosen was null then
+				if(!numSeats.equals("NULL")){
+					numseats = Integer.parseInt(numSeats);
+				}
+			}
 			
 			//make a call to the RideEntryManger and actually create database entry in DB
 			RideEntryManager rem = new RideEntryManager();			
 			
-			RideEntry createdRide = rem.createRideEntry(creationTimestamp, 
-					destination, null, null, name, orgin, departTime, 
-					numseats, userPK, vehicle);			
+			//if number of seats is null then use different create method
+			if(numseats != null){
+				RideEntry createdRide = rem.createRideEntry(creationTimestamp, 
+						destination, null, null, name, orgin, departTime, 
+						numseats.intValue(), userPK, vehicle);
+			}else{
+				RideEntry createdRide = rem.createRideEntry(creationTimestamp, 
+						destination, null, null, name, orgin, departTime, 
+						null, userPK, vehicle);				
+			}
 			
 			return new ModelAndView("redirect:/");
 		}
