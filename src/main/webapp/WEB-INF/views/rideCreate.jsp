@@ -46,6 +46,20 @@
 					<input name="departureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
 				</div>
 				
+				<!-- This section for determining if the ride will be Roundtrip -->
+				<div class="form-group text-center">
+					<h4 class="text-center">Is this a Roundtrip?</h4>
+					<div id="WantsRoundtripRide" class="btn-group" data-toggle="buttons">
+						<label class="btn btn-primary">
+							<input type="radio" value="Yes" name="RoundtripRideChoice">Yes
+						</label>
+						<label class="btn btn-primary">
+							<input type="radio" value="No" name="RoundtripRideChoice">No
+						</label>
+					</div>
+				</div>
+				
+				
 				<!-- This section for creating recurring Rides -->
 				<div class="form-group text-center">
 					<h4 class="text-center">Is this a recurring ride?</h4>
