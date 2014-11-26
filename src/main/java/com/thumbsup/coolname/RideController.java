@@ -106,15 +106,23 @@ public class RideController {
 			UserManager um = new UserManager();						
 			User currentUser = um.selectUser(userPK);
 
-			Vehicle vehicle = null;
-			if(currentUser.getVehicles().size()>0 && !selectCar.equals("NULL")){
-			
-				//get selected vehicle
-				VehicleManager vm = new VehicleManager();
-				vehicle = vm.selectVehicle(Integer.parseInt(selectCar));
+			//if the driver wants to drive
+			if(wantsToDrive == "Yes"){
+				//if the current user has vehicles and they selected one to drive then drive
+				Vehicle vehicle = null;			
+				if(currentUser.getVehicles().size()>0 && !selectCar.equals("NULL")){
+				
+					//get selected vehicle
+					VehicleManager vm = new VehicleManager();
+					vehicle = vm.selectVehicle(Integer.parseInt(selectCar));
+				}
+				//if the number of seats chosen was null then
+				if(numSeats != "NULL"){
+					int numseats=Integer.parseInt(numSeats);
+				}
 			}
 		
-			//convert times to correctly formatted datetime
+			//convert times to correctly formatted datetime for the depature time
 			System.out.println(departureTime);
 			departureTime = departureTime.replace("T", " ");
 			System.out.println(departureTime);
@@ -126,27 +134,21 @@ public class RideController {
 			}
 			catch (ParseException e)
 			{
+				//if it fails then make the departure time the current time on the server
 				e.printStackTrace();
 				java.util.Date date= new java.util.Date();
 				departTime = new Timestamp(date.getTime());
-			}
-			
+			}			
 			java.util.Date date= new java.util.Date();
 			Timestamp creationTimestamp = new Timestamp(date.getTime());
 			
-			RideEntryManager rem = new RideEntryManager();
+			
+			//make a call to the RideEntryManger and actually create database entry in DB
+			RideEntryManager rem = new RideEntryManager();			
 			
 			RideEntry createdRide = rem.createRideEntry(creationTimestamp, 
-					destination, 
-					null, 
-					null, 
-					name, 
-					orgin, 
-					departTime, 
-					vehicle);			
-			
-			SignupManager sum = new SignupManager();
-			sum.createSignup(currentUser.getUserId(), createdRide.getRideEntryID(), new Timestamp(new java.util.Date().getTime()));
+					destination, null, null, name, orgin, departTime, 
+					numseats, userPK, vehicle);			
 			
 			return new ModelAndView("redirect:/");
 		}
