@@ -87,6 +87,7 @@ public class RideController {
 			@RequestParam(value="orgin", required=true, defaultValue="NULL") String orgin,
 			@RequestParam(value="departureTime", required=true, defaultValue="NULL") String departureTime,
 			@RequestParam(value="RoundtripRideChoice") String roundtrip,
+			@RequestParam(value="returnDepartureTime") String returnDepartureTime,
 			@RequestParam(value="RecurringRideChoice") String recurring,
 			@RequestParam(value="DriveCar", required=false) String wantsToDrive,
 			@RequestParam(value="selectCar", required=false, defaultValue="NULL") String selectCar,
@@ -109,22 +110,9 @@ public class RideController {
 			Vehicle vehicle = null;
 			
 			
-			//convert times to correctly formatted datetime for the depature time
-			departureTime = departureTime.replace("T", " ");			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-			Timestamp departTime = null;
-			Timestamp departTime2 = null;
-			try
-			{
-				departTime = new Timestamp(sdf.parse(departureTime).getTime());
-			}
-			catch (ParseException e)
-			{
-				//if it fails then make the departure time the current time on the server
-				e.printStackTrace();
-				java.util.Date date= new java.util.Date();
-				departTime = new Timestamp(date.getTime());
-			}			
+			//convert times to correctly formatted datetime for the depature time					
+			Timestamp departTime = formatTimestamp(departureTime);
+			
 			java.util.Date date= new java.util.Date();
 			Timestamp creationTimestamp = new Timestamp(date.getTime());
 					
@@ -135,7 +123,8 @@ public class RideController {
 			}
 			
 			//make a call to the RideEntryManger and actually create database entry in DB
-			RideEntryManager rem = new RideEntryManager();		
+			RideEntryManager rem = new RideEntryManager();	
+			
 			
 			//if the driver wants to drive
 			if(wantsToDrive.equals("Yes")){
@@ -155,6 +144,12 @@ public class RideController {
 				// and the user is driving
 				if (roundtrip.equals("Yes")) {
 					logger.info("Roundtrip ride");
+					
+					//create a new RoundTripManger for creating a new roundtrip
+					
+					
+					
+					Timestamp departTime2 = formatTimestamp(returnDepartureTime);
 					
 					RideEntry startRide = rem.createRideEntry(
 							creationTimestamp, destination, null, null, name,
@@ -179,6 +174,12 @@ public class RideController {
 				if (roundtrip.equals("Yes")) {
 					logger.info("Roundtrip ride");
 
+					//create a new RoundTripManger for creating a new roundtrip
+					
+					
+					
+					Timestamp departTime2 = formatTimestamp(returnDepartureTime);
+					
 					RideEntry startRide = rem.createRideEntry(
 							creationTimestamp, destination, null, null, name,
 							orgin, departTime, 0, userPK, vehicle);

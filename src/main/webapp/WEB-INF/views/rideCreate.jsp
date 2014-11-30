@@ -58,8 +58,16 @@
 						</label>
 					</div>
 				</div>
-				
-				
+
+				<div id="RoundTrip" class="form-group text-center">
+					<div class="form-group">
+						<label for="returnDepartureTime" class="control-label">
+							Return Trip Departure Time
+						</label> 
+						<input name="returnDepartureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
+					</div>
+				</div>
+
 				<!-- This section for creating recurring Rides -->
 				<div class="form-group text-center">
 					<h4 class="text-center">Is this a recurring ride?</h4>
@@ -147,10 +155,18 @@
 
 <script>
 	$(document).ready(function(){
+		$("#RoundTrip").hide();
 		$("#RecurringRide").hide();
 		$("#Driving").hide();		
 	});
 
+	$('#WantsRoundtripRide').change(function(){
+		if($('input[name=RoundtripRideChoice]:checked').val() == "Yes"){
+			$("#RoundTrip").show();
+		}else{
+			$("#RoundTrip").hide();
+		}
+	});
 
 	$("#WantsRecurringRide").change(function(){
 		if($('input[name=RecurringRideChoice]:checked').val() == "Yes"){
