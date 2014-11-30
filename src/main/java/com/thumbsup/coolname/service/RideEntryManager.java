@@ -13,7 +13,7 @@ public class RideEntryManager
 	
 	//createRideEntry
 	public RideEntry createRideEntry(Timestamp creationTimestamp, String destination, Timestamp endTime, String mapUri,
-			String name, String source, Timestamp startTime, Integer numSeats, int AuthorID,  Vehicle vehicle)
+			String name, String source, Timestamp startTime, int numSeats, int AuthorID,  Vehicle vehicle)
 	{
 		RideEntry entry = new RideEntry();
 		

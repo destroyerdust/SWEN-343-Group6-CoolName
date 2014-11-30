@@ -139,6 +139,9 @@ public class RideController {
 				
 			}
 			
+			//make a call to the RideEntryManger and actually create database entry in DB
+			RideEntryManager rem = new RideEntryManager();		
+			
 			//if the driver wants to drive
 			if(wantsToDrive == "Yes"){
 				//if the current user has vehicles and they selected one to drive then drive						
@@ -152,21 +155,16 @@ public class RideController {
 				if(!numSeats.equals("NULL")){
 					numseats = Integer.parseInt(numSeats);
 				}
-			}
-			
-			//make a call to the RideEntryManger and actually create database entry in DB
-			RideEntryManager rem = new RideEntryManager();			
-			
-			//if number of seats is null then use different create method
-			if(numseats != null){
+				
 				RideEntry createdRide = rem.createRideEntry(creationTimestamp, 
 						destination, null, null, name, orgin, departTime, 
-						numseats.intValue(), userPK, vehicle);
-			}else{
+						numseats, userPK, vehicle);
+			} else{
+				
 				RideEntry createdRide = rem.createRideEntry(creationTimestamp, 
 						destination, null, null, name, orgin, departTime, 
-						null, userPK, vehicle);				
-			}
+						0, userPK, vehicle);
+			}			
 			
 			return new ModelAndView("redirect:/");
 		}
