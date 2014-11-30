@@ -27,6 +27,7 @@ import com.thumbsup.coolname.entity.RideEntry;
 import com.thumbsup.coolname.entity.User;
 import com.thumbsup.coolname.entity.Vehicle;
 import com.thumbsup.coolname.service.RideEntryManager;
+import com.thumbsup.coolname.service.RoundTripManager;
 import com.thumbsup.coolname.service.SignupManager;
 import com.thumbsup.coolname.service.UserManager;
 import com.thumbsup.coolname.service.VehicleManager;
@@ -146,8 +147,7 @@ public class RideController {
 					logger.info("Roundtrip ride");
 					
 					//create a new RoundTripManger for creating a new roundtrip
-					
-					
+					RoundTripManager rtm = new RoundTripManager();					
 					
 					Timestamp departTime2 = formatTimestamp(returnDepartureTime);
 					
@@ -159,6 +159,8 @@ public class RideController {
 					RideEntry endRide = rem.createRideEntry(
 							creationTimestamp, orgin, null, null, name,
 							destination, departTime2, numseats, userPK, vehicle);
+					
+					rtm.createRoundTrip(startRide.getRideEntryID(), endRide.getRideEntryID());
 					
 				} else {
 					//otherwise there is just one ride					
@@ -175,8 +177,7 @@ public class RideController {
 					logger.info("Roundtrip ride");
 
 					//create a new RoundTripManger for creating a new roundtrip
-					
-					
+					RoundTripManager rtm = new RoundTripManager();					
 					
 					Timestamp departTime2 = formatTimestamp(returnDepartureTime);
 					
@@ -188,6 +189,8 @@ public class RideController {
 					RideEntry endRide = rem.createRideEntry(creationTimestamp,
 							orgin, null, null, name, destination, departTime2,
 							0, userPK, vehicle);
+					
+					rtm.createRoundTrip(startRide.getRideEntryID(), endRide.getRideEntryID());
 
 				} else {					
 					RideEntry createdRide = rem.createRideEntry(
