@@ -12,6 +12,19 @@ public class RideEntryManager
 	private RideEntryDAO rideEntryDAO = new RideEntryDAO();
 	
 	//createRideEntry
+	/**
+	 * @param creationTimestamp
+	 * @param destination
+	 * @param endTime
+	 * @param mapUri
+	 * @param name
+	 * @param source
+	 * @param startTime
+	 * @param numSeats
+	 * @param AuthorID
+	 * @param vehicle
+	 * @return
+	 */
 	public RideEntry createRideEntry(Timestamp creationTimestamp, String destination, Timestamp endTime, String mapUri,
 			String name, String source, Timestamp startTime, int numSeats, int AuthorID,  Vehicle vehicle)
 	{

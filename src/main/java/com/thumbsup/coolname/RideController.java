@@ -113,6 +113,7 @@ public class RideController {
 			departureTime = departureTime.replace("T", " ");			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 			Timestamp departTime = null;
+			Timestamp departTime2 = null;
 			try
 			{
 				departTime = new Timestamp(sdf.parse(departureTime).getTime());
@@ -126,13 +127,7 @@ public class RideController {
 			}			
 			java.util.Date date= new java.util.Date();
 			Timestamp creationTimestamp = new Timestamp(date.getTime());
-			
-			//if the rideentry is going to be a round trip 
-			//TODO add the logic here
-			if(roundtrip.equals("Yes")){
-				logger.info("Roundtrip ride");
-			}
-			
+					
 			//if a ride entry is recurring
 			//TODO add the logic here
 			if(recurring.equals("Yes")){
@@ -156,20 +151,75 @@ public class RideController {
 					numseats = Integer.parseInt(numSeats);
 				}
 				
-				RideEntry createdRide = rem.createRideEntry(creationTimestamp, 
-						destination, null, null, name, orgin, departTime, 
-						numseats, userPK, vehicle);
-			} else{
-				
-				RideEntry createdRide = rem.createRideEntry(creationTimestamp, 
-						destination, null, null, name, orgin, departTime, 
-						0, userPK, vehicle);
+				//if the user wants a roundtrip then create two rideEntries
+				// and the user is driving
+				if (roundtrip.equals("Yes")) {
+					logger.info("Roundtrip ride");
+					
+					RideEntry startRide = rem.createRideEntry(
+							creationTimestamp, destination, null, null, name,
+							orgin, departTime, numseats, userPK, vehicle);
+					
+					//swap the orgin and destination
+					RideEntry endRide = rem.createRideEntry(
+							creationTimestamp, orgin, null, null, name,
+							destination, departTime2, numseats, userPK, vehicle);
+					
+				} else {
+					//otherwise there is just one ride					
+					RideEntry createdRide = rem.createRideEntry(
+							creationTimestamp, destination, null, null, name,
+							orgin, departTime, numseats, userPK, vehicle);
+				}
+			} 
+			//if there is no driver
+			else{
+				// if the user wants a roundtrip then create two rideEntries
+				// and the user is not driving
+				if (roundtrip.equals("Yes")) {
+					logger.info("Roundtrip ride");
+
+					RideEntry startRide = rem.createRideEntry(
+							creationTimestamp, destination, null, null, name,
+							orgin, departTime, 0, userPK, vehicle);
+
+					// swap the orgin and destination
+					RideEntry endRide = rem.createRideEntry(creationTimestamp,
+							orgin, null, null, name, destination, departTime2,
+							0, userPK, vehicle);
+
+				} else {					
+					RideEntry createdRide = rem.createRideEntry(
+							creationTimestamp, destination, null, null, name,
+							orgin, departTime, 0, userPK, vehicle);
+				}
 			}			
 			
 			return new ModelAndView("redirect:/");
 		}
 		
 		return new ModelAndView("rideCreate");
+	}
+	
+	//used for formating a string timestamp
+	public Timestamp formatTimestamp(String time){
+		//convert times to correctly formatted datetime for the depature time
+		time = time.replace("T", " ");			
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		Timestamp newTime = null;
+		try
+		{
+			newTime = new Timestamp(sdf.parse(time).getTime());
+		}
+		catch (ParseException e)
+		{
+			//if it fails then make the departure time the current time on the server
+			logger.info("Timestamp format failed, now setting current timestamp");
+			e.printStackTrace();
+			java.util.Date date= new java.util.Date();
+			newTime = new Timestamp(date.getTime());
+		}			
+		return newTime;
 	}
 	
 	@ResponseBody
