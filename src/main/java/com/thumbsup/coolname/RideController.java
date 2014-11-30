@@ -120,7 +120,8 @@ public class RideController {
 			//if a ride entry is recurring
 			//TODO add the logic here
 			if(recurring.equals("Yes")){
-				logger.info("Recurring ride");
+				logger.info("The user has chosen to create a Recurring ride");
+								
 			}
 			
 			//make a call to the RideEntryManger and actually create database entry in DB
@@ -144,7 +145,7 @@ public class RideController {
 				//if the user wants a roundtrip then create two rideEntries
 				// and the user is driving
 				if (roundtrip.equals("Yes")) {
-					logger.info("Roundtrip ride");
+					logger.info("The user has chosen to create a Roundtrip ride");
 					
 					//create a new RoundTripManger for creating a new roundtrip
 					RoundTripManager rtm = new RoundTripManager();					
@@ -174,7 +175,7 @@ public class RideController {
 				// if the user wants a roundtrip then create two rideEntries
 				// and the user is not driving
 				if (roundtrip.equals("Yes")) {
-					logger.info("Roundtrip ride");
+					logger.info("The user has chosen to create a Roundtrip ride");
 
 					//create a new RoundTripManger for creating a new roundtrip
 					RoundTripManager rtm = new RoundTripManager();					
