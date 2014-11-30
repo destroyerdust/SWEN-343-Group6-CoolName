@@ -129,21 +129,21 @@ public class RideController {
 			
 			//if the rideentry is going to be a round trip 
 			//TODO add the logic here
-			if(roundtrip == "Yes"){
-				
+			if(roundtrip.equals("Yes")){
+				logger.info("Roundtrip ride");
 			}
 			
 			//if a ride entry is recurring
 			//TODO add the logic here
-			if(recurring == "Yes"){
-				
+			if(recurring.equals("Yes")){
+				logger.info("Recurring ride");
 			}
 			
 			//make a call to the RideEntryManger and actually create database entry in DB
 			RideEntryManager rem = new RideEntryManager();		
 			
 			//if the driver wants to drive
-			if(wantsToDrive == "Yes"){
+			if(wantsToDrive.equals("Yes")){
 				//if the current user has vehicles and they selected one to drive then drive						
 				if(currentUser.getVehicles().size()>0 && !selectCar.equals("NULL")){
 				
