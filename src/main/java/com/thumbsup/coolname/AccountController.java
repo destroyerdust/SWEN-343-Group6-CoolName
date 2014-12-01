@@ -151,7 +151,7 @@ public class AccountController {
 		ModelAndView view = null;
 		if( userId == null)
 		{
-			page = "redirect:login";
+			page = "redirect:/account/login";
 			view = new ModelAndView(page);
 		}
 		else
@@ -168,42 +168,26 @@ public class AccountController {
 	{
 		UserManager services = new UserManager();
 		User oldUser = services.selectUser((Integer) request.getSession().getAttribute("auth"));
-		List<Vehicle> toDelete = new ArrayList<Vehicle>();
 		if(updatedUser.getVehicles() != null)
 		{
-			if(oldUser.getVehicles().size() > updatedUser.getVehicles().size())
-			{
-				for(Vehicle vehicle: oldUser.getVehicles())
-				{
-					boolean delete = true;
-					for(Vehicle v: updatedUser.getVehicles())
+			List<Integer> toDelete = new ArrayList<Integer>();
+			for (Vehicle vehicle : oldUser.getVehicles()) {
+				boolean delete = true;
+				for (Vehicle v : updatedUser.getVehicles()) {
+					if(vehicle.getVehicleID() == v.getVehicleID() && v.getDescription() != null)
 					{
-						if(vehicle.getVehicleID() == v.getVehicleID())
-						{
-							delete = false;
-							break;
-						}
-					}
-					if(delete)
-						toDelete.add(vehicle);
+						delete = false;
+						vehicle.setName(v.getName());
+						vehicle.setModel(v.getModel());
+						vehicle.setNumSeats(v.getNumSeats());
+						vehicle.setDescription(v.getDescription());
+					}	
 				}
-				for (Vehicle vehicle : toDelete) {
-					oldUser.removeVehicle(vehicle);
-				}
+				if(delete)
+					toDelete.add(oldUser.getVehicles().indexOf(vehicle));
 			}
-			else
-			{
-				for (Vehicle vehicle : oldUser.getVehicles()) {
-					for (Vehicle v : updatedUser.getVehicles()) {
-						if(vehicle.getVehicleID() == v.getVehicleID())
-						{
-							vehicle.setName(v.getName());
-							vehicle.setModel(v.getModel());
-							vehicle.setNumSeats(v.getNumSeats());
-							vehicle.setDescription(v.getDescription());
-						}
-					}
-				}
+			for (int index : toDelete) {
+				oldUser.getVehicles().remove(index);
 			}
 		}
 		else

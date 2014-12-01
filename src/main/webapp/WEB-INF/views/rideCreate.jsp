@@ -45,7 +45,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="orgin" class="col-sm-2 control-label">Orgin</label>
+					<label for="orgin" class="col-sm-2 control-label">Origin</label>
 					<div class="col-sm-8">
 						<input name="orgin" type="text" class="form-control">
 					</div>
@@ -54,6 +54,15 @@
 					<label for="departureTime" class="col-sm-2 control-label">Departure Time</label>
 					<div class="col-sm-8">
 						<input name="departureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="group-list" class="col-sm-2 control-label">Group</label>
+					<div class="col-sm-8">
+						<select id="Group" name="rideGroup" class="form-control">
+							      		<option value="" selected disabled></option>
+								  		${userGroups}				 
+						</select>
 					</div>
 				</div>
 				
@@ -68,7 +77,7 @@
 							<input type="radio" value="No" name="RoundtripRideChoice">No
 						</label>
 					</div>
-				</div>
+				</div>	
 
 				<div id="RoundTrip" class="form-group text-center">
 					<div class="form-group">
@@ -79,7 +88,7 @@
 							<input name="returnDepartureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
 						</div>
 					</div>
-				</div>			
+				</div>		
 															
 				<!-- Note that the fieldset should only be viewable if a user has a car -->
 				<c:if test="${isDriver}">

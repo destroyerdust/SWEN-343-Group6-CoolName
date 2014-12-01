@@ -23,9 +23,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.thumbsup.coolname.entity.Group;
 import com.thumbsup.coolname.entity.RideEntry;
 import com.thumbsup.coolname.entity.User;
 import com.thumbsup.coolname.entity.Vehicle;
+import com.thumbsup.coolname.service.GroupManager;
+import com.thumbsup.coolname.service.RideEntryGroupManager;
 import com.thumbsup.coolname.service.RideEntryManager;
 import com.thumbsup.coolname.service.RoundTripManager;
 import com.thumbsup.coolname.service.SignupManager;
@@ -72,11 +75,21 @@ public class RideController {
 				}
 			}
 		}
+		
+		List<Group> groups = um.getGroupsForUser((Integer)request.getSession().getAttribute("auth"));
+		String userGroups = "";
+		if(groups.size()!=0)
+		{				
+			for(Group group : groups)
+			{
+				userGroups+="<option value=\"" + group.getGroupID() + "\" >" + group.getName() + "</option>\n";
+			}
+		}
+		
+		
 		request.setAttribute("isDriver", isDriver);
 		request.setAttribute("carChoice", carChoice);		
-		
-		
-		
+		request.setAttribute("userGroups", userGroups);
 		
 		return new ModelAndView("rideCreate");
 	}
@@ -85,14 +98,14 @@ public class RideController {
 	public ModelAndView PostCreateRide( 
 			@RequestParam(value="name", required=true, defaultValue="NULL") String name,
 			@RequestParam(value="destination", required=true, defaultValue="NULL") String destination,
-			@RequestParam(value="orgin", required=true, defaultValue="NULL") String orgin,
+			@RequestParam(value="orgin", required=true, defaultValue="NULL") String origin,
 			@RequestParam(value="departureTime", required=true, defaultValue="NULL") String departureTime,
 			@RequestParam(value="RoundtripRideChoice") String roundtrip,
 			@RequestParam(value="returnDepartureTime") String returnDepartureTime,
-			@RequestParam(value="RecurringRideChoice") String recurring,
 			@RequestParam(value="DriveCar", required=false) String wantsToDrive,
 			@RequestParam(value="selectCar", required=false, defaultValue="NULL") String selectCar,
-			@RequestParam(value="numSeats", required=false, defaultValue="NULL") String numSeats,			
+			@RequestParam(value="numSeats", required=false, defaultValue="NULL") String numSeats,
+			@RequestParam(value="rideGroup", required=false, defaultValue="NULL") String group,
 			HttpServletRequest request,
 			Model model) {
 		logger.info("POST: Creating new ride! The current use is");
@@ -116,20 +129,13 @@ public class RideController {
 			
 			java.util.Date date= new java.util.Date();
 			Timestamp creationTimestamp = new Timestamp(date.getTime());
-					
-			//if a ride entry is recurring
-			//TODO add the logic here
-			if(recurring.equals("Yes")){
-				logger.info("The user has chosen to create a Recurring ride");
-								
-			}
 			
 			//make a call to the RideEntryManger and actually create database entry in DB
 			RideEntryManager rem = new RideEntryManager();	
 			
 			
 			//if the driver wants to drive
-			if(wantsToDrive.equals("Yes")){
+			if(wantsToDrive != null && wantsToDrive.equals("Yes")){
 				//if the current user has vehicles and they selected one to drive then drive						
 				if(currentUser.getVehicles().size()>0 && !selectCar.equals("NULL")){
 				
@@ -154,20 +160,31 @@ public class RideController {
 					
 					RideEntry startRide = rem.createRideEntry(
 							creationTimestamp, destination, null, null, name,
-							orgin, departTime, numseats, userPK, vehicle);
+							origin, departTime, numseats, userPK, vehicle);
 					
 					//swap the orgin and destination
 					RideEntry endRide = rem.createRideEntry(
-							creationTimestamp, orgin, null, null, name,
+							creationTimestamp, origin, null, null, name,
 							destination, departTime2, numseats, userPK, vehicle);
 					
 					rtm.createRoundTrip(startRide.getRideEntryID(), endRide.getRideEntryID());
+					if(!group.equals("NULL"))
+					{
+						RideEntryGroupManager regm = new RideEntryGroupManager();
+						regm.createSignup(startRide.getRideEntryID(), Integer.parseInt(group), creationTimestamp);
+						regm.createSignup(endRide.getRideEntryID(), Integer.parseInt(group), creationTimestamp);
+					}
 					
 				} else {
 					//otherwise there is just one ride					
 					RideEntry createdRide = rem.createRideEntry(
 							creationTimestamp, destination, null, null, name,
-							orgin, departTime, numseats, userPK, vehicle);
+							origin, departTime, numseats, userPK, vehicle);
+					if(!group.equals("NULL"))
+					{
+						RideEntryGroupManager regm = new RideEntryGroupManager();
+						regm.createSignup(createdRide.getRideEntryID(), Integer.parseInt(group), creationTimestamp);	
+					}
 				}
 			} 
 			//if there is no driver
@@ -184,21 +201,32 @@ public class RideController {
 					
 					RideEntry startRide = rem.createRideEntry(
 							creationTimestamp, destination, null, null, name,
-							orgin, departTime, 0, userPK, vehicle);
+							origin, departTime, 0, userPK, vehicle);
 
-					// swap the orgin and destination
+					// swap the origin and destination
 					RideEntry endRide = rem.createRideEntry(creationTimestamp,
-							orgin, null, null, name, destination, departTime2,
+							origin, null, null, name, destination, departTime2,
 							0, userPK, vehicle);
 					
 					rtm.createRoundTrip(startRide.getRideEntryID(), endRide.getRideEntryID());
+					if(!group.equals("NULL"))
+					{
+						RideEntryGroupManager regm = new RideEntryGroupManager();
+						regm.createSignup(startRide.getRideEntryID(), Integer.parseInt(group), creationTimestamp);
+						regm.createSignup(endRide.getRideEntryID(), Integer.parseInt(group), creationTimestamp);
+					}
 
 				} else {					
 					RideEntry createdRide = rem.createRideEntry(
 							creationTimestamp, destination, null, null, name,
-							orgin, departTime, 0, userPK, vehicle);
+							origin, departTime, 0, userPK, vehicle);
+					if(!group.equals("NULL"))
+					{
+						RideEntryGroupManager regm = new RideEntryGroupManager();
+						regm.createSignup(createdRide.getRideEntryID(), Integer.parseInt(group), creationTimestamp);	
+					}
 				}
-			}			
+			}
 			
 			return new ModelAndView("redirect:/");
 		}
