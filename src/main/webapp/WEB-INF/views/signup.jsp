@@ -14,31 +14,46 @@
 <body>
 <div class="container">
 	<div class="row">
-	<div class="col-md-3"></div>
-	<div class="col-md-6">
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
 	<h1>Sign Up</h1>
 	<c:if test="${not s}">
 		<div>INCORRECT INFORMATION</div>
 	</c:if>
-	<form class="signUpForm" action="signup" method="POST">
+	<form class="signUpForm form-horizontal" action="signup" method="POST">
 		<div class="form-group">
-			<input type="text" id="usr" class="form-control" name="usr" placeholder="User Name">
+			<label for="usr" class="col-sm-2 control-label">User Name</label>
+			<div class="col-sm-6">
+				<input type="text" id="usr" class="form-control" name="usr" placeholder="User Name">
+			</div>
 		</div>
 		<div class="form-group">
-			<input type="password" id="psw" class="form-control" name="psw" placeholder="Password">
+			<label for="psw" class="col-sm-2 control-label">Password</label>
+			<div class="col-sm-6">
+				<input type="password" id="psw" class="form-control" name="psw" placeholder="Password">
+			</div>
 		</div>
 		<div class="form-group">
-			<input type="text" id="name" class="form-control" name="name" placeholder="First Name">
+			<label for="name" class="col-sm-2 control-label">First Name</label>
+			<div class="col-sm-6">
+				<input type="text" id="name" class="form-control" name="name" placeholder="First Name">
+			</div>
 		</div>
 		<div class="form-group">
-			<input type="text" id="lstn" class="form-control" name="lstn" placeholder="Last Name">
+			<label for="lstn" class="col-sm-2 control-label">Last Name</label>
+			<div class="col-sm-6">
+				<input type="text" id="lstn" class="form-control" name="lstn" placeholder="Last Name">
+			</div>
 		</div>
 		<div class="form-group">
-			<input type="text" id="cell" class="form-control" name="cell" placeholder="Cell Phone Number">
+			<label for="cell" class="col-sm-2 control-label">Cell Phone Number</label>
+			<div class="col-sm-6">
+				<input type="text" id="cell" class="form-control" name="cell" placeholder="Cell Phone Number">
+			</div>
 		</div>
 		<div class="form-group">
-			<p>Have a car?</p>
-			<div class="btn-group" data-toggle="buttons">
+			<label class="col-sm-2 control-label">Have a car?</label>
+			<div class="btn-group col-sm-6" data-toggle="buttons">
 				<label class="btn btn-primary">
 					<input type="radio" value="Yes" id="caryes" name="caraswr"> Yes
 				</label>
@@ -48,18 +63,31 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<input type="text" id="model" class="form-control" name="model" placeholder="Model">
+			<label for="model" class="col-sm-2 control-label">Model</label>
+			<div class="col-sm-6">
+				<input type="text" id="model" class="form-control" name="model" placeholder="Model">
+			</div>
 		</div>
 		<div class="form-group">
-			<input type="number" id="seats" class="form-control" name="seats" min="0" max="10" step="1" value="4" placeholder="Number Seats">
+			<label for="seats" class="col-sm-2 control-label">Number of Seats</label>
+			<div class="col-sm-6">
+				<input type="number" id="seats" class="form-control" name="seats" min="0" max="10" step="1" value="4" placeholder="Number Seats">
+			</div>
 		</div>
 		<div class="form-group">
-			<textarea class="form-control" rows="4" id="desc" name="desc" placeholder="Vehicle Description"></textarea>
+			<label for="desc" class="col-sm-2 control-label">Vehicle Description</label>
+			<div class="col-sm-6">
+				<textarea class="form-control" rows="4" id="desc" name="desc" placeholder="Vehicle Description"></textarea>
+			</div>
 		</div>
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+		</div>
 	</form>
 	</div>
-	<div class="col-md-3"></div>
+	<div class="col-md-2"></div>
 	</div><!-- Row End -->
 	</div><!-- Container End -->
 	<script>
