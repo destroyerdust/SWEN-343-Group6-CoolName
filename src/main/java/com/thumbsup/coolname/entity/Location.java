@@ -15,6 +15,8 @@ public class Location implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int locationID;
+	
+	private String title;
 
 	private double longitude;
 
@@ -55,6 +57,14 @@ public class Location implements Serializable {
 
 	public void setRideEntryID(int rideEntryID) {
 		this.rideEntryID = rideEntryID;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }
