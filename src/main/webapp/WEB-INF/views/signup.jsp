@@ -53,13 +53,15 @@
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Have a car?</label>
-			<div class="btn-group col-sm-6" data-toggle="buttons">
-				<label class="btn btn-primary">
-					<input type="radio" value="Yes" id="caryes" name="caraswr"> Yes
-				</label>
-				<label class="btn btn-primary">
-					<input type="radio" value="No" id="carno" name="caraswr"> No
-				</label>
+			<div class="col-sm-6">
+				<div class="btn-group" data-toggle="buttons">
+					<label class="btn btn-primary">
+						<input type="radio" value="Yes" id="caryes" name="caraswr"> Yes
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" value="No" id="carno" name="caraswr"> No
+					</label>
+				</div>
 			</div>
 		</div>
 		<div class="form-group">
