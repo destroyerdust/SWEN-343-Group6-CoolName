@@ -20,9 +20,19 @@
 
 		<h1>
 			${group.getName()} <span style="float: right;">
-				<button type="button" class="btn btn-primary" id="create-group"
+				<c:choose>
+      				<c:when test="${! joined}">
+      				<button type="button" class="btn btn-primary" id="create-group"
 					onclick="location.href='/coolname/group/${group.getGroupID()}/join'">Join
 					Group</button>
+      				</c:when>
+
+      				<c:otherwise>
+      				<button type="button" class="btn btn-primary" id="leave-group"
+					onclick="location.href='/coolname/group/${group.getGroupID()}/leave'">Leave
+					Group</button>
+      				</c:otherwise>
+    			</c:choose>
 			</span>
 		</h1>
 		<table id="rideListTable" class="table table-striped table-bordered"

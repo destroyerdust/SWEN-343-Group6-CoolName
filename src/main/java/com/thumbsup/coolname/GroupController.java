@@ -2,9 +2,11 @@ package com.thumbsup.coolname;
 
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.jws.WebParam.Mode;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -71,26 +73,45 @@ public class GroupController {
 	}
 	
 	@RequestMapping(value = "/group/list", method = RequestMethod.GET)
-	public String list(Locale locale, Model model)
+	public ModelAndView list(Locale locale, Model model, HttpServletRequest request)
 	{
 		GroupManager gm = new GroupManager();
 		List<Group> groupList = gm.listGroups();
-		model.addAttribute("groupList", groupList);
 		
-		return "groupList";
+		List<Group> userGroups = new ArrayList<Group>();
+		if(request.getSession().getAttribute("auth")!=null)
+		{
+			UserManager um = new UserManager();
+			userGroups = um.getGroupsForUser((Integer)request.getSession().getAttribute("auth"));
+		}
+		
+		model.addAttribute("groupList", groupList);
+		model.addAttribute("userGroups",userGroups);
+		
+		return new ModelAndView("groupList");
 	}
 	
 	@RequestMapping(value = "/group/{groupID}/view", method = RequestMethod.GET)
-	public String view(Locale locale, Model model, @PathVariable int groupID)
+	public String view(Locale locale, Model model, HttpServletRequest request,@PathVariable int groupID)
 	{
 		GroupManager gm = new GroupManager();
 		Group group = gm.selectGroup(groupID);
 		List<RideEntry> rideEntries = gm.findRideEntriesForGroup(groupID);
 		List<User> users = gm.findUsersForGroup(groupID);
 		
+		boolean joined = false;
+		for(User u : users)
+		{
+			if(u.getUserId() == (Integer)request.getSession().getAttribute("auth"))
+			{
+				joined = true;
+			}
+		}
+		
 		model.addAttribute("group", group);
 		model.addAttribute("rideEntries", rideEntries);
 		model.addAttribute("groupUsers", users);
+		model.addAttribute("joined", joined);
 		
 		return "groupView";
 	}
@@ -110,8 +131,8 @@ public class GroupController {
 		return new ModelAndView("redirect:/group/list");
 	}
 	
-	@RequestMapping(value = "/group/{groupID}/leave", method = RequestMethod.DELETE)
-	public ModelAndView leave(Locale locale, Model model, @PathVariable int groupID, HttpServletRequest request)
+	@RequestMapping(value = "/group/{groupID}/leave", method = RequestMethod.GET)
+	public ModelAndView leave(Locale locale, Model model, HttpServletRequest request, @PathVariable int groupID)
 	{
 		if(request.getSession().getAttribute("auth")==null)
 		{
