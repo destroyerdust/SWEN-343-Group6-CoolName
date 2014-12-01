@@ -30,14 +30,14 @@
 						<div class="form-group">
 							<label for="usr" class="col-sm-2 control-label">User Name</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" name="usr" placeholder="User Name" autofocus>
+								<input type="text" class="form-control" name="usr" autofocus>
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="psw" class="col-sm-2 control-label">Password</label>
 							<div class="col-sm-6">
-								<input type="password" class="form-control" name="psw" placeholder="Password">
+								<input type="password" class="form-control" name="psw">
 							</div>
 						</div>
 						<div class="form-group">
