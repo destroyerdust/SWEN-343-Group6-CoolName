@@ -30,6 +30,7 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Status</th>
                 <th>Source</th>
                 <th>Destination</th>
                 <th>Start Time</th>
@@ -37,6 +38,7 @@
             </tr>
         	<tr id="filterrow">
         		<th>Name</th>
+        		<th>Status</th>
                 <th>Source</th>
                 <th>Destination</th>
                 <th>Start Time</th>
@@ -47,6 +49,7 @@
         	<c:forEach items="${listRideEntrys}" var="entry">
         		<tr>
         			<td><a href="/coolname/ride/${entry.getRideEntryID()}/view">${entry.getName()}</a></td>
+        			<td>${entry.getStatus()}</td>
         			<td>${entry.getSource()}</td>
         			<td>${entry.getDestination()}</td>
         			<td>${entry.getStartTime()}</td>
