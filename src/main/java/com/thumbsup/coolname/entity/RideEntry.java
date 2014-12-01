@@ -35,6 +35,8 @@ public class RideEntry implements Serializable {
 	private int numSeats;
 	
 	private int AuthorID;
+	
+	private String status;
 
 	//bi-directional many-to-one association to Vehicle
 	@ManyToOne
@@ -130,5 +132,13 @@ public class RideEntry implements Serializable {
 
 	public void setAuthorID(int authorID) {
 		AuthorID = authorID;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }
