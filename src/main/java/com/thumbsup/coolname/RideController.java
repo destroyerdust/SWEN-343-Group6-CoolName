@@ -27,6 +27,7 @@ import com.thumbsup.coolname.entity.RideEntry;
 import com.thumbsup.coolname.entity.User;
 import com.thumbsup.coolname.entity.Vehicle;
 import com.thumbsup.coolname.service.RideEntryManager;
+import com.thumbsup.coolname.service.RoundTripManager;
 import com.thumbsup.coolname.service.SignupManager;
 import com.thumbsup.coolname.service.UserManager;
 import com.thumbsup.coolname.service.VehicleManager;
@@ -86,6 +87,10 @@ public class RideController {
 			@RequestParam(value="destination", required=true, defaultValue="NULL") String destination,
 			@RequestParam(value="orgin", required=true, defaultValue="NULL") String orgin,
 			@RequestParam(value="departureTime", required=true, defaultValue="NULL") String departureTime,
+			@RequestParam(value="RoundtripRideChoice") String roundtrip,
+			@RequestParam(value="returnDepartureTime") String returnDepartureTime,
+			@RequestParam(value="RecurringRideChoice") String recurring,
+			@RequestParam(value="DriveCar", required=false) String wantsToDrive,
 			@RequestParam(value="selectCar", required=false, defaultValue="NULL") String selectCar,
 			@RequestParam(value="numSeats", required=false, defaultValue="NULL") String numSeats,			
 			HttpServletRequest request,
@@ -102,53 +107,124 @@ public class RideController {
 			
 			UserManager um = new UserManager();						
 			User currentUser = um.selectUser(userPK);
-
+			Integer numseats = null;
 			Vehicle vehicle = null;
-			if(currentUser.getVehicles().size()>0 && !selectCar.equals("NULL")){
 			
-				//get selected vehicle
-				VehicleManager vm = new VehicleManager();
-				vehicle = vm.selectVehicle(Integer.parseInt(selectCar));
-			}
-		
-			//convert times to correctly formatted datetime
-			System.out.println(departureTime);
-			departureTime = departureTime.replace("T", " ");
-			System.out.println(departureTime);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-			Timestamp departTime = null;
-			try
-			{
-				departTime = new Timestamp(sdf.parse(departureTime).getTime());
-			}
-			catch (ParseException e)
-			{
-				e.printStackTrace();
-				java.util.Date date= new java.util.Date();
-				departTime = new Timestamp(date.getTime());
-			}
+			
+			//convert times to correctly formatted datetime for the depature time					
+			Timestamp departTime = formatTimestamp(departureTime);
 			
 			java.util.Date date= new java.util.Date();
 			Timestamp creationTimestamp = new Timestamp(date.getTime());
+					
+			//if a ride entry is recurring
+			//TODO add the logic here
+			if(recurring.equals("Yes")){
+				logger.info("The user has chosen to create a Recurring ride");
+								
+			}
 			
-			RideEntryManager rem = new RideEntryManager();
+			//make a call to the RideEntryManger and actually create database entry in DB
+			RideEntryManager rem = new RideEntryManager();	
 			
-			RideEntry createdRide = rem.createRideEntry(creationTimestamp, 
-					destination, 
-					null, 
-					null, 
-					name, 
-					orgin, 
-					departTime, 
-					vehicle);			
 			
-			SignupManager sum = new SignupManager();
-			sum.createSignup(currentUser.getUserId(), createdRide.getRideEntryID(), new Timestamp(new java.util.Date().getTime()));
+			//if the driver wants to drive
+			if(wantsToDrive.equals("Yes")){
+				//if the current user has vehicles and they selected one to drive then drive						
+				if(currentUser.getVehicles().size()>0 && !selectCar.equals("NULL")){
+				
+					//get selected vehicle
+					VehicleManager vm = new VehicleManager();
+					vehicle = vm.selectVehicle(Integer.parseInt(selectCar));
+				}
+				//if the number of seats chosen was null then
+				if(!numSeats.equals("NULL")){
+					numseats = Integer.parseInt(numSeats);
+				}
+				
+				//if the user wants a roundtrip then create two rideEntries
+				// and the user is driving
+				if (roundtrip.equals("Yes")) {
+					logger.info("The user has chosen to create a Roundtrip ride");
+					
+					//create a new RoundTripManger for creating a new roundtrip
+					RoundTripManager rtm = new RoundTripManager();					
+					
+					Timestamp departTime2 = formatTimestamp(returnDepartureTime);
+					
+					RideEntry startRide = rem.createRideEntry(
+							creationTimestamp, destination, null, null, name,
+							orgin, departTime, numseats, userPK, vehicle);
+					
+					//swap the orgin and destination
+					RideEntry endRide = rem.createRideEntry(
+							creationTimestamp, orgin, null, null, name,
+							destination, departTime2, numseats, userPK, vehicle);
+					
+					rtm.createRoundTrip(startRide.getRideEntryID(), endRide.getRideEntryID());
+					
+				} else {
+					//otherwise there is just one ride					
+					RideEntry createdRide = rem.createRideEntry(
+							creationTimestamp, destination, null, null, name,
+							orgin, departTime, numseats, userPK, vehicle);
+				}
+			} 
+			//if there is no driver
+			else{
+				// if the user wants a roundtrip then create two rideEntries
+				// and the user is not driving
+				if (roundtrip.equals("Yes")) {
+					logger.info("The user has chosen to create a Roundtrip ride");
+
+					//create a new RoundTripManger for creating a new roundtrip
+					RoundTripManager rtm = new RoundTripManager();					
+					
+					Timestamp departTime2 = formatTimestamp(returnDepartureTime);
+					
+					RideEntry startRide = rem.createRideEntry(
+							creationTimestamp, destination, null, null, name,
+							orgin, departTime, 0, userPK, vehicle);
+
+					// swap the orgin and destination
+					RideEntry endRide = rem.createRideEntry(creationTimestamp,
+							orgin, null, null, name, destination, departTime2,
+							0, userPK, vehicle);
+					
+					rtm.createRoundTrip(startRide.getRideEntryID(), endRide.getRideEntryID());
+
+				} else {					
+					RideEntry createdRide = rem.createRideEntry(
+							creationTimestamp, destination, null, null, name,
+							orgin, departTime, 0, userPK, vehicle);
+				}
+			}			
 			
 			return new ModelAndView("redirect:/");
 		}
 		
 		return new ModelAndView("rideCreate");
+	}
+	
+	//used for formating a string timestamp
+	public Timestamp formatTimestamp(String time){
+		//convert times to correctly formatted datetime for the depature time
+		time = time.replace("T", " ");			
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		Timestamp newTime = null;
+		try
+		{
+			newTime = new Timestamp(sdf.parse(time).getTime());
+		}
+		catch (ParseException e)
+		{
+			//if it fails then make the departure time the current time on the server
+			logger.info("Timestamp format failed, now setting current timestamp");
+			e.printStackTrace();
+			java.util.Date date= new java.util.Date();
+			newTime = new Timestamp(date.getTime());
+		}			
+		return newTime;
 	}
 	
 	@ResponseBody

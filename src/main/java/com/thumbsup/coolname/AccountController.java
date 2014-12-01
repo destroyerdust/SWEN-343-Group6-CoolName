@@ -21,6 +21,8 @@ import com.thumbsup.coolname.service.UserManager;
 @Controller
 public class AccountController {
 	
+	// SIGNUP SERVICES
+	
 	@RequestMapping(value="account/signup", method=RequestMethod.GET)
 	public String getSignup(HttpServletRequest request)
 	{
@@ -78,8 +80,10 @@ public class AccountController {
 		return new ModelAndView(page);
 	}
 	
+	// MANAGE ACCOUNT SERVICES
+	
 	@RequestMapping(value="account/manage", method=RequestMethod.GET)
-	public ModelAndView updateProfile(HttpServletRequest request)
+	public ModelAndView getAccount(HttpServletRequest request)
 	{
 		String page = "manageAccount";
 		Integer userId = (Integer) request.getSession().getAttribute("auth");
@@ -98,7 +102,28 @@ public class AccountController {
 		return view;
 	}
 	
-	@RequestMapping(value="account/manage", method=RequestMethod.POST)
+	// EDIT PROFILE SERVICES
+	@RequestMapping(value="account/profile/edit", method=RequestMethod.GET)
+	public ModelAndView getProfile(HttpServletRequest request)
+	{
+		String page = "editProfile";
+		Integer userId = (Integer) request.getSession().getAttribute("auth");
+		ModelAndView view = null;
+		if( userId == null)
+		{
+			page = "redirect:login";
+			view = new ModelAndView(page);
+		}
+		else
+		{
+			UserDAO dao = new UserDAO();
+			User u = dao.select(userId);
+			view = new ModelAndView(page,"user",u);
+		}
+		return view;
+	}
+	
+	@RequestMapping(value="account/profile/edit", method=RequestMethod.POST)
 	public ModelAndView updateProfile(@ModelAttribute("user") User updatedUser, HttpServletRequest request)
 	{
 		UserManager services = new UserManager();
@@ -107,30 +132,137 @@ public class AccountController {
 		String firstName = updatedUser.getFirstName();
 		String lastName = updatedUser.getLastName();
 		String phoneNumber = updatedUser.getPhoneNumber();
-		if( (firstName != null && !firstName.equals("")))
+		if( (firstName != null && !firstName.equals("")) && (lastName != null && !lastName.equals("")) && (phoneNumber != null && !phoneNumber.equals("")) )
+		{
 			oldUser.setFirstName(updatedUser.getFirstName());
-		if(lastName != null && !lastName.equals(""))
 			oldUser.setLastName(updatedUser.getLastName());
-		if(phoneNumber != null && !phoneNumber.equals(""))
 			oldUser.setPhoneNumber(updatedUser.getPhoneNumber());
-		for (Vehicle vehicle : oldUser.getVehicles()) {
-			boolean delete = true;
-			for (Vehicle v : updatedUser.getVehicles()) {
-				if(vehicle.getVehicleID() == v.getVehicleID())
+			services.updateUser(oldUser);
+		}
+		return new ModelAndView("redirect:/account/manage");
+	}
+	
+	// VEHICLE MANAGEMENT SERVICES
+	@RequestMapping(value="account/vehicle/edit", method=RequestMethod.GET)
+	public ModelAndView getVehicles(HttpServletRequest request)
+	{
+		String page = "myVehicles";
+		Integer userId = (Integer) request.getSession().getAttribute("auth");
+		ModelAndView view = null;
+		if( userId == null)
+		{
+			page = "redirect:login";
+			view = new ModelAndView(page);
+		}
+		else
+		{
+			UserDAO dao = new UserDAO();
+			User u = dao.select(userId);
+			view = new ModelAndView(page,"user",u);
+		}
+		return view;
+	}
+	
+	@RequestMapping(value="account/vehicle/edit", method=RequestMethod.POST)
+	public ModelAndView updateVehicles(@ModelAttribute("user") User updatedUser, HttpServletRequest request)
+	{
+		UserManager services = new UserManager();
+		User oldUser = services.selectUser((Integer) request.getSession().getAttribute("auth"));
+		List<Vehicle> toDelete = new ArrayList<Vehicle>();
+		if(updatedUser.getVehicles() != null)
+		{
+			if(oldUser.getVehicles().size() > updatedUser.getVehicles().size())
+			{
+				for(Vehicle vehicle: oldUser.getVehicles())
 				{
-					delete = false;
-					vehicle.setName(v.getName());
-					vehicle.setModel(v.getModel());
-					vehicle.setNumSeats(v.getNumSeats());
-					vehicle.setDescription(v.getDescription());
-					break;
+					boolean delete = true;
+					for(Vehicle v: updatedUser.getVehicles())
+					{
+						if(vehicle.getVehicleID() == v.getVehicleID())
+						{
+							delete = false;
+							break;
+						}
+					}
+					if(delete)
+						toDelete.add(vehicle);
+				}
+				for (Vehicle vehicle : toDelete) {
+					oldUser.removeVehicle(vehicle);
 				}
 			}
-			if(delete)
-				oldUser.getVehicles().remove(vehicle);
+			else
+			{
+				for (Vehicle vehicle : oldUser.getVehicles()) {
+					for (Vehicle v : updatedUser.getVehicles()) {
+						if(vehicle.getVehicleID() == v.getVehicleID())
+						{
+							vehicle.setName(v.getName());
+							vehicle.setModel(v.getModel());
+							vehicle.setNumSeats(v.getNumSeats());
+							vehicle.setDescription(v.getDescription());
+						}
+					}
+				}
+			}
 		}
-		return new ModelAndView("home");
+		else
+		{
+			oldUser.getVehicles().clear();
+		}
+		services.updateUser(oldUser);
+		return new ModelAndView("redirect:/account/manage");
 	}
+	
+	@RequestMapping(value="/account/vehicle/create", method=RequestMethod.GET)
+	public ModelAndView getCreateVehicle(HttpServletRequest request)
+	{
+		String page = "createVehicle";
+		Integer userId = (Integer) request.getSession().getAttribute("auth");
+		ModelAndView view = null;
+		if( userId == null)
+		{
+			page = "redirect:/account/login";
+			view = new ModelAndView(page);
+		}
+		else
+		{
+			UserDAO dao = new UserDAO();
+			User u = dao.select(userId);
+			view = new ModelAndView(page,"user",u);
+		}
+		return view;
+	}
+	
+	@RequestMapping(value="account/vehicle/create", method=RequestMethod.POST)
+	public ModelAndView postCreateVehicle(@RequestParam(value="model", required=true, defaultValue="") String model,
+							@RequestParam(value="seats", required=true, defaultValue="") String seats,
+							@RequestParam(value="desc", required=true, defaultValue="") String description,
+							@RequestParam(value="name", required=true, defaultValue="") String name,
+							@RequestParam(value="license", required=true, defaultValue="") String license,
+							HttpServletRequest request)
+	{
+		if(model != null && seats != null && !model.equals("") && !seats.equals("") && !name.equals("") && !license.equals(""))
+		{
+			Vehicle v = null;
+			v = new Vehicle();
+			v.setName(name);
+			v.setLicensePlate(license);
+			v.setDescription(description);
+			v.setModel(model);
+			v.setNumSeats(Integer.parseInt(seats));
+			int type = UserType.DRIVER.getId();
+			UserManager services = new UserManager();
+			User user = services.selectUser((Integer) request.getSession().getAttribute("auth"));
+			user.setUserType(type);
+			user.addVehicle(v);
+			services.updateUser(user);
+		}
+		return new ModelAndView("redirect:/account/vehicle/edit");
+	}
+	
+	
+	// LOGIN SERVICES
 	
 	@RequestMapping(value = "/account/login", method = RequestMethod.GET)
 	public String getLogin(HttpServletRequest request) {

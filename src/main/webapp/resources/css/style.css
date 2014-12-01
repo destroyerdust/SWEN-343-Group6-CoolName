@@ -1,0 +1,5 @@
+/* Fixed validation icon for radio button group */
+.signUpForm .btn-group .form-control-feedback {
+    top: 0;
+    right: -30px;
+}

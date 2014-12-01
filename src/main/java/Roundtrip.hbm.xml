@@ -4,18 +4,17 @@
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
 
 <hibernate-mapping>
-   <class name="com.thumbsup.coolname.entity.Location" table="Location">
+   <class name="com.thumbsup.coolname.entity.RoundTrip" table="RoundTrip">
    	
    	<meta attribute="class-description">
    		"Contains the details on the location entity class."
    	</meta>
-   	<id name="LocationID" type="int" column="LocationID">
+   	<id name="RoundTripID" type="int" column="RoundTripID">
    		<generator class="native"></generator>
    	</id>
-   	<property name="latitude" column="Latitude" type="double"/>
-   	<property name="longitude" column="Longitude" type="double"/>
-   	<property name="rideEntryID" column="RideEntryID" type="int"/>
-   	<property name="title" column="Title" type="string"/>
-   	
+
+   	<property name="StartRideEntryID" column="StartRideEntryID" type="int"/>
+   	<property name="EndRideEntryID" column="EndRideEntryID" type="int"/>
+
    </class>
 </hibernate-mapping>

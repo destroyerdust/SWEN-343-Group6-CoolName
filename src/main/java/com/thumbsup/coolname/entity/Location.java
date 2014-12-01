@@ -21,6 +21,8 @@ public class Location implements Serializable {
 	private double latitude;
 
 	private int rideEntryID;
+	
+	private String title;
 
 	public Location() {
 	}
@@ -55,6 +57,14 @@ public class Location implements Serializable {
 
 	public void setRideEntryID(int rideEntryID) {
 		this.rideEntryID = rideEntryID;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }

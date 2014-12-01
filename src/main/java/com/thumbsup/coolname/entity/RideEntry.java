@@ -33,6 +33,8 @@ public class RideEntry implements Serializable {
 	private Timestamp startTime;
 	
 	private int numSeats;
+	
+	private int AuthorID;
 
 	//bi-directional many-to-one association to Vehicle
 	@ManyToOne
@@ -121,5 +123,12 @@ public class RideEntry implements Serializable {
 	public void setNumSeats(int numSeats) {
 		this.numSeats = numSeats;
 	}
+	
+	public int getAuthorID() {
+		return AuthorID;
+	}
 
+	public void setAuthorID(int authorID) {
+		AuthorID = authorID;
+	}
 }
