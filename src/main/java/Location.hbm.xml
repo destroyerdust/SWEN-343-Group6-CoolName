@@ -12,10 +12,10 @@
    	<id name="LocationID" type="int" column="LocationID">
    		<generator class="native"></generator>
    	</id>
+  	<property name="title" column="Title" type="string"/>
    	<property name="latitude" column="Latitude" type="double"/>
    	<property name="longitude" column="Longitude" type="double"/>
    	<property name="rideEntryID" column="RideEntryID" type="int"/>
-   	<property name="title" column="Title" type="string"/>
    	
    </class>
 </hibernate-mapping>

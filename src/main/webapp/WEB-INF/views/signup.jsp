@@ -23,61 +23,63 @@
 	<form class="signUpForm form-horizontal" action="signup" method="POST">
 		<div class="form-group">
 			<label for="usr" class="col-sm-2 control-label">User Name</label>
-			<div class="col-sm-6">
-				<input type="text" id="usr" class="form-control" name="usr" placeholder="User Name">
+			<div class="col-sm-8">
+				<input type="text" id="usr" class="form-control" name="usr" autofocus>
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="psw" class="col-sm-2 control-label">Password</label>
-			<div class="col-sm-6">
-				<input type="password" id="psw" class="form-control" name="psw" placeholder="Password">
+			<div class="col-sm-8">
+				<input type="password" id="psw" class="form-control" name="psw">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="name" class="col-sm-2 control-label">First Name</label>
-			<div class="col-sm-6">
-				<input type="text" id="name" class="form-control" name="name" placeholder="First Name">
+			<div class="col-sm-8">
+				<input type="text" id="name" class="form-control" name="name">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="lstn" class="col-sm-2 control-label">Last Name</label>
-			<div class="col-sm-6">
-				<input type="text" id="lstn" class="form-control" name="lstn" placeholder="Last Name">
+			<div class="col-sm-8">
+				<input type="text" id="lstn" class="form-control" name="lstn">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="cell" class="col-sm-2 control-label">Cell Phone Number</label>
-			<div class="col-sm-6">
-				<input type="text" id="cell" class="form-control" name="cell" placeholder="Cell Phone Number">
+			<div class="col-sm-8">
+				<input type="text" id="cell" class="form-control" name="cell">
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Have a car?</label>
-			<div class="btn-group col-sm-6" data-toggle="buttons">
-				<label class="btn btn-primary">
-					<input type="radio" value="Yes" id="caryes" name="caraswr"> Yes
-				</label>
-				<label class="btn btn-primary">
-					<input type="radio" value="No" id="carno" name="caraswr"> No
-				</label>
+			<div class="col-sm-8">
+				<div class="btn-group" data-toggle="buttons">
+					<label class="btn btn-primary">
+						<input type="radio" value="Yes" id="caryes" name="caraswr"> Yes
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" value="No" id="carno" name="caraswr"> No
+					</label>
+				</div>
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="model" class="col-sm-2 control-label">Model</label>
-			<div class="col-sm-6">
-				<input type="text" id="model" class="form-control" name="model" placeholder="Model">
+			<div class="col-sm-8">
+				<input type="text" id="model" class="form-control" name="model">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="seats" class="col-sm-2 control-label">Number of Seats</label>
-			<div class="col-sm-6">
-				<input type="number" id="seats" class="form-control" name="seats" min="0" max="10" step="1" value="4" placeholder="Number Seats">
+			<div class="col-sm-8">
+				<input type="number" id="seats" class="form-control" name="seats" min="0" max="10" step="1" value="4">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="desc" class="col-sm-2 control-label">Vehicle Description</label>
-			<div class="col-sm-6">
-				<textarea class="form-control" rows="4" id="desc" name="desc" placeholder="Vehicle Description"></textarea>
+			<div class="col-sm-8">
+				<textarea class="form-control" rows="4" id="desc" name="desc"></textarea>
 			</div>
 		</div>
 		<div class="form-group">
