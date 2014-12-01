@@ -72,10 +72,12 @@
 
 				<div id="RoundTrip" class="form-group text-center">
 					<div class="form-group">
-						<label for="returnDepartureTime" class="control-label">
+						<label for="returnDepartureTime" class="control-label col-sm-2">
 							Return Trip Departure Time
-						</label> 
-						<input name="returnDepartureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
+						</label>
+						<div class="col-sm-8">
+							<input name="returnDepartureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
+						</div>
 					</div>
 				</div>			
 															
@@ -98,26 +100,34 @@
 						<fieldset>				
 							<h3 class="text-center">Which car would you like to use?</h3>
 							<div class="form-group">
-								<label for="selectCar" class="control-label">Vehicle</label>
-							    <select id="Car" name="selectCar" class="form-control">
-							      <option value="" selected disabled>Select your Vehicle</option>
-								  ${carChoice}				 
-								</select>
+								<label for="selectCar" class="control-label col-sm-2">Vehicle</label>
+								<div class="col-sm-8">
+							    	<select id="Car" name="selectCar" class="form-control">
+							      		<option value="" selected disabled>Select your Vehicle</option>
+								  		${carChoice}				 
+									</select>
+								</div>
 							</div>
 							<div class="form-group">
-								<label for="numSeats" class="control-label">Available seats</label>
-								<select id="numSeats" name="numSeats" class="form-control">
-								  <option value="" selected disabled>Select # of Available seats</option>
-								  <option>1</option>
-								  <option>2</option>
-								  <option>3</option>
-								  <option>99</option>
-								</select>
+								<label for="numSeats" class="control-label col-sm-2">Available seats</label>
+								<div class="col-sm-8">
+									<select id="numSeats" name="numSeats" class="form-control">
+								  		<option value="" selected disabled>Select # of Available seats</option>
+		   							  	<option>1</option>
+								  		<option>2</option>
+								  		<option>3</option>
+								  		<option>99</option>
+									</select>
+								</div>
 							</div>
 						</fieldset>					
 					</div>
 				</c:if>
-				<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+					</div>
+				</div>
 			</form>
 		</div>
 	
