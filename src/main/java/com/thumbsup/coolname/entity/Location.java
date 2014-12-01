@@ -16,8 +16,6 @@ public class Location implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int locationID;
 	
-	private String title;
-
 	private double longitude;
 
 	private double latitude;

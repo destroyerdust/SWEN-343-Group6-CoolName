@@ -16,7 +16,6 @@
    	<property name="latitude" column="Latitude" type="double"/>
    	<property name="longitude" column="Longitude" type="double"/>
    	<property name="rideEntryID" column="RideEntryID" type="int"/>
-   	<property name="title" column="Title" type="string"/>
    	
    </class>
 </hibernate-mapping>
