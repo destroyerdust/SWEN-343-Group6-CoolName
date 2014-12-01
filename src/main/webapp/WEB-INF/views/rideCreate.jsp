@@ -26,24 +26,35 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-3"></div>	
-		<div class="col-md-6">
-			<form role="form" method="POST">
+		<div class="col-md-2"></div>	
+		<div class="col-md-8">
+			<form class="form-horizontal role="form" method="POST">
 				<div class="form-group">
 					<h3 class="text-center">Create your ride request</h3>
 				</div>
 				<div class="form-group">
-					<input name="name" type="text" class="form-control" placeholder="Name of ride">
+					<label for="name" class="col-sm-2 control-label">Name of Ride</label>
+					<div class="col-sm-8">
+						<input name="name" type="text" class="form-control">
+					</div>
 				</div>
 				<div class="form-group">
-					<input name="destination" type="text" class="form-control" placeholder="Destination">
+					<label for="destination" class="col-sm-2 control-label">Destination</label>
+					<div class="col-sm-8">
+						<input name="destination" type="text" class="form-control">
+					</div>
 				</div>
 				<div class="form-group">
-					<input name="orgin" type="text" class="form-control" placeholder="Orgin">
+					<label for="orgin" class="col-sm-2 control-label">Orgin</label>
+					<div class="col-sm-8">
+						<input name="orgin" type="text" class="form-control">
+					</div>
 				</div>
 				<div class="form-group">
-					<label for="departureTime" class="control-label">Departure Time</label>
-					<input name="departureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
+					<label for="departureTime" class="col-sm-2 control-label">Departure Time</label>
+					<div class="col-sm-8">
+						<input name="departureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
+					</div>
 				</div>
 				
 				<!-- This section for determining if the ride will be Roundtrip -->
@@ -110,7 +121,7 @@
 			</form>
 		</div>
 	
-		<div class="col-md-3"></div>
+		<div class="col-md-2"></div>
 	</div>
 </div>
 

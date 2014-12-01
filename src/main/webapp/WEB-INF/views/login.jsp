@@ -29,14 +29,14 @@
 					<form class="form-horizontal" action="login" method="POST">
 						<div class="form-group">
 							<label for="usr" class="col-sm-2 control-label">User Name</label>
-							<div class="col-sm-6">
+							<div class="col-sm-8">
 								<input type="text" class="form-control" name="usr" autofocus>
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="psw" class="col-sm-2 control-label">Password</label>
-							<div class="col-sm-6">
+							<div class="col-sm-8">
 								<input type="password" class="form-control" name="psw">
 							</div>
 						</div>
