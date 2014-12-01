@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 
 import com.thumbsup.coolname.entity.Group;
 import com.thumbsup.coolname.entity.RideEntry;
+import com.thumbsup.coolname.entity.User;
 
 public class GroupDAO extends CRUDManager<Group, Integer>{
     
@@ -68,5 +69,33 @@ public class GroupDAO extends CRUDManager<Group, Integer>{
     	s.close();
     	return resultGroup;
 	}
+	
+	public List<RideEntry> findRideEntriesForGroup(Integer groupPrimaryKeyID) {
 
+		SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
+
+		Query query = s.createQuery("select re from RideEntry_Group reg, RideEntry re where reg.groupID = :groupID and re.rideEntryID = reg.rideEntryID");
+		query.setParameter(""
+				+ "groupID", groupPrimaryKeyID);
+		List<RideEntry> relatedRideEntries = query.list();
+
+		s.flush();
+		s.close();
+		return relatedRideEntries;
+	}
+
+	public List<User> findUsersForGroup(Integer groupPrimaryKeyID)
+	{
+		SessionFactory factory = SessionFactory.getSessionFactory();
+		Session s = factory.getSession();
+
+		Query query = s.createQuery("select u from User_Group ug, User u where ug.groupID = :groupID and u.userId = ug.userID");
+		query.setParameter("" + "groupID", groupPrimaryKeyID);
+		List<User> relatedUsers = query.list();
+
+		s.flush();
+		s.close();
+		return relatedUsers;
+	}
 }

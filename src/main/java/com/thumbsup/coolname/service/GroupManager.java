@@ -7,6 +7,7 @@ import com.thumbsup.coolname.dao.GroupDAO;
 import com.thumbsup.coolname.dao.RideEntryDAO;
 import com.thumbsup.coolname.entity.Group;
 import com.thumbsup.coolname.entity.RideEntry;
+import com.thumbsup.coolname.entity.User;
 import com.thumbsup.coolname.entity.Vehicle;
 
 public class GroupManager 
@@ -58,4 +59,13 @@ public class GroupManager
 		return groupDAO.select(groupID);
 	}
 
+	public List<RideEntry> findRideEntriesForGroup(int groupID)
+	{
+		return groupDAO.findRideEntriesForGroup(groupID);
+	}
+	
+	public List<User> findUsersForGroup(int groupID)
+	{
+		return groupDAO.findUsersForGroup(groupID);
+	}
 }

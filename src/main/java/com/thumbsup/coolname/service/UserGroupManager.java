@@ -1,6 +1,7 @@
 package com.thumbsup.coolname.service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import com.thumbsup.coolname.dao.SignupDAO;
 import com.thumbsup.coolname.dao.User_GroupDAO;
@@ -43,6 +44,12 @@ public class UserGroupManager {
 		// Delete User
 		ugDAO.delete(ug);
 
+	}
+	
+	public List<User_Group> listUserGroups()
+	{
+		List<User_Group> userGroups = ugDAO.selectAll();
+		return userGroups;
 	}
 
 }
