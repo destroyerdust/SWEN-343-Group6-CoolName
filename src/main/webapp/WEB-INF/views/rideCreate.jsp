@@ -26,62 +26,58 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-3"></div>	
-		<div class="col-md-6">
-			<form role="form" method="POST">
+		<div class="col-md-2"></div>	
+		<div class="col-md-8">
+			<form class="form-horizontal role="form" method="POST">
 				<div class="form-group">
 					<h3 class="text-center">Create your ride request</h3>
 				</div>
 				<div class="form-group">
-					<input name="name" type="text" class="form-control" placeholder="Name of ride">
+					<label for="name" class="col-sm-2 control-label">Name of Ride</label>
+					<div class="col-sm-8">
+						<input name="name" type="text" class="form-control">
+					</div>
 				</div>
 				<div class="form-group">
-					<input name="destination" type="text" class="form-control" placeholder="Destination">
+					<label for="destination" class="col-sm-2 control-label">Destination</label>
+					<div class="col-sm-8">
+						<input name="destination" type="text" class="form-control">
+					</div>
 				</div>
 				<div class="form-group">
-					<input name="orgin" type="text" class="form-control" placeholder="Orgin">
+					<label for="orgin" class="col-sm-2 control-label">Orgin</label>
+					<div class="col-sm-8">
+						<input name="orgin" type="text" class="form-control">
+					</div>
 				</div>
 				<div class="form-group">
-					<label for="departureTime" class="control-label">Departure Time</label>
-					<input name="departureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
-				</div>
-				
-				<!-- This section for creating recurring Rides -->
-				<div class="form-group text-center">
-					<h4 class="text-center">Is this a recurring ride?</h4>
-					<div id="WantsRecurringRide" class="btn-group" data-toggle="buttons">
-						<label class="btn btn-primary">
-							<input type="radio" value="Yes" name="RecurringRideChoice">Yes
-						</label>
-						<label class="btn btn-primary">
-							<input type="radio" value="No" name="RecurringRideChoice">No
-						</label>
+					<label for="departureTime" class="col-sm-2 control-label">Departure Time</label>
+					<div class="col-sm-8">
+						<input name="departureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
 					</div>
 				</div>
 				
-				<div id="RecurringRide" class="form-group text-center">
-					<label class="btn btn-primary">
-						<input type="radio" value="Sunday" name="Day">Sun
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" value="Monday" name="Day">Mon
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" value="Tuesday" name="Day">Tue
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" value="Wednesday" name="Day">Wed
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" value="Thursday" name="Day">Thu
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" value="Friday" name="Day">Fri
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" value="Saturday" name="Day">Sat
-					</label>
+				<!-- This section for determining if the ride will be Roundtrip -->
+				<div class="form-group text-center">
+					<h4 class="text-center">Is this a Roundtrip?</h4>
+					<div id="WantsRoundtripRide" class="btn-group" data-toggle="buttons">
+						<label class="btn btn-primary">
+							<input type="radio" value="Yes" name="RoundtripRideChoice">Yes
+						</label>
+						<label class="btn btn-primary">
+							<input type="radio" value="No" name="RoundtripRideChoice">No
+						</label>
+					</div>
 				</div>
+
+				<div id="RoundTrip" class="form-group text-center">
+					<div class="form-group">
+						<label for="returnDepartureTime" class="control-label">
+							Return Trip Departure Time
+						</label> 
+						<input name="returnDepartureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
+					</div>
+				</div>			
 															
 				<!-- Note that the fieldset should only be viewable if a user has a car -->
 				<c:if test="${isDriver}">
@@ -125,7 +121,7 @@
 			</form>
 		</div>
 	
-		<div class="col-md-3"></div>
+		<div class="col-md-2"></div>
 	</div>
 </div>
 
@@ -133,16 +129,15 @@
 
 <script>
 	$(document).ready(function(){
-		$("#RecurringRide").hide();
+		$("#RoundTrip").hide();
 		$("#Driving").hide();		
 	});
 
-
-	$("#WantsRecurringRide").change(function(){
-		if($('input[name=RecurringRideChoice]:checked').val() == "Yes"){
-			$("#RecurringRide").show();
+	$('#WantsRoundtripRide').change(function(){
+		if($('input[name=RoundtripRideChoice]:checked').val() == "Yes"){
+			$("#RoundTrip").show();
 		}else{
-			$("#RecurringRide").hide();
+			$("#RoundTrip").hide();
 		}
 	});
 

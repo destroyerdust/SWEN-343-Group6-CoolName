@@ -1,6 +1,7 @@
 package com.thumbsup.coolname;
 
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,10 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.thumbsup.coolname.entity.Group;
+import com.thumbsup.coolname.entity.RideEntry;
 import com.thumbsup.coolname.entity.User;
+import com.thumbsup.coolname.entity.User_Group;
 import com.thumbsup.coolname.entity.Vehicle;
 import com.thumbsup.coolname.service.GroupManager;
 import com.thumbsup.coolname.service.SignupManager;
+import com.thumbsup.coolname.service.UserGroupManager;
 import com.thumbsup.coolname.service.UserManager;
 import com.thumbsup.coolname.service.VehicleManager;
 
@@ -56,7 +60,14 @@ public class GroupController {
 			HttpServletRequest request,
 			Model model)
 	{
-		return new ModelAndView("redirect:/");
+		
+		GroupManager gm = new GroupManager();
+		Group group = gm.createGroup(name, description, ((Integer)request.getSession().getAttribute("auth")).intValue());
+		
+		UserGroupManager ugm = new UserGroupManager();
+		User_Group ug = ugm.createSignup(((Integer)request.getSession().getAttribute("auth")).intValue(), group.getGroupID(), new Timestamp(new java.util.Date().getTime()));
+		
+		return new ModelAndView("redirect:/group/list");
 	}
 	
 	@RequestMapping(value = "/group/list", method = RequestMethod.GET)
@@ -74,22 +85,55 @@ public class GroupController {
 	{
 		GroupManager gm = new GroupManager();
 		Group group = gm.selectGroup(groupID);
-		
-		
+		List<RideEntry> rideEntries = gm.findRideEntriesForGroup(groupID);
+		List<User> users = gm.findUsersForGroup(groupID);
 		
 		model.addAttribute("group", group);
+		model.addAttribute("rideEntries", rideEntries);
+		model.addAttribute("groupUsers", users);
+		
 		return "groupView";
 	}
 	
 	@RequestMapping(value = "/group/{groupID}/join", method = RequestMethod.GET)
 	public ModelAndView join(Locale locale, Model model, @PathVariable int groupID, HttpServletRequest request)
 	{
-		return new ModelAndView("redirect:/");
+		if(request.getSession().getAttribute("auth")==null)
+		{
+			//redirect to login			
+			logger.info("user is not authenticated, redirecting to log in");
+			return new ModelAndView("redirect:/account/login");
+		}
+		UserGroupManager ugm = new UserGroupManager();
+		ugm.createSignup((Integer)request.getSession().getAttribute("auth"), groupID, new Timestamp(new java.util.Date().getTime()));
+		
+		return new ModelAndView("redirect:/group/list");
 	}
 	
 	@RequestMapping(value = "/group/{groupID}/leave", method = RequestMethod.DELETE)
 	public ModelAndView leave(Locale locale, Model model, @PathVariable int groupID, HttpServletRequest request)
 	{
-		return new ModelAndView("redirect:/");
+		if(request.getSession().getAttribute("auth")==null)
+		{
+			//redirect to login			
+			logger.info("user is not authenticated, redirecting to log in");
+			return new ModelAndView("redirect:/account/login");
+		}
+		UserGroupManager ugm = new UserGroupManager();
+		int ugID = -1;
+		for(User_Group ug : ugm.listUserGroups())
+		{
+			if(ug.getGroupID() == groupID && ug.getUserID() == (Integer)request.getSession().getAttribute("auth"))
+			{
+				ugID = ug.getUser_GroupID();
+				break;
+			}
+		}
+		if(ugID != -1)
+		{
+			ugm.deleteSignup(ugID);
+		}
+		
+		return new ModelAndView("redirect:/group/list");
 	}
 }

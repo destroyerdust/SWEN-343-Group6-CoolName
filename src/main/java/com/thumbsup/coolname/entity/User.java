@@ -33,7 +33,7 @@ public class User implements Serializable {
 	private int userType;
 
 	//bi-directional many-to-one association to RideEntry
-	@OneToMany(mappedBy="user")
+	@OneToMany(targetEntity= Vehicle.class ,mappedBy="user", fetch = FetchType.EAGER)
 	private List<Vehicle> vehicles;
 	
 	public User(){}

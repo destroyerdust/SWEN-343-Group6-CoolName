@@ -31,6 +31,7 @@
    <mapping resource="Location.hbm.xml"/>
    <mapping resource="RideEntry_Group.hbm.xml"/>
    <mapping resource="User_Group.hbm.xml"/>
+   <mapping resource="Roundtrip.hbm.xml"/>
 
 </session-factory>
 </hibernate-configuration>

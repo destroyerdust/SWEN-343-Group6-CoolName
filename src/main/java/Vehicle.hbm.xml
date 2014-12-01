@@ -18,6 +18,7 @@
    		<one-to-many class="com.thumbsup.coolname.entity.RideEntry"/>
    	</list>
    	<property name="model" column="Model" type="string"/>
+   	<property name="licensePlate" column="LicensePlate" type="string"/>
    	<property name="name" column="Name" type="string"/>
    	<property name="numSeats" column="NumSeats" type="int"/>
    	<property name="description" column="Description" type="string"/>

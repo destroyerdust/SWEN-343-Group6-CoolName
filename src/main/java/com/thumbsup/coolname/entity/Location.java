@@ -23,6 +23,8 @@ public class Location implements Serializable {
 	private double latitude;
 
 	private int rideEntryID;
+	
+	private String title;
 
 	public Location() {
 	}
