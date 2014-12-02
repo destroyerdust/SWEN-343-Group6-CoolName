@@ -33,25 +33,7 @@ public class HomeController {
 		
 		//process the list
 		for(RideEntry ride: listRideEntry){
-			//gets current server time to use for ride status comparison
-			Timestamp currentTime = new Timestamp(new java.util.Date().getTime());
-
-			//if the ride has already started but has not ended
-			if(currentTime.after(ride.getStartTime()) && currentTime.before(ride.getEndTime())){
-				//the ride has already started and is in progress
-				ride.setStatus("In Progress");
-			}
-			//if the ride has not started
-			else if(currentTime.before(ride.getStartTime()) && currentTime.before(ride.getEndTime())){
-				ride.setStatus("Seating");				
-			}
-			//if the ride has finished
-			else if(currentTime.after(ride.getStartTime()) && currentTime.after(ride.getEndTime())){
-				ride.setStatus("Complete");
-			}else{
-				//this should never happen but just incase (pesky dirty data)
-				ride.setStatus("Invalid Start/End Time");
-			}
+			ride.updateStatus();
 		}
 
 		model.addAttribute("listRideEntrys", listRideEntry);
