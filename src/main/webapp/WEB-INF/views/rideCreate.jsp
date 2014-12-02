@@ -43,7 +43,7 @@
 					<label for="departureTime" class="col-sm-2 control-label">Departure Time</label>
 					<div class="col-sm-8">
 						<div class='input-group date' id='datetimepicker1'>
-                    		<input type='text' class="form-control" />
+                    		<input name="departureTime" type='text' class="form-control" />
                     		<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     		</span>
                 		</div>
@@ -53,7 +53,7 @@
 					<label for="arrivalTime" class="col-sm-2 control-label">Arrival Time</label>
 					<div class="col-sm-8">
 						<div class='input-group date' id='datetimepicker2'>
-                    		<input type='text' class="form-control" />
+                    		<input name="arrivalTime" type='text' class="form-control" />
                     		<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     		</span>
                 		</div>
@@ -89,7 +89,7 @@
 						</label>
 						<div class="col-sm-8">
 							<div class='input-group date' id='datetimepicker3'>
-							     <input type='text' class="form-control" />
+							     <input name="returnDepartureTime" type='text' class="form-control" />
                     			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     			</span>
                 				</div>
@@ -101,7 +101,7 @@
 						</label>
 						<div class="col-sm-8">
 							<div class='input-group date' id='datetimepicker4'>
-							     <input type='text' class="form-control" />
+							     <input name="returnArrivalTime" type='text' class="form-control" />
                     			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     			</span>
                 				</div>
