@@ -50,6 +50,16 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label for="arrivalTime" class="col-sm-2 control-label">Arrival Time</label>
+					<div class="col-sm-8">
+						<div class='input-group date' id='datetimepicker2'>
+                    		<input type='text' class="form-control" />
+                    		<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    		</span>
+                		</div>
+					</div>
+				</div>
+				<div class="form-group">
 					<label for="group-list" class="col-sm-2 control-label">Group</label>
 					<div class="col-sm-8">
 						<select id="Group" name="rideGroup" class="form-control">
@@ -78,7 +88,19 @@
 							Return Trip Departure Time
 						</label>
 						<div class="col-sm-8">
-							<div class='input-group date' id='datetimepicker2'>
+							<div class='input-group date' id='datetimepicker3'>
+							     <input type='text' class="form-control" />
+                    			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    			</span>
+                				</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="returnArrivalTime" class="control-label col-sm-2">
+							Return Trip Departure Time
+						</label>
+						<div class="col-sm-8">
+							<div class='input-group date' id='datetimepicker4'>
 							     <input type='text' class="form-control" />
                     			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     			</span>
