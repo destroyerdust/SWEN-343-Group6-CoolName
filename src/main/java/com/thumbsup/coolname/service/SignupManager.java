@@ -1,6 +1,8 @@
 package com.thumbsup.coolname.service;
 
 import java.sql.Timestamp;
+import java.util.List;
+
 import com.thumbsup.coolname.dao.SignupDAO;
 import com.thumbsup.coolname.entity.Signup;
 
@@ -46,5 +48,11 @@ public class SignupManager {
 		sDAO.delete(s);
 
 	}
+	
+	public List<Signup> listSignups()
+	{
+		return sDAO.selectAll();
+	}
+			
 
 }

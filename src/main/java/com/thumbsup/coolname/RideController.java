@@ -25,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.thumbsup.coolname.entity.Group;
 import com.thumbsup.coolname.entity.RideEntry;
+import com.thumbsup.coolname.entity.RoundTrip;
+import com.thumbsup.coolname.entity.Signup;
 import com.thumbsup.coolname.entity.User;
 import com.thumbsup.coolname.entity.Vehicle;
 import com.thumbsup.coolname.service.GroupManager;
@@ -305,7 +307,7 @@ public class RideController {
 	 * Select ride viewer
 	 */
 	@RequestMapping(value = "/ride/{rideEntryID}/view", method = RequestMethod.GET)
-	public String view(Locale locale, Model model, @PathVariable int rideEntryID) {
+	public String view(Locale locale, Model model, HttpServletRequest request, @PathVariable int rideEntryID) {
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
@@ -355,7 +357,49 @@ public class RideController {
 			model.addAttribute("vehicleModel", "No vehicle");
 			model.addAttribute("driverName", "No driver");
 		}
-
+		
+		int roundTripStart = 0;
+		int roundTripEnd = 0;
+		RoundTripManager rtm = new RoundTripManager();
+		for(RoundTrip rt : rtm.listRideEntries())
+		{
+			if(rt.getStartRideEntryID() == re.getRideEntryID())
+			{
+				roundTripEnd = rt.getEndRideEntryID();
+				break;
+			}
+			else if(rt.getEndRideEntryID() == re.getRideEntryID())
+			{
+				roundTripStart = rt.getStartRideEntryID();
+				break;
+			}
+		}
+		model.addAttribute("roundTripStart",roundTripStart);
+		model.addAttribute("roundTripEnd",roundTripEnd);
+		
+		int rideRelation = 0;
+		if((Integer)request.getSession().getAttribute("auth") != null)
+		{
+			if(re.getAuthorID() == (Integer)request.getSession().getAttribute("auth"))
+			{
+				rideRelation = 1;
+			}
+			else
+			{
+				UserManager um = new UserManager();
+				List<RideEntry> entries = um.getRideHistoryForUser((Integer)request.getSession().getAttribute("auth"));
+				for(RideEntry entry : entries)
+				{
+					if(entry.getRideEntryID() == re.getRideEntryID())
+					{
+						rideRelation = 2;
+						break;
+					}
+				}
+			}	
+		}	
+		model.addAttribute("rideRelation", rideRelation);
+		
 		return "rideView";
 	}
 	
