@@ -10,6 +10,8 @@
 <!-- Bootstrap Form Valication CSS -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/>
 
+<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap-datetimepicker.css" />"/>
+
 <!-- Custom CSS -->
 <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />"/>
 
@@ -30,3 +32,7 @@
 
 <!-- Formatter.js -->
 <script type="text/javascript" src="<c:url value="/resources/js/formatter.js" />"> </script>
+
+<script type="text/javascript" src="<c:url value="/resources/js/moment.js" />"> </script>
+
+<script type="text/javascript" src="<c:url value="/resources/js/bootstrap-datetimepicker.min.js" />"> </script>
