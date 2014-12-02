@@ -70,7 +70,6 @@ div.inline {
 			</c:if>
 			<c:if test="${rideRelation == 1}">
 				<span>
-					<button class="btn btn-primary" onclick="location.href='/coolname/ride/${rideEntryID}/begin'">Begin Ride</button>
 					<button class="btn btn-primary" onclick="location.href='/coolname/ride/${rideEntryID}/edit'">Edit Ride</button>
 					<button class="btn btn-primary" onclick="location.href='/coolname/ride/${rideEntryID}/delete'">Delete Ride</button>
 				</span>
