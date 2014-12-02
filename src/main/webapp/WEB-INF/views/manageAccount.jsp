@@ -68,7 +68,13 @@
 				</div>
 				<div class="col-sm-offset-2 col-sm-10">
 					<h3>Rides in progress</h3>
-					<div></div>
+					<c:forEach items="${user.vehicles}" var="vehicle">
+						<c:forEach items="${vehicle.rideEntries}" var="ride">
+							<c:if test="${ride.status == 'In Progress'}">
+								<span>${ride.name}</span><span>${ride.status}</span>
+							</c:if>
+						</c:forEach>
+					</c:forEach>
 				</div>
 			</div>
 			<div class="col-md-2"></div>

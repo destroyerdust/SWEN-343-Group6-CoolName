@@ -232,7 +232,7 @@ public class AccountController {
 		boolean status = false;
 		for (Vehicle vehicle : vehicles) {
 			if( vehicle.getVehicleID() != 0 && (vehicle.getDescription().equals("") || vehicle.getLicensePlate().equals("") || vehicle.getModel().equals("") || vehicle.getName().equals("") ||
-					vehicle.getNumSeats() == 0 || vehicle.getLicensePlate().length() > 4))
+					vehicle.getNumSeats() == 0))
 			{
 				status = true;
 			}
@@ -270,7 +270,7 @@ public class AccountController {
 							HttpServletRequest request)
 	{
 		String page = "redirect:/account/vehicle/edit";
-		if(model != null && seats != null && !model.equals("") && !seats.equals("") && !name.equals("") && !license.equals("") && license.length() <= 4)
+		if(model != null && seats != null && !model.equals("") && !seats.equals("") && !name.equals("") && !license.equals(""))
 		{
 			Vehicle v = null;
 			v = new Vehicle();

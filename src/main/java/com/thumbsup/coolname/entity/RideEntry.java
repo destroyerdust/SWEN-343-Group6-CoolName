@@ -141,4 +141,26 @@ public class RideEntry implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public void updateStatus(){
+		//gets current server time to use for ride status comparison
+		Timestamp currentTime = new Timestamp(new java.util.Date().getTime());
+
+		//if the ride has already started but has not ended
+		if(currentTime.after(this.getStartTime()) && currentTime.before(this.getEndTime())){
+			//the this has already started and is in progress
+			this.setStatus("In Progress");
+		}
+		//if the this has not started
+		else if(currentTime.before(this.getStartTime()) && currentTime.before(this.getEndTime())){
+			this.setStatus("Seating");				
+		}
+		//if the this has finished
+		else if(currentTime.after(this.getStartTime()) && currentTime.after(this.getEndTime())){
+			this.setStatus("Complete");
+		}else{
+			//this should never happen but just incase (pesky dirty data)
+			this.setStatus("Invalid Start/End Time");
+		}
+	}
 }
