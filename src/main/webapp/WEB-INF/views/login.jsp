@@ -20,35 +20,35 @@
 			<div class="row">
 				<div class="col-md-2"></div>	
 				<div class="col-md-8">
-					<div>
-						<h1>Login</h1>
-						<c:if test="${not l}">
-							<div>USERNAME OR PASSWORD INCORRECT</div>
-						</c:if>
+				<h1 class="text-center">Login</h1>
+				<div>
+					<c:if test="${not l}">
+						<div>USERNAME OR PASSWORD INCORRECT</div>
+					</c:if>
+				</div>
+				<form class="form-horizontal" action="login" method="POST">
+					<div class="form-group">
+						<label for="usr" class="col-sm-2 control-label">User Name</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" name="usr" autofocus>
+						</div>
 					</div>
-					<form class="form-horizontal" action="login" method="POST">
-						<div class="form-group">
-							<label for="usr" class="col-sm-2 control-label">User Name</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" name="usr" autofocus>
-							</div>
-						</div>
 						
-						<div class="form-group">
-							<label for="psw" class="col-sm-2 control-label">Password</label>
-							<div class="col-sm-8">
-								<input type="password" class="form-control" name="psw">
-							</div>
+					<div class="form-group">
+						<label for="psw" class="col-sm-2 control-label">Password</label>
+						<div class="col-sm-8">
+							<input type="password" class="form-control" name="psw">
 						</div>
-						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
-								<button class="btn btn-primary" type="submit" >Login</button>
-							</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button class="btn btn-primary" type="submit" >Login</button>
 						</div>
-					</form>
-			    </div>
-			    <div class="col-md-2"></div>
+					</div>
+				</form>
 			</div>
+			<div class="col-md-2"></div>
 		</div>
+	</div>
 </body>
 </html>

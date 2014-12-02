@@ -14,32 +14,51 @@
 <body>
 <div class="container">
 	<div class="row">
-	<div class="col-md-3"></div>
-	<div class="col-md-6">
-	<h1>Create vehicle</h1>
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+	<h1 class="text-center">Create vehicle</h1>
 	<c:if test="${not s}">
 		<div>INCORRECT INFORMATION</div>
 	</c:if>
-	<form action="create" method="POST">
+	<form class="form-horizontal" action="create" method="POST">
 		<div class="form-group">
-			<input type="text" id="model" class="form-control" name="model" placeholder="Model">
+			<label for="model" class="col-sm-2 control-label">Model</label>
+			<div class="col-sm-8">
+				<input type="text" id="model" class="form-control" name="model">
+			</div>
 		</div>
 		<div class="form-group">
-			<input type="text" id="license" class="form-control" name="license" placeholder="License Plate">
+			<label for="license" class="col-sm-2 control-label">License Plate</label>
+			<div class="col-sm-8">
+				<input type="text" id="license" class="form-control" name="license">
+			</div>
 		</div>
 		<div class="form-group">
-			<input type="text" id="name" class="form-control" name="name" placeholder="Name">
+			<label for="name" class="col-sm-2 control-label">Name</label>
+			<div class="col-sm-8">
+				<input type="text" id="name" class="form-control" name="name">
+			</div>
 		</div>
 		<div class="form-group">
-			<input type="number" id="seats" class="form-control" name="seats" min="0" max="10" step="1" value="4" placeholder="Number Seats">
+			<label for="seats" class="col-sm-2 control-label">Number of Seats</label>
+			<div class="col-sm-8">
+				<input type="number" id="seats" class="form-control" name="seats" min="0" max="10" step="1" value="4">
+			</div>
 		</div>
 		<div class="form-group">
-			<textarea class="form-control" rows="4" id="desc" name="desc" placeholder="Vehicle Description"></textarea>
+			<label for="desc" class="col-sm-2 control-label">Description</label>
+			<div class="col-sm-8">
+				<textarea class="form-control" rows="4" id="desc" name="desc"></textarea>
+			</div>
 		</div>
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+		</div>
 	</form>
 	</div>
-	<div class="col-md-3"></div>
+	<div class="col-md-2"></div>
 	</div><!-- Row End -->
 	</div><!-- Container End -->
 </body>

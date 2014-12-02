@@ -9,14 +9,13 @@
 		<!-- Includes all of the content within header.jsp-->
 		<%@ include file="/WEB-INF/views/header.jsp" %>
 	</div>
-	<p>${serverTime}</p>
 	<!-- End Header -->
 <body>
 <div class="container">
 	<div class="row">
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
-	<h1>Sign Up</h1>
+	<h1 class="text-center">Sign Up</h1>
 	<c:if test="${not s}">
 		<div>INCORRECT INFORMATION</div>
 	</c:if>

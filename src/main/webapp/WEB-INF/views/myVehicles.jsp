@@ -19,7 +19,7 @@
 	<div class="row">
 	<div class="col-md-3"></div>
 	<div class="col-md-6">
-	<h1>My vehicles</h1>
+	<h1 class="text-center">My vehicles</h1>
 	<c:if test="${not s}">
 		<div>INCORRECT INFORMATION</div>
 	</c:if>

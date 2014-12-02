@@ -17,35 +17,45 @@
 <body>
 <div class="container">
 	<div class="row">
-	<div class="col-md-3"></div>
-	<div class="col-md-6">
-	<h1>Sign Up</h1>
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+	<h1 class="text-center">Edit User</h1>
 	<c:if test="${not s}">
 		<div>INCORRECT INFORMATION</div>
 	</c:if>
-	<form:form action="edit" method="POST" modelAttribute="user">
+	<form:form class="form-horizontal" action="edit" method="POST" modelAttribute="user">
 		<div class="form-group">
-			<label>Username: </label><span name="userName">${user.userName}</span>
-		</div>
-<!-- 		<div class="form-group">
-			<input type="password" id="psw" class="form-control" name="psw" placeholder="Password">
-		</div> -->
-		<div class="form-group">
-			<label>First name:</label>
-			<input type="text" id="name" class="form-control" name="firstName" value="${user.firstName}">
+			<label class="col-sm-2 control-label">Username: </label>
+			<div class="col-sm-8">
+				<p class="form-control-static" name="userName">${user.userName}</p>
+			</div>
 		</div>
 		<div class="form-group">
-			<label>Last name:</label>
-			<input type="text" id="lstn" class="form-control" name="lastName" value="${user.lastName}">
+			<label class="col-sm-2 control-label">First name:</label>
+			<div class="col-sm-8">
+				<input type="text" id="name" class="form-control" name="firstName" value="${user.firstName}">
+			</div>
 		</div>
 		<div class="form-group">
-			<label>Cell phone:</label>
-			<input type="text" id="cell" class="form-control" name="phoneNumber" value="${user.phoneNumber}">
-		</div>		
-		<button type="submit" class="btn btn-primary">Submit</button>
+			<label class="col-sm-2 control-label">Last name:</label>
+			<div class="col-sm-8">
+				<input type="text" id="lstn" class="form-control" name="lastName" value="${user.lastName}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Cell phone:</label>
+			<div class="col-sm-8">
+				<input type="text" id="cell" class="form-control" name="phoneNumber" value="${user.phoneNumber}">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">	
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+		</div>
 	</form:form>
 	</div>
-	<div class="col-md-3"></div>
+	<div class="col-md-2"></div>
 	</div><!-- Row End -->
 	</div><!-- Container End -->
 	<script>

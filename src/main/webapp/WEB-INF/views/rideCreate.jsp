@@ -30,7 +30,7 @@
 		<div class="col-md-8">
 			<form class="form-horizontal role="form" method="POST">
 				<div class="form-group">
-					<h3 class="text-center">Create your ride request</h3>
+					<h1 class="text-center">Create your ride request</h1>
 				</div>
 				<div class="form-group">
 					<label for="name" class="col-sm-2 control-label">Name of Ride</label>
