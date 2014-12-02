@@ -129,6 +129,7 @@ public class RideController {
 			
 			//convert times to correctly formatted datetime for the depature time					
 			Timestamp departTime = formatTimestamp(departureTime);
+			Timestamp startTime = new Timestamp(departTime.getTime()+1000*60*30);
 			
 			java.util.Date date= new java.util.Date();
 			Timestamp creationTimestamp = new Timestamp(date.getTime());
@@ -159,15 +160,16 @@ public class RideController {
 					//create a new RoundTripManger for creating a new roundtrip
 					RoundTripManager rtm = new RoundTripManager();					
 					
-					Timestamp departTime2 = formatTimestamp(returnDepartureTime);
+					Timestamp departTime2 = formatTimestamp(returnDepartureTime);					
+					Timestamp startTime2 = new Timestamp(departTime2.getTime()+1000*60*30);
 					
 					RideEntry startRide = rem.createRideEntry(
-							creationTimestamp, destination, null, null, name,
+							creationTimestamp, destination, startTime, null, name,
 							origin, departTime, numseats, userPK, vehicle);
 					
 					//swap the orgin and destination
 					RideEntry endRide = rem.createRideEntry(
-							creationTimestamp, origin, null, null, name,
+							creationTimestamp, origin, startTime2, null, name,
 							destination, departTime2, numseats, userPK, vehicle);
 					
 					rtm.createRoundTrip(startRide.getRideEntryID(), endRide.getRideEntryID());
@@ -181,7 +183,7 @@ public class RideController {
 				} else {
 					//otherwise there is just one ride					
 					RideEntry createdRide = rem.createRideEntry(
-							creationTimestamp, destination, null, null, name,
+							creationTimestamp, destination, startTime, null, name,
 							origin, departTime, numseats, userPK, vehicle);
 					if(!group.equals("NULL"))
 					{
@@ -201,14 +203,15 @@ public class RideController {
 					RoundTripManager rtm = new RoundTripManager();					
 					
 					Timestamp departTime2 = formatTimestamp(returnDepartureTime);
+					Timestamp startTime2 = new Timestamp(departTime2.getTime()+1000*60*30);
 					
 					RideEntry startRide = rem.createRideEntry(
-							creationTimestamp, destination, null, null, name,
+							creationTimestamp, destination, startTime, null, name,
 							origin, departTime, 0, userPK, vehicle);
 
 					// swap the origin and destination
 					RideEntry endRide = rem.createRideEntry(creationTimestamp,
-							origin, null, null, name, destination, departTime2,
+							origin, startTime2, null, name, destination, departTime2,
 							0, userPK, vehicle);
 					
 					rtm.createRoundTrip(startRide.getRideEntryID(), endRide.getRideEntryID());
@@ -221,7 +224,7 @@ public class RideController {
 
 				} else {					
 					RideEntry createdRide = rem.createRideEntry(
-							creationTimestamp, destination, null, null, name,
+							creationTimestamp, destination, startTime, null, name,
 							origin, departTime, 0, userPK, vehicle);
 					if(!group.equals("NULL"))
 					{

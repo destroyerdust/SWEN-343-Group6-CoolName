@@ -1,19 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <html>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-<head>
 <%@ include file="/WEB-INF/views/includes.jsp" %>
-
+<head>
 	<!-- Begin Header -->
 	<div id="head" >
 		<!-- Includes all of the content within header.jsp-->
@@ -28,7 +17,7 @@
 	<div class="row">
 		<div class="col-md-2"></div>	
 		<div class="col-md-8">
-			<form class="form-horizontal role="form" method="POST">
+			<form class="createRideForm form-horizontal" role="form" method="POST">
 				<div class="form-group">
 					<h1 class="text-center">Create your ride request</h1>
 				</div>
@@ -53,7 +42,11 @@
 				<div class="form-group">
 					<label for="departureTime" class="col-sm-2 control-label">Departure Time</label>
 					<div class="col-sm-8">
-						<input name="departureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
+						<div class='input-group date' id='datetimepicker1'>
+                    		<input type='text' class="form-control" />
+                    		<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    		</span>
+                		</div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -85,7 +78,11 @@
 							Return Trip Departure Time
 						</label>
 						<div class="col-sm-8">
-							<input name="returnDepartureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
+							<div class='input-group date' id='datetimepicker2'>
+							     <input type='text' class="form-control" />
+                    			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    			</span>
+                				</div>
 						</div>
 					</div>
 				</div>		
@@ -188,7 +185,54 @@
             }
 		});		
  	});
-
+	
+	$(function () {
+        $('#datetimepicker1').datetimepicker();
+    });
+	$(function () {
+        $('#datetimepicker2').datetimepicker();
+    });
 </script>
+<script>
+    $(document).ready(function() {
+        $('.createRideForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+            	name: {
+                    message: 'The name of ride is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'The name of ride is required and cannot be empty'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: 'The name of ride must be more than 6 and less than 30 characters long'
+                        }
+                    }
+                },
+                destination: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The destination is required'
+                        }
+                    }
+                },
+                orgin: {
+                	validators: {
+                		notEmpty: {
+                			message: 'The origin is required'
+                		}
+                	}
+                }
+            }
+        });
+    });
+    </script>
 
 </html>

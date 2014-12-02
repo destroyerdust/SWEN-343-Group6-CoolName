@@ -145,7 +145,7 @@ public class RideEntry implements Serializable {
 	public void updateStatus(){
 		//gets current server time to use for ride status comparison
 		Timestamp currentTime = new Timestamp(new java.util.Date().getTime());
-
+		
 		//if the ride has already started but has not ended
 		if(currentTime.after(this.getStartTime()) && currentTime.before(this.getEndTime())){
 			//the this has already started and is in progress
