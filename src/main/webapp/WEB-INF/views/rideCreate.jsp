@@ -43,10 +43,10 @@
 					<label for="departureTime" class="col-sm-2 control-label">Departure Time</label>
 					<div class="col-sm-8">
 						<div class='input-group date' id='datetimepicker1'>
-                    	<input type='text' class="form-control" />
-                    	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                    	</span>
-                </div>
+                    		<input type='text' class="form-control" />
+                    		<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    		</span>
+                		</div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -78,7 +78,11 @@
 							Return Trip Departure Time
 						</label>
 						<div class="col-sm-8">
-							<input name="returnDepartureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
+							<div class='input-group date' id='datetimepicker2'>
+							     <input type='text' class="form-control" />
+                    			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    			</span>
+                				</div>
 						</div>
 					</div>
 				</div>		
@@ -184,6 +188,9 @@
 	
 	$(function () {
         $('#datetimepicker1').datetimepicker();
+    });
+	$(function () {
+        $('#datetimepicker2').datetimepicker();
     });
 </script>
 <script>
