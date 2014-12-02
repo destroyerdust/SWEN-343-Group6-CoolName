@@ -64,10 +64,36 @@ div.inline {
 </head>
 <body>
 	<h1>${rideEntry.getName()}
-		<span style="float: right;"><button class="btn btn-primary"
-				onclick="location.href='/coolname/ride/${rideEntryID}/join'">Join
-				Ride</button></span>
+		<span style="float: right;">
+			<c:if test="${rideRelation == 0}">
+				<button class="btn btn-primary" onclick="location.href='/coolname/ride/${rideEntryID}/join'">Join Ride</button>
+			</c:if>
+			<c:if test="${rideRelation == 1}">
+				<span>
+					<button class="btn btn-primary" onclick="location.href='/coolname/ride/${rideEntryID}/begin'">Begin Ride</button>
+					<button class="btn btn-primary" onclick="location.href='/coolname/ride/${rideEntryID}/edit'">Edit Ride</button>
+					<button class="btn btn-primary" onclick="location.href='/coolname/ride/${rideEntryID}/delete'">Delete Ride</button>
+				</span>
+			</c:if>
+			<c:if test="${rideRelation == 2}">
+				<button class="btn btn-primary" onclick="location.href='/coolname/ride/${rideEntryID}/leave'">Leave Ride</button>
+			</c:if>
+		</span>
 	</h1>
+	<h2>
+				<c:if test="${roundTripEnd > 0}">
+					Round Trip - Start
+					<span style="float: right;">
+					<button class="btn btn-primary" onclick="location.href='/coolname/ride/${roundTripEnd}/view'">End</button>
+					</span>
+				</c:if>
+				<c:if test="${roundTripStart > 0}">
+					Round Trip - End
+					<span style="float: right;">
+					<button class="btn btn-primary" onclick="location.href='/coolname/ride/${roundTripStart}/view'">Start</button>
+					</span>
+				</c:if>
+			</h2>
 	<div>
 		<div id="map" style="height: 310px; width: 100%; float: center;"></div>
 		<span>
