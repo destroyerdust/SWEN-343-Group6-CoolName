@@ -20,6 +20,9 @@
 	<div class="col-md-3"></div>
 	<div class="col-md-6">
 	<h1>My vehicles</h1>
+	<c:if test="${not s}">
+		<div>INCORRECT INFORMATION</div>
+	</c:if>
 	<form:form action="edit" method="POST" modelAttribute="user">
 		<div class="form-group">
 			<div >
@@ -40,6 +43,10 @@
 						<label>Model: </label>
 						<div class="form-group">
 							<form:input class="form-control" path="vehicles[${status.index}].model" name="model" value="${vehicle.model}" />
+						</div>
+						<label>License Plate:</label>
+						<div class="form-group">
+							<form:input class="form-control" path="vehicles[${status.index}].licensePlate" name="licensePlate" value="${vehicle.licensePlate}" />
 						</div>
 						<label>Name: </label>
 						<div class="form-group">

@@ -20,6 +20,9 @@
 	<div class="col-md-3"></div>
 	<div class="col-md-6">
 	<h1>Sign Up</h1>
+	<c:if test="${not s}">
+		<div>INCORRECT INFORMATION</div>
+	</c:if>
 	<form:form action="edit" method="POST" modelAttribute="user">
 		<div class="form-group">
 			<label>Username: </label><span name="userName">${user.userName}</span>

@@ -17,6 +17,9 @@
 	<div class="col-md-3"></div>
 	<div class="col-md-6">
 	<h1>Create vehicle</h1>
+	<c:if test="${not s}">
+		<div>INCORRECT INFORMATION</div>
+	</c:if>
 	<form action="create" method="POST">
 		<div class="form-group">
 			<input type="text" id="model" class="form-control" name="model" placeholder="Model">

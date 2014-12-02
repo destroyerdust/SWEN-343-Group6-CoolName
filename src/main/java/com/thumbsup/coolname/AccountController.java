@@ -111,13 +111,14 @@ public class AccountController {
 		ModelAndView view = null;
 		if( userId == null)
 		{
-			page = "redirect:login";
+			page = "redirect:/account/login";
 			view = new ModelAndView(page);
 		}
 		else
 		{
 			UserDAO dao = new UserDAO();
 			User u = dao.select(userId);
+			request.setAttribute("s", true);
 			view = new ModelAndView(page,"user",u);
 		}
 		return view;
@@ -132,6 +133,7 @@ public class AccountController {
 		String firstName = updatedUser.getFirstName();
 		String lastName = updatedUser.getLastName();
 		String phoneNumber = updatedUser.getPhoneNumber();
+		String page = "redirect:/account/manage";
 		if( (firstName != null && !firstName.equals("")) && (lastName != null && !lastName.equals("")) && (phoneNumber != null && !phoneNumber.equals("")) )
 		{
 			oldUser.setFirstName(updatedUser.getFirstName());
@@ -139,7 +141,12 @@ public class AccountController {
 			oldUser.setPhoneNumber(updatedUser.getPhoneNumber());
 			services.updateUser(oldUser);
 		}
-		return new ModelAndView("redirect:/account/manage");
+		else
+		{
+			request.setAttribute("s", false);
+			page = "editProfile";
+		}
+		return new ModelAndView(page);
 	}
 	
 	// VEHICLE MANAGEMENT SERVICES
@@ -158,6 +165,7 @@ public class AccountController {
 		{
 			UserDAO dao = new UserDAO();
 			User u = dao.select(userId);
+			request.setAttribute("s", true);
 			view = new ModelAndView(page,"user",u);
 		}
 		return view;
@@ -168,6 +176,11 @@ public class AccountController {
 	{
 		UserManager services = new UserManager();
 		User oldUser = services.selectUser((Integer) request.getSession().getAttribute("auth"));
+		if(validateVehicleList(updatedUser.getVehicles()))
+		{
+			request.setAttribute("s", false);
+			return new ModelAndView("myVehicles", "user", oldUser);
+		}
 		if(updatedUser.getVehicles() != null)
 		{
 			List<Integer> toDelete = new ArrayList<Integer>();
@@ -181,6 +194,7 @@ public class AccountController {
 						vehicle.setModel(v.getModel());
 						vehicle.setNumSeats(v.getNumSeats());
 						vehicle.setDescription(v.getDescription());
+						vehicle.setLicensePlate(v.getLicensePlate());
 					}	
 				}
 				if(delete)
@@ -198,6 +212,19 @@ public class AccountController {
 		return new ModelAndView("redirect:/account/manage");
 	}
 	
+	private boolean validateVehicleList(List<Vehicle> vehicles)
+	{
+		boolean status = false;
+		for (Vehicle vehicle : vehicles) {
+			if( vehicle.getVehicleID() != 0 && (vehicle.getDescription().equals("") || vehicle.getLicensePlate().equals("") || vehicle.getModel().equals("") || vehicle.getName().equals("") ||
+					vehicle.getNumSeats() == 0 || vehicle.getLicensePlate().length() > 4))
+			{
+				status = true;
+			}
+		}
+		return status;
+	}
+	
 	@RequestMapping(value="/account/vehicle/create", method=RequestMethod.GET)
 	public ModelAndView getCreateVehicle(HttpServletRequest request)
 	{
@@ -213,6 +240,7 @@ public class AccountController {
 		{
 			UserDAO dao = new UserDAO();
 			User u = dao.select(userId);
+			request.setAttribute("s", true);
 			view = new ModelAndView(page,"user",u);
 		}
 		return view;
@@ -226,7 +254,8 @@ public class AccountController {
 							@RequestParam(value="license", required=true, defaultValue="") String license,
 							HttpServletRequest request)
 	{
-		if(model != null && seats != null && !model.equals("") && !seats.equals("") && !name.equals("") && !license.equals(""))
+		String page = "redirect:/account/vehicle/edit";
+		if(model != null && seats != null && !model.equals("") && !seats.equals("") && !name.equals("") && !license.equals("") && license.length() <= 4)
 		{
 			Vehicle v = null;
 			v = new Vehicle();
@@ -242,7 +271,12 @@ public class AccountController {
 			user.addVehicle(v);
 			services.updateUser(user);
 		}
-		return new ModelAndView("redirect:/account/vehicle/edit");
+		else
+		{
+			request.setAttribute("s", false);
+			page = "createVehicle";
+		}
+		return new ModelAndView(page);
 	}
 	
 	
