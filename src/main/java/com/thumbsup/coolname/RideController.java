@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.thumbsup.coolname.entity.Group;
 import com.thumbsup.coolname.entity.RideEntry;
+import com.thumbsup.coolname.entity.RideEntry_Group;
 import com.thumbsup.coolname.entity.RoundTrip;
 import com.thumbsup.coolname.entity.Signup;
 import com.thumbsup.coolname.entity.User;
@@ -406,6 +407,50 @@ public class RideController {
 			SignupManager sum = new SignupManager();
 			sum.createSignup(userID, rideEntryID, new Timestamp(new Date().getTime()));
 		}
+		return new ModelAndView("redirect:/");
+	}
+	
+	@RequestMapping(value = "/ride/{rideEntryID}/delete", method = RequestMethod.GET)
+	public ModelAndView delete(Locale locale, Model model, @PathVariable int rideEntryID, HttpServletRequest request)
+	{
+		RideEntryManager rem = new RideEntryManager();
+		SignupManager sm = new SignupManager();
+		RideEntryGroupManager regm = new RideEntryGroupManager();
+		RoundTripManager rtm = new RoundTripManager();
+		
+		rem.deleteRideEntry(rideEntryID);
+		
+		List<Signup> s = sm.listSignups();
+		for(int i = 0; i < s.size(); i++)
+		{
+			if(s.get(i).getRideEntryID() == rideEntryID)
+			{
+				sm.deleteSignup(s.get(i).getRideOnID());
+			}
+		}
+		
+		List<RideEntry_Group> r = regm.listRideEntryGroups();
+		for(int i = 0; i < r.size(); i++)
+		{
+			if(r.get(i).getRideEntryID() == rideEntryID)
+			{
+				regm.deleteSignup(r.get(i).getRideEntry_GroupID());
+			}
+		}
+		
+		List<RoundTrip> rt = rtm.listRideEntries();
+		for(int i = 0; i < rt.size(); i++)
+		{
+			if(rt.get(i).getStartRideEntryID() == rideEntryID)
+			{
+				rtm.deleteRoundTrip(rt.get(i).getRoundTripID());
+			}
+			if(rt.get(i).getEndRideEntryID() == rideEntryID)
+			{
+				rtm.deleteRoundTrip(rt.get(i).getRoundTripID());
+			}
+		}
+		
 		return new ModelAndView("redirect:/");
 	}
 }
