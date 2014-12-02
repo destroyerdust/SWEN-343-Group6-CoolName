@@ -20,7 +20,7 @@
 	<c:if test="${not s}">
 		<div>INCORRECT INFORMATION</div>
 	</c:if>
-	<form class="form-horizontal" action="create" method="POST">
+	<form class="createVehicleForm form-horizontal" action="create" method="POST">
 		<div class="form-group">
 			<label for="model" class="col-sm-2 control-label">Model</label>
 			<div class="col-sm-8">
@@ -61,5 +61,53 @@
 	<div class="col-md-2"></div>
 	</div><!-- Row End -->
 	</div><!-- Container End -->
+	
+	<script>
+	$(document).ready(function() {
+        $('.createVehicleForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+            	model: {
+                    message: 'The model is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'The model is required and cannot be empty'
+                        }
+                    }
+                },
+                license: {
+                	message: 'The License plate is not valid',
+                	validators: {
+                		notEmpty: {
+                			message: 'The License plate is required and cannot be empty'
+                		},
+                		stringLength: {
+                			min: 7,
+                			max: 7,
+                			message: 'The license plate must be 7 characters long'
+                		},
+                		regexp: {
+                			regexp: /^[a-zA-Z0-9]+$/,
+                			message: 'The license plate can only consiste of alphabetical characters and numbers'
+                		}
+                	}
+                },
+                name: {
+                    message: 'The name is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'The name is required and cannot be empty'
+                        }
+                    }
+                }
+            }
+        });
+    });
+	</script>
 </body>
 </html>
