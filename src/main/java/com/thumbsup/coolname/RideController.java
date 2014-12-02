@@ -315,11 +315,31 @@ public class RideController {
 		RideEntryManager rem = new RideEntryManager();
 		RideEntry re = rem.selectRideEntry(rideEntryID);
 		
+		//gets current server time to use for ride status comparison
+		Timestamp currentTime = new Timestamp(new java.util.Date().getTime());
+
+		//if the ride has already started but has not ended
+		if(currentTime.after(re.getStartTime()) && currentTime.before(re.getEndTime())){
+			//the ride has already started and is in progress
+			re.setStatus("In Progress");
+		}
+		//if the ride has not started
+		else if(currentTime.before(re.getStartTime()) && currentTime.before(re.getEndTime())){
+			re.setStatus("Seating");				
+		}
+		//if the ride has finished
+		else if(currentTime.after(re.getStartTime()) && currentTime.after(re.getEndTime())){
+			re.setStatus("Complete");
+		}else{
+			//this should never happen but just incase (pesky dirty data)
+			re.setStatus("Invalid Start/End Time");
+		}
+		
 		if(re.getVehicle() != null)
 		{
 			VehicleManager vm = new VehicleManager();
 			int vehicleID = re.getVehicle().getVehicleID();
-			Vehicle v = vm.selectVehicle(vehicleID);
+			Vehicle v = vm.selectVehicle(vehicleID);				
 			
 			UserManager um = new UserManager();
 			int userID = v.getUser().getUserId();

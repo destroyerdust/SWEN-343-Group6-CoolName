@@ -78,6 +78,10 @@ div.inline {
 						<td>${driverName}</td>
 					</tr>
 					<tr>
+						<th>Status</th>
+						<td>${rideEntry.getStatus()}</td>
+					</tr>
+					<tr>
 						<th>Destination:</th>
 						<td>${rideEntry.getDestination()}</td>
 					</tr>
