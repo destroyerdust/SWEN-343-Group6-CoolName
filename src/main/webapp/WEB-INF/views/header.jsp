@@ -27,6 +27,7 @@
         <li><a href="/coolname/account/login">Login</a></li>
         <li><a href="/coolname/account/signup">Sign Up</a></li>
       <% } else { %>
+      	<li><a href="/coolname/account/manage">My Account</a></li>
         <li><a href="/coolname/account/logout">Logout</a></li>
 	  <% } %>
       </ul>
