@@ -166,6 +166,7 @@ public class AccountController {
 			UserDAO dao = new UserDAO();
 			User u = dao.select(userId);
 			request.setAttribute("s", true);
+			request.setAttribute("p", false);
 			view = new ModelAndView(page,"user",u);
 		}
 		return view;
@@ -176,13 +177,13 @@ public class AccountController {
 	{
 		UserManager services = new UserManager();
 		User oldUser = services.selectUser((Integer) request.getSession().getAttribute("auth"));
-		if(validateVehicleList(updatedUser.getVehicles()))
-		{
-			request.setAttribute("s", false);
-			return new ModelAndView("myVehicles", "user", oldUser);
-		}
 		if(updatedUser.getVehicles() != null)
 		{
+			if(validateVehicleList(updatedUser.getVehicles()))
+			{
+				request.setAttribute("s", false);
+				return new ModelAndView("myVehicles", "user", oldUser);
+			}
 			List<Integer> toDelete = new ArrayList<Integer>();
 			for (Vehicle vehicle : oldUser.getVehicles()) {
 				boolean delete = true;
@@ -201,11 +202,25 @@ public class AccountController {
 					toDelete.add(oldUser.getVehicles().indexOf(vehicle));
 			}
 			for (int index : toDelete) {
+				if(oldUser.getVehicles().get(index).getRideEntries().size() > 0)
+				{
+					request.setAttribute("s", true);
+					request.setAttribute("p", true);
+					return new ModelAndView("myVehicles","user", oldUser);
+				}
 				oldUser.getVehicles().remove(index);
 			}
 		}
 		else
 		{
+			for (Vehicle v : oldUser.getVehicles()) {
+				if(v.getRideEntries().size() > 0)
+				{
+					request.setAttribute("p", true);
+					request.setAttribute("s", true);
+					return new ModelAndView("myVehicles","user", oldUser);
+				}
+			}
 			oldUser.getVehicles().clear();
 		}
 		services.updateUser(oldUser);
