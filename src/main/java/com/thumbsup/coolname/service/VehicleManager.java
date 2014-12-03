@@ -42,6 +42,11 @@ public class VehicleManager {
 		dao.update(entity);
 	}
 	
+	public void updateVehicle(Vehicle vehicle)
+	{
+		dao.update(vehicle);
+	}
+	
 	public List<Vehicle> listAll()
 	{
 		return dao.selectAll();

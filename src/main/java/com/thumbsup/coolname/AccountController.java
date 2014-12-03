@@ -1,6 +1,7 @@
 package com.thumbsup.coolname;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import com.thumbsup.coolname.dao.UserDAO;
 import com.thumbsup.coolname.entity.RideEntry;
 import com.thumbsup.coolname.entity.User;
 import com.thumbsup.coolname.entity.Vehicle;
+import com.thumbsup.coolname.service.SignupManager;
 import com.thumbsup.coolname.service.UserManager;
 
 @Controller
@@ -314,23 +316,112 @@ public class AccountController {
 		{
 			UserDAO dao = new UserDAO();
 			User u = dao.select(userId);
+			for (Vehicle vehicle : u.getVehicles()) {
+				for (RideEntry ride : vehicle.getRideEntries()) {
+					ride.updateStatus();
+				}
+			}
 			request.setAttribute("s", true);
+			request.setAttribute("p", false);
 			view = new ModelAndView(page,"user",u);
 		}
 		return view;
 	}
 	
+	
 	@RequestMapping(value="account/ride/edit", method=RequestMethod.POST)
 	public ModelAndView updateRides(@ModelAttribute("user") User updatedUser, HttpServletRequest request)
 	{
-		for (Vehicle vehicle : updatedUser.getVehicles()) {
+		UserManager services = new UserManager();
+		User oldUser = services.selectUser((Integer) request.getSession().getAttribute("auth"));
+		if(oldUser != null)
+		{
+			
+			if(updatedUser.getVehicles() == null)
+			{
+				for (Vehicle vehicle : oldUser.getVehicles()) {
+					vehicle.getRideEntries().removeAll(vehicle.getRideEntries());
+				}
+			}
+			else if(validateRides(updatedUser.getVehicles()))
+			{
+				request.setAttribute("s", true);
+				return new ModelAndView("myRides", "user", oldUser);
+			}
+			else
+			{
+				List<Integer[]> toDelete = new ArrayList<Integer[]>();
+				for (int i=0; i < oldUser.getVehicles().size(); i++) {
+					List<RideEntry> rides = oldUser.getVehicles().get(i).getRideEntries();
+					for (int j = 0; j < rides.size(); j++) {
+						rides.get(j).updateStatus();
+						if(rides.get(j).getStatus().equals("In Progress"))
+						{
+							RideEntry updatedRide = containsRide(rides.get(j), updatedUser.getVehicles().get(i).getRideEntries());
+							if(updatedRide != null)
+							{
+								rides.get(j).setName(updatedRide.getName());
+								rides.get(j).setDestination(updatedRide.getDestination());
+								rides.get(j).setNumSeats(updatedRide.getNumSeats());
+								rides.get(j).setSource(updatedRide.getSource());
+								rides.get(j).setStartTime(updatedRide.getStartTime());
+							}
+							else
+							{
+								System.out.println("TEST");
+								Integer[] point = new Integer[2];
+								point[0] = i;
+								point[1] = j;
+								toDelete.add(point);
+							}
+						}
+					}
+				}
+				
+				for (Integer[] integers : toDelete) {
+					RideEntry ride = oldUser.getVehicles().get(integers[0]).getRideEntries().get(integers[1]);
+					SignupManager service = new SignupManager();
+					if( service.selectByRide(ride).size() > 0)
+					{
+						request.setAttribute("s", true);
+						request.setAttribute("p", true);
+						return new ModelAndView("myVehicles","user", oldUser);
+					}
+					oldUser.getVehicles().get(integers[0]).removeRideEntry(ride);
+				}
+			}
+			services.updateUser(oldUser);
+		}
+		return new ModelAndView("redirect:/account/manage");
+	}
+	
+	private boolean validateRides(List<Vehicle> vehicles)
+	{
+		boolean status = false;
+		for (Vehicle vehicle : vehicles) {
 			for (RideEntry ride : vehicle.getRideEntries()) {
-				System.out.println(ride.getName());
+				if( ride.getRideEntryID() != 0 && (ride.getDestination().equals("") || ride.getName().equals("") || ride.getSource().equals("") || ride.getStartTime().equals("") ||
+						ride.getNumSeats() == 0))
+				{
+					status = true;
+					break;
+				}
 			}
 		}
-		String page = "redirect:/account/vehicle/edit";
-		
-		return new ModelAndView(page);
+		return status;
+	}
+	
+	private RideEntry containsRide(RideEntry ride, List<RideEntry> listB)
+	{
+		RideEntry result = null;
+		for (RideEntry rideEntry : listB) {
+			if(ride.getRideEntryID() == rideEntry.getRideEntryID())
+			{
+				result = rideEntry;
+				break;
+			}
+		}
+		return result;
 	}
 	
 	

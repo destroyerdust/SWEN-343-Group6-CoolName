@@ -31,7 +31,7 @@ public class Vehicle implements Serializable {
 	private int numSeats;
 
 	//bi-directional many-to-one association to RideEntry
-	@OneToMany(mappedBy="vehicle")
+	@OneToMany(targetEntity= RideEntry.class ,mappedBy="vehicle", orphanRemoval=true)
 	private List<RideEntry> rideEntries;
 
 	//bi-directional many-to-one association to User
