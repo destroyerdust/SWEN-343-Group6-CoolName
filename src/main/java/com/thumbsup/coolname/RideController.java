@@ -474,6 +474,18 @@ public class RideController {
 			if(sid != -1)
 			{
 				sum.deleteSignup(sid);
+				
+				RideEntryManager rem = new RideEntryManager();
+				RideEntry entry = rem.selectRideEntry(rideEntryID);
+				UserManager um = new UserManager();
+				
+				for(Vehicle v : um.selectUser(userID).getVehicles())
+				{
+					if(v.getVehicleID() == entry.getVehicle().getVehicleID())
+					{
+						rem.updateRideEntry(entry.getRideEntryID(), entry.getCreationTimestamp(), entry.getDestination(), entry.getEndTime(), entry.getMapUri(), entry.getName(), entry.getSource(), entry.getStartTime(), entry.getNumSeats(), entry.getAuthorID(), null);
+					}
+				}
 			}
 		}
 		return new ModelAndView("redirect:/");
