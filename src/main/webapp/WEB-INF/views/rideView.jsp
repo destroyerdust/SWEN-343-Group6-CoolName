@@ -66,7 +66,24 @@ div.inline {
 	<h1>${rideEntry.getName()}
 		<span style="float: right;">
 			<c:if test="${rideRelation == 0}">
-				<button class="btn btn-primary" onclick="location.href='/coolname/ride/${rideEntryID}/join'">Join Ride</button>
+				<c:choose>
+					<c:when test="${userType != 3}">
+						<button class="btn btn-primary" onclick="location.href='/coolname/ride/${rideEntryID}/join'">Join Ride</button>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${driverName == 'No driver'}">
+							<div class="btn-group">
+  								<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    								Join as Driver <span class="caret"></span>
+  								</button>
+  								<ul class="dropdown-menu" role="menu">
+    								${vehicles}
+  								</ul>
+							</div>
+						</c:if>
+						<button class="btn btn-primary" onclick="location.href='/coolname/ride/${rideEntryID}/join'">Join as Passenger</button>
+					</c:otherwise>
+				</c:choose>
 			</c:if>
 			<c:if test="${rideRelation == 1}">
 				<span>

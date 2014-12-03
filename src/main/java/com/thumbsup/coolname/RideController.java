@@ -244,9 +244,8 @@ public class RideController {
 	
 	//used for formating a string timestamp
 	public Timestamp formatTimestamp(String time){
-		//convert times to correctly formatted datetime for the depature time
-		time = time.replace("T", " ");			
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		//convert times to correctly formatted datetime for the depature time			
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm");
 		Timestamp newTime = null;
 		try
 		{
@@ -384,6 +383,21 @@ public class RideController {
 						break;
 					}
 				}
+				int userType = um.selectUser((Integer)request.getSession().getAttribute("auth")).getUserType();
+				String vehicles = "";
+				if(userType == 3)
+				{
+					for(Vehicle v : um.selectUser((Integer)request.getSession().getAttribute("auth")).getVehicles())
+					{
+						vehicles += "<li><a href=\"/coolname/ride/" + rideEntryID + "/join/" + v.getVehicleID() + "\">" + v.getModel() + "</a></li>\n";
+					}
+					model.addAttribute("userType", 3);
+				}
+				else
+				{
+					model.addAttribute("userType",userType);
+				}
+				model.addAttribute("vehicles", vehicles);
 			}	
 		}	
 		model.addAttribute("rideRelation", rideRelation);
@@ -411,6 +425,56 @@ public class RideController {
 		{
 			SignupManager sum = new SignupManager();
 			sum.createSignup(userID, rideEntryID, new Timestamp(new Date().getTime()));
+		}
+		return new ModelAndView("redirect:/");
+	}
+	
+	@RequestMapping(value = "/ride/{rideEntryID}/join/{vehicleID}", method = RequestMethod.GET)
+	public ModelAndView joinWithVehicle(Locale locale, Model model, @PathVariable int rideEntryID, @PathVariable int vehicleID, HttpServletRequest request)
+	{
+		Integer userID = (Integer)request.getSession().getAttribute("auth");
+		if(userID == null)
+		{
+			//Do nothing
+		}
+		else
+		{
+			SignupManager sum = new SignupManager();
+			sum.createSignup(userID, rideEntryID, new Timestamp(new Date().getTime()));
+			
+			VehicleManager vm = new VehicleManager();
+			Vehicle v = vm.selectVehicle(vehicleID);
+			
+			RideEntryManager rem = new RideEntryManager();
+			RideEntry r = rem.selectRideEntry(rideEntryID);
+			rem.updateRideEntry(rideEntryID, r.getCreationTimestamp(), r.getDestination(), r.getEndTime(), r.getMapUri(), r.getName(), r.getSource(), r.getStartTime(), r.getNumSeats(), r.getAuthorID(), v);
+		}
+		return new ModelAndView("redirect:/");
+	}
+	
+	@RequestMapping(value = "/ride/{rideEntryID}/leave", method = RequestMethod.GET)
+	public ModelAndView leave(Locale locale, Model model, @PathVariable int rideEntryID, HttpServletRequest request)
+	{
+		Integer userID = (Integer)request.getSession().getAttribute("auth");
+		if(userID == null)
+		{
+			//Do nothing
+		}
+		else
+		{
+			SignupManager sum = new SignupManager();
+			int sid = -1;
+			for(Signup s : sum.listSignups())
+			{
+				if(s.getRideEntryID() == rideEntryID && s.getUserID() == userID)
+				{
+					sid = s.getRideOnID();
+				}
+			}
+			if(sid != -1)
+			{
+				sum.deleteSignup(sid);
+			}
 		}
 		return new ModelAndView("redirect:/");
 	}
