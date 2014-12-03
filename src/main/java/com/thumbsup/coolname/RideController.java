@@ -176,33 +176,86 @@ public class RideController {
 					Timestamp departTime2 = formatTimestamp(returnDepartureTime);					
 					Timestamp startTime2 = new Timestamp(departTime2.getTime()+1000*60*30);
 					
-					RideEntry startRide = rem.createRideEntry(
-							creationTimestamp, destination, startTime, null, name,
-							origin, departTime, numseats, userPK, vehicle);
+//					RideEntry startRide = rem.createRideEntry(
+//							creationTimestamp, destination, startTime, null, name,
+//							origin, departTime, numseats, userPK, vehicle);
+					RideEntry startRide = new RideEntry();
+					startRide.setCreationTimestamp(creationTimestamp);
+					startRide.setDestination(destination);
+					startRide.setStartTime(startTime);
+					startRide.setName(name);
+					startRide.setSource(origin);
+					startRide.setStartTime(departTime);
+					startRide.setNumSeats(Integer.parseInt(numSeats));
+					startRide.setAuthorID(userPK);
+					startRide.setVehicle(vehicle);
+					
+					vehicle.addRideEntry(startRide);
+					
+					
 					
 					//swap the orgin and destination
-					RideEntry endRide = rem.createRideEntry(
-							creationTimestamp, origin, startTime2, null, name,
-							destination, departTime2, numseats, userPK, vehicle);
+//					RideEntry endRide = rem.createRideEntry(
+//							creationTimestamp, origin, startTime2, null, name,
+//							destination, departTime2, numseats, userPK, vehicle);
 					
-					rtm.createRoundTrip(startRide.getRideEntryID(), endRide.getRideEntryID());
+					RideEntry endRide = new RideEntry();
+					endRide.setCreationTimestamp(creationTimestamp);
+					endRide.setDestination(origin);
+					endRide.setStartTime(startTime2);
+					endRide.setName(name);
+					endRide.setSource(destination);
+					endRide.setStartTime(departTime2);
+					endRide.setNumSeats(Integer.parseInt(numSeats));
+					endRide.setAuthorID(userPK);
+					endRide.setVehicle(vehicle);
+					
+					vehicle.addRideEntry(startRide);
+					
+					VehicleManager vm = new VehicleManager();
+					vm.updateVehicle(vehicle);
+					
+					rtm.createRoundTrip(endRide.getRideEntryID(), endRide.getRideEntryID());
+					
+					//Create the locations along with the RideEntry ALWAYS
+					makeLocationEntry(locm, origin, startRide.getRideEntryID(), srcLat, srcLong);
+					makeLocationEntry(locm, destination, startRide.getRideEntryID(), destLat, destLong);
+					
+					//Create the locations along with the RideEntry ALWAYS
+					//Reversed because roundtrip
+					makeLocationEntry(locm, origin, endRide.getRideEntryID(), destLat, destLong);
+					makeLocationEntry(locm, destination, endRide.getRideEntryID(), srcLat, srcLong);
+					
 					if(!group.equals("NULL"))
 					{
 						RideEntryGroupManager regm = new RideEntryGroupManager();
-						regm.createSignup(startRide.getRideEntryID(), Integer.parseInt(group), creationTimestamp);
+						regm.createSignup(endRide.getRideEntryID(), Integer.parseInt(group), creationTimestamp);
 						regm.createSignup(endRide.getRideEntryID(), Integer.parseInt(group), creationTimestamp);
 					}
 					
 				} else {
 					//otherwise there is just one ride					
-					RideEntry createdRide = rem.createRideEntry(
-							creationTimestamp, destination, startTime, null, name,
-							origin, departTime, numseats, userPK, vehicle);
+					
+					RideEntry createdRide = new RideEntry();
+					createdRide.setCreationTimestamp(creationTimestamp);
+					createdRide.setDestination(destination);
+					createdRide.setEndTime(startTime);
+					createdRide.setName(name);
+					createdRide.setSource(origin);
+					createdRide.setStartTime(departTime);
+					createdRide.setNumSeats(Integer.parseInt(numSeats));
+					createdRide.setAuthorID(userPK);
+					createdRide.setVehicle(vehicle);
+					
+					vehicle.addRideEntry(createdRide);
+					
+					VehicleManager vm = new VehicleManager();
+					vm.updateVehicle(vehicle);
 					
 					//Create the locations along with the RideEntry ALWAYS
 					makeLocationEntry(locm, origin, createdRide.getRideEntryID(), srcLat, srcLong);
 					makeLocationEntry(locm, destination, createdRide.getRideEntryID(), destLat, destLong);
-
+					
 					if(!group.equals("NULL"))
 					{
 						RideEntryGroupManager regm = new RideEntryGroupManager();
@@ -237,6 +290,7 @@ public class RideController {
 							0, userPK, vehicle);
 					
 					//Create the locations along with the RideEntry ALWAYS
+					//Reversed because roundtrip
 					makeLocationEntry(locm, origin, endRide.getRideEntryID(), destLat, destLong);
 					makeLocationEntry(locm, destination, endRide.getRideEntryID(), srcLat, srcLong);
 					
@@ -508,6 +562,18 @@ public class RideController {
 			if(sid != -1)
 			{
 				sum.deleteSignup(sid);
+				
+				RideEntryManager rem = new RideEntryManager();
+				RideEntry entry = rem.selectRideEntry(rideEntryID);
+				UserManager um = new UserManager();
+				
+				for(Vehicle v : um.selectUser(userID).getVehicles())
+				{
+					if(v.getVehicleID() == entry.getVehicle().getVehicleID())
+					{
+						rem.updateRideEntry(entry.getRideEntryID(), entry.getCreationTimestamp(), entry.getDestination(), entry.getEndTime(), entry.getMapUri(), entry.getName(), entry.getSource(), entry.getStartTime(), entry.getNumSeats(), entry.getAuthorID(), null);
+					}
+				}
 			}
 		}
 		return new ModelAndView("redirect:/");

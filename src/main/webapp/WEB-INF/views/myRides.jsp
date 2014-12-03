@@ -29,45 +29,49 @@
 	<form:form action="edit" method="POST" modelAttribute="user">
 		<div class="form-group">
 			<div >
-				<button style="margin-bottom: 10px;" class="btn btn-primary" type="button" onclick="location.href='/coolname/account/vehicle/create'">Create new vehicle</button>
+				<button style="margin-bottom: 10px;" class="btn btn-primary" type="button" onclick="location.href='/coolname/ride/create'">Create new ride</button>
 				<c:forEach items="${user.vehicles}" var="v">
 					<c:forEach items="${v.rideEntries}" var="ride">
-						<div class="${ride.rideEntryID}" style="margin-bottom: 10px">
-							<div style="float: left;width: 300px;">${ride.name}</div>
-							<div style="margin-left: 50px;">
-								<span class="rideEntryID" style="display:none">${ride.rideEntryID}</span>
-								<button type="button" class="editbtn btn btn-primary" style="margin-right: 25px;">Edit</button>
-								<button type="button" class="deletebtn btn btn-primary" >Delete</button>
+						<c:if test="${ride.status == 'In Progress'}">
+							<div class="${ride.rideEntryID}" style="margin-bottom: 10px">
+								<div style="float: left;width: 300px;">${ride.name}</div>
+								<div style="margin-left: 50px;">
+									<span class="rideEntryID" style="display:none">${ride.rideEntryID}</span>
+									<button type="button" class="editbtn btn btn-primary" style="margin-right: 25px;">Edit</button>
+									<button type="button" class="deletebtn btn btn-primary" >Delete</button>
+								</div>
 							</div>
-						</div>
+						</c:if>
 					</c:forEach>
 				</c:forEach>
 				<c:forEach items="${user.vehicles}" var="vehicle" varStatus="i">
 					<c:forEach items="${vehicle.rideEntries}" var="ride" varStatus="j">
-						<div class="${ride.rideEntryID}" class="form-group" style="display: none">
-							<form:hidden path="vehicles[${i.index}].rideEntries[${j.index}].rideEntryID" name="rideEntryID" value="${ride.rideEntryID}"/>
-							<label>Name: </label>
-							<div class="form-group">
-								<form:input class="form-control" path="vehicles[${i.index}].rideEntries[${j.index}].name" name="name" value="${ride.name}" />
+						<c:if test="${ride.status == 'In Progress'}">
+							<div class="${ride.rideEntryID}" class="form-group" style="display: none">
+								<form:hidden path="vehicles[${i.index}].rideEntries[${j.index}].rideEntryID" name="rideEntryID" value="${ride.rideEntryID}"/>
+								<label>Name: </label>
+								<div class="form-group">
+									<form:input class="form-control" path="vehicles[${i.index}].rideEntries[${j.index}].name" name="name" value="${ride.name}" />
+								</div>
+								<label>Destination:</label>
+								<div class="form-group">
+									<form:input class="form-control" path="vehicles[${i.index}].rideEntries[${j.index}].destination" name="destination" value="${ride.destination}" />
+								</div>
+								<label>Origin: </label>
+								<div class="form-group">
+									<form:input class="form-control" path="vehicles[${i.index}].rideEntries[${j.index}].source" name="source" value="${ride.source}" />
+								</div>
+								<label>Seats:</label>
+								<div class="form-group">
+									<form:input class="form-control" path="vehicles[${i.index}].rideEntries[${j.index}].numSeats" name="numSeats" value="${ride.numSeats}" />
+								</div>
+								<label>Departure Time:</label>
+								<div class="form-group">
+									<form:input class="form-control" path="vehicles[${i.index}].rideEntries[${j.index}].startTime" name="startTime" value="${ride.startTime}" />
+								</div>
+								<button type="button" class="rideSavebtn btn btn-primary">Save</button>
 							</div>
-							<label>Destination:</label>
-							<div class="form-group">
-								<form:input class="form-control" path="vehicles[${i.index}].rideEntries[${j.index}].destination" name="destination" value="${ride.destination}" />
-							</div>
-							<label>Name: </label>
-							<div class="form-group">
-								<form:input class="form-control" path="vehicles[${i.index}].rideEntries[${j.index}].source" name="source" value="${ride.source}" />
-							</div>
-							<label>Seats:</label>
-							<div class="form-group">
-								<form:input class="form-control" path="vehicles[${i.index}].rideEntries[${j.index}].numSeats" name="numSeats" value="${ride.numSeats}" />
-							</div>
-							<label>Description:</label>
-							<div class="form-group">
-								<form:textarea class="form-control" path="vehicles[${i.index}].rideEntries[${j.index}].startTime" name="startTime" value="${ride.startTime}" />
-							</div>
-							<button type="button" class="rideSavebtn btn btn-primary">Save</button>
-						</div>
+						</c:if>
 					</c:forEach>
 				</c:forEach>
 			</div>

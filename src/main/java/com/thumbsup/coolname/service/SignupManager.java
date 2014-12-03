@@ -1,9 +1,11 @@
 package com.thumbsup.coolname.service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.thumbsup.coolname.dao.SignupDAO;
+import com.thumbsup.coolname.entity.RideEntry;
 import com.thumbsup.coolname.entity.Signup;
 
 /**
@@ -52,6 +54,20 @@ public class SignupManager {
 	public List<Signup> listSignups()
 	{
 		return sDAO.selectAll();
+	}
+	
+	public List<Signup> selectByRide(RideEntry ride)
+	{
+		List<Signup> result = sDAO.selectAll();
+		List<Signup> toDelete = new ArrayList<Signup>();
+		for (Signup signup : result) {
+			if(signup.getRideEntryID() != ride.getRideEntryID())
+			{
+				toDelete.add(signup);
+			}
+		}
+		result.removeAll(toDelete);
+		return result;
 	}
 			
 
