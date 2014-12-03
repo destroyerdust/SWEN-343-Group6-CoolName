@@ -85,8 +85,11 @@ public class GroupController {
 			userGroups = um.getGroupsForUser((Integer)request.getSession().getAttribute("auth"));
 		}
 		
+		
+		
 		model.addAttribute("groupList", groupList);
 		model.addAttribute("userGroups",userGroups);
+		model.addAttribute("ownerCheck",(Integer)request.getSession().getAttribute("auth"));
 		
 		return new ModelAndView("groupList");
 	}

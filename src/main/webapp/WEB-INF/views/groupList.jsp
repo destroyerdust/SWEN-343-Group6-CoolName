@@ -53,11 +53,16 @@
         			<td><a href="/coolname/group/${group.getGroupID()}/view">${group.getName()}</a></td>
         			<td>${group.getDescription()}</td>
         			<td>
-        				<c:set var="contains" value="false"/>
-						<c:forEach var="ug" items="${userGroups}">
+        				<c:set var="contains" value="false"/>        			
+						<c:forEach var="ug" items="${userGroups}">							
   							<c:if test="${group.getName() eq ug.getName()}">
-    							<c:set var="contains" value="true"/>
-    							<button type="button" class="btn btn-primary" id="leave-group"
+  								<c:set var="contains" value="true"/>
+								<c:if test="${group.getOwnerID() eq ownerCheck}">
+									<button type="button" class="btn btn-primary" id="edit-group"
+										onclick="location.href='/coolname/group/${group.getGroupID()}/edit'">Edit
+										Group</button>
+								</c:if>
+								<button type="button" class="btn btn-primary" id="leave-group"
 								onclick="location.href='/coolname/group/${group.getGroupID()}/leave'">Leave
 								Group</button>
   							</c:if>
