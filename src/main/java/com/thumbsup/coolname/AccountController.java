@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.thumbsup.coolname.dao.UserDAO;
+import com.thumbsup.coolname.entity.RideEntry;
 import com.thumbsup.coolname.entity.User;
 import com.thumbsup.coolname.entity.Vehicle;
 import com.thumbsup.coolname.service.UserManager;
@@ -97,6 +98,10 @@ public class AccountController {
 		{
 			UserDAO dao = new UserDAO();
 			User u = dao.select(userId);
+			for(Vehicle vehicle : u.getVehicles())
+				for (RideEntry ride : vehicle.getRideEntries()) {
+					ride.updateStatus();
+				}
 			view = new ModelAndView(page,"user",u);
 		}
 		return view;
@@ -291,6 +296,40 @@ public class AccountController {
 			request.setAttribute("s", false);
 			page = "createVehicle";
 		}
+		return new ModelAndView(page);
+	}
+	
+	@RequestMapping(value="/account/ride/edit", method=RequestMethod.GET)
+	public ModelAndView getRides(HttpServletRequest request)
+	{
+		String page = "myRides";
+		Integer userId = (Integer) request.getSession().getAttribute("auth");
+		ModelAndView view = null;
+		if( userId == null)
+		{
+			page = "redirect:/account/login";
+			view = new ModelAndView(page);
+		}
+		else
+		{
+			UserDAO dao = new UserDAO();
+			User u = dao.select(userId);
+			request.setAttribute("s", true);
+			view = new ModelAndView(page,"user",u);
+		}
+		return view;
+	}
+	
+	@RequestMapping(value="account/ride/edit", method=RequestMethod.POST)
+	public ModelAndView updateRides(@ModelAttribute("user") User updatedUser, HttpServletRequest request)
+	{
+		for (Vehicle vehicle : updatedUser.getVehicles()) {
+			for (RideEntry ride : vehicle.getRideEntries()) {
+				System.out.println(ride.getName());
+			}
+		}
+		String page = "redirect:/account/vehicle/edit";
+		
 		return new ModelAndView(page);
 	}
 	

@@ -68,10 +68,13 @@
 				</div>
 				<div class="col-sm-offset-2 col-sm-10">
 					<h3>Rides in progress</h3>
+					<button type="button" class="btn btn-primary"
+						onclick="location.href='/coolname/account/ride/edit'">Ride
+						Management</button>
 					<c:forEach items="${user.vehicles}" var="vehicle">
 						<c:forEach items="${vehicle.rideEntries}" var="ride">
 							<c:if test="${ride.status == 'In Progress'}">
-								<span>${ride.name}</span><span>${ride.status}</span>
+								<div><span>${ride.name}</span><span>${ride.status}</span></div>
 							</c:if>
 						</c:forEach>
 					</c:forEach>
