@@ -10,15 +10,10 @@
 
     var center_lat = 43.0758,
         center_long = -77.6647,
-        markers_json = [ {
-            "title": "Marker Source",
-            "latitude" : 43.0758,
-            "longitude" : -77.6647
-        }, {
-            "title": "Marker Destination",
-            "latitude" : 44.0758,
-            "longitude" : -78.6647
-        }];
+        src_lat = '<c:out value="${sourceLocation.getLatitude()}"/>',  
+        src_long = '<c:out value="${sourceLocation.getLongitude()}"/>',
+        dest_lat = '<c:out value="${destinationLocation.getLatitude()}"/>',
+        dest_long = '<c:out value="${destinationLocation.getLongitude()}"/>';
 
     function showImmutableMap(center_lat, center_long) {
         var mapOptions = {
@@ -27,18 +22,19 @@
             mapTypeId : google.maps.MapTypeId.ROADMAP
         },
             map = new google.maps.Map(document.getElementById("map"), mapOptions);
-        var posA = new google.maps.LatLng(center_lat, center_long);
-		var markerA = new google.maps.Marker({
-			position : posA,
+        
+        var srcPosition = new google.maps.LatLng(src_lat, src_long);
+		var srcMarker = new google.maps.Marker({
+			position : srcPosition,
 			map : map,
-			title : "MarkerA"
+			title : "Origin"
 		});
         
-        var posB = new google.maps.LatLng(43.0858, center_long);
-		var markerB = new google.maps.Marker({
-			position : posB,
+        var destPosition = new google.maps.LatLng(dest_lat, dest_long);
+		var destMarker = new google.maps.Marker({
+			position : destPosition,
 			map : map,
-			title : "MarkerB"
+			title : "Destination"
 		});
     }
 

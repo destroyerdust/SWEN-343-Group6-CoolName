@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.thumbsup.coolname.entity.Group;
+import com.thumbsup.coolname.entity.Location;
 import com.thumbsup.coolname.entity.RideEntry;
 import com.thumbsup.coolname.entity.RideEntry_Group;
 import com.thumbsup.coolname.entity.RoundTrip;
@@ -407,9 +408,17 @@ public class RideController {
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate);
 		
+		LocationManager locm = new LocationManager();
 		RideEntryManager rem = new RideEntryManager();
 		RideEntry re = rem.selectRideEntry(rideEntryID);
+		List<Location> relatedLocations = locm.findLocationFromRideEntryId(rideEntryID);
 		
+		//relatedLocations may be of size 0 (empty, this is bad), 2 (normal ride) or 4 (roundtrip ride)
+		//still just truncate to the first two locations because the roundtrip just has duplicates
+		model.addAttribute("sourceLocation", relatedLocations.get(0));
+		model.addAttribute("destinationLocation", relatedLocations.get(1));
+		
+		model.addAttribute("serverTime", formattedDate);
 		re.updateStatus();
 		
 		if(re.getVehicle() != null)
