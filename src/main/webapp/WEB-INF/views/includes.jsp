@@ -36,3 +36,7 @@
 <script type="text/javascript" src="<c:url value="/resources/js/moment.js" />"> </script>
 
 <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-datetimepicker.min.js" />"> </script>
+
+<!-- Google Maps API v3 -->
+<script
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>

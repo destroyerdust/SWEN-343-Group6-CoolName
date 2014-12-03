@@ -2,11 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<%@ include file="/WEB-INF/views/includes.jsp"%>
-<script
-	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
-<!-- <script type="text/javascript" src="<c:url value="/resources/js/RideViewMap.js" />"></script> -->
-	
+<%@ include file="/WEB-INF/views/includes.jsp"%>	
 
 <script>
 (function () {

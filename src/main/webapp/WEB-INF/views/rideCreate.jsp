@@ -27,14 +27,23 @@
 						<input name="name" type="text" class="form-control">
 					</div>
 				</div>
+				
+				<!-- Google Map Begin -->
+					<div id="map" style="height: 310px; width: 100%; float: center;"></div>
+					<input id="srcLat" name="srcLat" type="hidden" value="" class="form-control">
+					<input id="srcLong" name="srcLong" type="hidden" value="" class="form-control">
+					<input id="destLat" name="destLat" type="hidden" value="" class="form-control">
+					<input id="destLong" name="destLong" type="hidden" value="" class="form-control">
+				<!-- Google Map End -->
+				
 				<div class="form-group">
-					<label for="destination" class="col-sm-2 control-label">Destination</label>
+					<label for="destination" class="col-sm-2 control-label">Destination Description</label>
 					<div class="col-sm-8">
 						<input name="destination" type="text" class="form-control">
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="orgin" class="col-sm-2 control-label">Origin</label>
+					<label for="orgin" class="col-sm-2 control-label">Origin Description</label>
 					<div class="col-sm-8">
 						<input name="orgin" type="text" class="form-control">
 					</div>
@@ -218,7 +227,8 @@
 <script>
     $(document).ready(function() {
         $('.createRideForm').bootstrapValidator({
-            message: 'This value is not valid',
+        	excluded: [':disabled', ':hidden', ':not(:visible)'],
+        	message: 'This value is not valid',
             feedbackIcons: {
                 valid: 'glyphicon glyphicon-ok',
                 invalid: 'glyphicon glyphicon-remove',
@@ -255,6 +265,73 @@
             }
         });
     });
+    
+    /* The following function creates the markable Google Map to the "map" element "
+    	Clicking on the map either: 
+    		1) sets the ride's origin marker,
+    		2) sets the ride's destination marker,
+    		else) clears the markers
+    */
+    (function () {
+        'use strict';
+
+        //Rochester, NY coordinates
+        var center_lat = 43.0758,
+            center_long = -77.6647;
+
+        function showMarkableMap(center_lat, center_long) {
+            var mapOptions = {
+                center : new google.maps.LatLng(center_lat, center_long),
+                zoom : 10,
+                mapTypeId : google.maps.MapTypeId.ROADMAP
+            },
+            
+            map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            
+            //Use the Array and a Switch statement to control all markers on the map
+            var markersArray = [];
+            
+            //On click, do something to the map and markersArray
+            google.maps.event.addListener(map, 'click', function(event) {
+                var positionClicked = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+
+            	switch(markersArray.length){
+	            	case 0:  //add origin
+		            	var srcMarker = new google.maps.Marker({
+		        			position : positionClicked,
+		        			map : map,
+		        			title : "Origin"
+		        		});
+	            		markersArray.push(srcMarker);
+		                document.getElementById('srcLat').value = event.latLng.lat();
+                		document.getElementById('srcLong').value = event.latLng.lng();
+		            	break;
+		            	
+	            	case 1: //add destination
+		            	var destMarker = new google.maps.Marker({
+		        			position : positionClicked,
+		        			map : map,
+		        			title : "Destination"
+		        		});
+	            		markersArray.push(destMarker);
+		            	document.getElementById('destLat').value = event.latLng.lat();
+                		document.getElementById('destLong').value = event.latLng.lng();
+		            	break;
+		            	
+	            	default: //reset count, reset array
+	            		for (var i = 0; i < markersArray.length; i++ ) {
+	            	   	 	markersArray[i].setMap(null);
+	            	  	}
+	            	 	markersArray.length = 0;
+	            		break; 
+            	}
+            }) 
+        }
+
+        google.maps.event.addDomListener(window, 'load', function () {
+            showMarkableMap(center_lat, center_long);
+        });
+    }());
     </script>
 
 </html>

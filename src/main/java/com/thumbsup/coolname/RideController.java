@@ -31,6 +31,7 @@ import com.thumbsup.coolname.entity.Signup;
 import com.thumbsup.coolname.entity.User;
 import com.thumbsup.coolname.entity.Vehicle;
 import com.thumbsup.coolname.service.GroupManager;
+import com.thumbsup.coolname.service.LocationManager;
 import com.thumbsup.coolname.service.RideEntryGroupManager;
 import com.thumbsup.coolname.service.RideEntryManager;
 import com.thumbsup.coolname.service.RoundTripManager;
@@ -99,6 +100,8 @@ public class RideController {
 	
 	@RequestMapping(value = "/ride/create", method = RequestMethod.POST)
 	public ModelAndView PostCreateRide( 
+			
+			//RideEntry things
 			@RequestParam(value="name", required=true, defaultValue="NULL") String name,
 			@RequestParam(value="destination", required=true, defaultValue="NULL") String destination,
 			@RequestParam(value="orgin", required=true, defaultValue="NULL") String origin,
@@ -111,6 +114,14 @@ public class RideController {
 			@RequestParam(value="selectCar", required=false, defaultValue="NULL") String selectCar,
 			@RequestParam(value="numSeats", required=false, defaultValue="NULL") String numSeats,
 			@RequestParam(value="rideGroup", required=false, defaultValue="NULL") String group,
+			
+			//location things that are required of the form
+			@RequestParam(value="srcLat", required=true, defaultValue="00.00") Double srcLat,
+			@RequestParam(value="srcLong", required=true, defaultValue="00.00") Double srcLong,
+			@RequestParam(value="destLat", required=true, defaultValue="00.00") Double destLat,
+			@RequestParam(value="destLong", required=true, defaultValue="00.00") Double destLong,
+
+			//Spring things
 			HttpServletRequest request,
 			Model model) {
 		logger.info("POST: Creating new ride! The current use is");
@@ -138,7 +149,7 @@ public class RideController {
 			
 			//make a call to the RideEntryManger and actually create database entry in DB
 			RideEntryManager rem = new RideEntryManager();	
-			
+			LocationManager locm = new LocationManager();
 			
 			//if the driver wants to drive
 			if(wantsToDrive != null && wantsToDrive.equals("Yes")){
@@ -205,6 +216,16 @@ public class RideController {
 					vm.updateVehicle(vehicle);
 					
 					rtm.createRoundTrip(endRide.getRideEntryID(), endRide.getRideEntryID());
+					
+					//Create the locations along with the RideEntry ALWAYS
+					makeLocationEntry(locm, origin, startRide.getRideEntryID(), srcLat, srcLong);
+					makeLocationEntry(locm, destination, startRide.getRideEntryID(), destLat, destLong);
+					
+					//Create the locations along with the RideEntry ALWAYS
+					//Reversed because roundtrip
+					makeLocationEntry(locm, origin, endRide.getRideEntryID(), destLat, destLong);
+					makeLocationEntry(locm, destination, endRide.getRideEntryID(), srcLat, srcLong);
+					
 					if(!group.equals("NULL"))
 					{
 						RideEntryGroupManager regm = new RideEntryGroupManager();
@@ -214,9 +235,6 @@ public class RideController {
 					
 				} else {
 					//otherwise there is just one ride					
-					/*RideEntry createdRide = rem.createRideEntry(
-							creationTimestamp, destination, startTime, null, name,
-							origin, departTime, numseats, userPK, vehicle);*/
 					
 					RideEntry createdRide = new RideEntry();
 					createdRide.setCreationTimestamp(creationTimestamp);
@@ -233,6 +251,10 @@ public class RideController {
 					
 					VehicleManager vm = new VehicleManager();
 					vm.updateVehicle(vehicle);
+					
+					//Create the locations along with the RideEntry ALWAYS
+					makeLocationEntry(locm, origin, createdRide.getRideEntryID(), srcLat, srcLong);
+					makeLocationEntry(locm, destination, createdRide.getRideEntryID(), destLat, destLong);
 					
 					if(!group.equals("NULL"))
 					{
@@ -258,10 +280,19 @@ public class RideController {
 							creationTimestamp, destination, startTime, null, name,
 							origin, departTime, 0, userPK, vehicle);
 
+					//Create the locations along with the RideEntry ALWAYS
+					makeLocationEntry(locm, origin, startRide.getRideEntryID(), srcLat, srcLong);
+					makeLocationEntry(locm, destination, startRide.getRideEntryID(), destLat, destLong);
+					
 					// swap the origin and destination
 					RideEntry endRide = rem.createRideEntry(creationTimestamp,
 							origin, startTime2, null, name, destination, departTime2,
 							0, userPK, vehicle);
+					
+					//Create the locations along with the RideEntry ALWAYS
+					//Reversed because roundtrip
+					makeLocationEntry(locm, origin, endRide.getRideEntryID(), destLat, destLong);
+					makeLocationEntry(locm, destination, endRide.getRideEntryID(), srcLat, srcLong);
 					
 					rtm.createRoundTrip(startRide.getRideEntryID(), endRide.getRideEntryID());
 					if(!group.equals("NULL"))
@@ -275,6 +306,11 @@ public class RideController {
 					RideEntry createdRide = rem.createRideEntry(
 							creationTimestamp, destination, startTime, null, name,
 							origin, departTime, 0, userPK, vehicle);
+					
+					//Create the locations along with the RideEntry ALWAYS
+					makeLocationEntry(locm, origin, createdRide.getRideEntryID(), srcLat, srcLong);
+					makeLocationEntry(locm, destination, createdRide.getRideEntryID(), destLat, destLong);
+					
 					if(!group.equals("NULL"))
 					{
 						RideEntryGroupManager regm = new RideEntryGroupManager();
@@ -282,11 +318,16 @@ public class RideController {
 					}
 				}
 			}
-			
 			return new ModelAndView("redirect:/");
 		}
 		
 		return new ModelAndView("rideCreate");
+	}
+	
+	
+	/* Helper method that creates a single Location Entry */
+	private void makeLocationEntry(LocationManager locm, String title, int RideEntryPK, double lat, double lng){
+		locm.createlocation(title, lat, lng, RideEntryPK);
 	}
 	
 	//used for formating a string timestamp
