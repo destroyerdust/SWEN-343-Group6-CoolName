@@ -69,7 +69,7 @@
 				<div class="col-sm-offset-2 col-sm-10">
 					<h3>Rides in progress</h3>
 					<button type="button" class="btn btn-primary"
-						onclick="location.href='/coolname/account/ride/edit'">Ride
+						onclick="location.href='/coolname/rides/edit'">Ride
 						Management</button>
 					<c:forEach items="${user.vehicles}" var="vehicle">
 						<c:forEach items="${vehicle.rideEntries}" var="ride">
