@@ -165,28 +165,75 @@ public class RideController {
 					Timestamp departTime2 = formatTimestamp(returnDepartureTime);					
 					Timestamp startTime2 = new Timestamp(departTime2.getTime()+1000*60*30);
 					
-					RideEntry startRide = rem.createRideEntry(
-							creationTimestamp, destination, startTime, null, name,
-							origin, departTime, numseats, userPK, vehicle);
+//					RideEntry startRide = rem.createRideEntry(
+//							creationTimestamp, destination, startTime, null, name,
+//							origin, departTime, numseats, userPK, vehicle);
+					RideEntry startRide = new RideEntry();
+					startRide.setCreationTimestamp(creationTimestamp);
+					startRide.setDestination(destination);
+					startRide.setStartTime(startTime);
+					startRide.setName(name);
+					startRide.setSource(origin);
+					startRide.setStartTime(departTime);
+					startRide.setNumSeats(Integer.parseInt(numSeats));
+					startRide.setAuthorID(userPK);
+					startRide.setVehicle(vehicle);
+					
+					vehicle.addRideEntry(startRide);
+					
+					
 					
 					//swap the orgin and destination
-					RideEntry endRide = rem.createRideEntry(
-							creationTimestamp, origin, startTime2, null, name,
-							destination, departTime2, numseats, userPK, vehicle);
+//					RideEntry endRide = rem.createRideEntry(
+//							creationTimestamp, origin, startTime2, null, name,
+//							destination, departTime2, numseats, userPK, vehicle);
 					
-					rtm.createRoundTrip(startRide.getRideEntryID(), endRide.getRideEntryID());
+					RideEntry endRide = new RideEntry();
+					endRide.setCreationTimestamp(creationTimestamp);
+					endRide.setDestination(origin);
+					endRide.setStartTime(startTime2);
+					endRide.setName(name);
+					endRide.setSource(destination);
+					endRide.setStartTime(departTime2);
+					endRide.setNumSeats(Integer.parseInt(numSeats));
+					endRide.setAuthorID(userPK);
+					endRide.setVehicle(vehicle);
+					
+					vehicle.addRideEntry(startRide);
+					
+					VehicleManager vm = new VehicleManager();
+					vm.updateVehicle(vehicle);
+					
+					rtm.createRoundTrip(endRide.getRideEntryID(), endRide.getRideEntryID());
 					if(!group.equals("NULL"))
 					{
 						RideEntryGroupManager regm = new RideEntryGroupManager();
-						regm.createSignup(startRide.getRideEntryID(), Integer.parseInt(group), creationTimestamp);
+						regm.createSignup(endRide.getRideEntryID(), Integer.parseInt(group), creationTimestamp);
 						regm.createSignup(endRide.getRideEntryID(), Integer.parseInt(group), creationTimestamp);
 					}
 					
 				} else {
 					//otherwise there is just one ride					
-					RideEntry createdRide = rem.createRideEntry(
+					/*RideEntry createdRide = rem.createRideEntry(
 							creationTimestamp, destination, startTime, null, name,
-							origin, departTime, numseats, userPK, vehicle);
+							origin, departTime, numseats, userPK, vehicle);*/
+					
+					RideEntry createdRide = new RideEntry();
+					createdRide.setCreationTimestamp(creationTimestamp);
+					createdRide.setDestination(destination);
+					createdRide.setEndTime(startTime);
+					createdRide.setName(name);
+					createdRide.setSource(origin);
+					createdRide.setStartTime(departTime);
+					createdRide.setNumSeats(Integer.parseInt(numSeats));
+					createdRide.setAuthorID(userPK);
+					createdRide.setVehicle(vehicle);
+					
+					vehicle.addRideEntry(createdRide);
+					
+					VehicleManager vm = new VehicleManager();
+					vm.updateVehicle(vehicle);
+					
 					if(!group.equals("NULL"))
 					{
 						RideEntryGroupManager regm = new RideEntryGroupManager();
@@ -244,9 +291,8 @@ public class RideController {
 	
 	//used for formating a string timestamp
 	public Timestamp formatTimestamp(String time){
-		//convert times to correctly formatted datetime for the depature time
-		time = time.replace("T", " ");			
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		//convert times to correctly formatted datetime for the depature time			
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm");
 		Timestamp newTime = null;
 		try
 		{
@@ -384,6 +430,21 @@ public class RideController {
 						break;
 					}
 				}
+				int userType = um.selectUser((Integer)request.getSession().getAttribute("auth")).getUserType();
+				String vehicles = "";
+				if(userType == 3)
+				{
+					for(Vehicle v : um.selectUser((Integer)request.getSession().getAttribute("auth")).getVehicles())
+					{
+						vehicles += "<li><a href=\"/coolname/ride/" + rideEntryID + "/join/" + v.getVehicleID() + "\">" + v.getModel() + "</a></li>\n";
+					}
+					model.addAttribute("userType", 3);
+				}
+				else
+				{
+					model.addAttribute("userType",userType);
+				}
+				model.addAttribute("vehicles", vehicles);
 			}	
 		}	
 		model.addAttribute("rideRelation", rideRelation);
@@ -411,6 +472,68 @@ public class RideController {
 		{
 			SignupManager sum = new SignupManager();
 			sum.createSignup(userID, rideEntryID, new Timestamp(new Date().getTime()));
+		}
+		return new ModelAndView("redirect:/");
+	}
+	
+	@RequestMapping(value = "/ride/{rideEntryID}/join/{vehicleID}", method = RequestMethod.GET)
+	public ModelAndView joinWithVehicle(Locale locale, Model model, @PathVariable int rideEntryID, @PathVariable int vehicleID, HttpServletRequest request)
+	{
+		Integer userID = (Integer)request.getSession().getAttribute("auth");
+		if(userID == null)
+		{
+			//Do nothing
+		}
+		else
+		{
+			SignupManager sum = new SignupManager();
+			sum.createSignup(userID, rideEntryID, new Timestamp(new Date().getTime()));
+			
+			VehicleManager vm = new VehicleManager();
+			Vehicle v = vm.selectVehicle(vehicleID);
+			
+			RideEntryManager rem = new RideEntryManager();
+			RideEntry r = rem.selectRideEntry(rideEntryID);
+			rem.updateRideEntry(rideEntryID, r.getCreationTimestamp(), r.getDestination(), r.getEndTime(), r.getMapUri(), r.getName(), r.getSource(), r.getStartTime(), r.getNumSeats(), r.getAuthorID(), v);
+		}
+		return new ModelAndView("redirect:/");
+	}
+	
+	@RequestMapping(value = "/ride/{rideEntryID}/leave", method = RequestMethod.GET)
+	public ModelAndView leave(Locale locale, Model model, @PathVariable int rideEntryID, HttpServletRequest request)
+	{
+		Integer userID = (Integer)request.getSession().getAttribute("auth");
+		if(userID == null)
+		{
+			//Do nothing
+		}
+		else
+		{
+			SignupManager sum = new SignupManager();
+			int sid = -1;
+			for(Signup s : sum.listSignups())
+			{
+				if(s.getRideEntryID() == rideEntryID && s.getUserID() == userID)
+				{
+					sid = s.getRideOnID();
+				}
+			}
+			if(sid != -1)
+			{
+				sum.deleteSignup(sid);
+				
+				RideEntryManager rem = new RideEntryManager();
+				RideEntry entry = rem.selectRideEntry(rideEntryID);
+				UserManager um = new UserManager();
+				
+				for(Vehicle v : um.selectUser(userID).getVehicles())
+				{
+					if(v.getVehicleID() == entry.getVehicle().getVehicleID())
+					{
+						rem.updateRideEntry(entry.getRideEntryID(), entry.getCreationTimestamp(), entry.getDestination(), entry.getEndTime(), entry.getMapUri(), entry.getName(), entry.getSource(), entry.getStartTime(), entry.getNumSeats(), entry.getAuthorID(), null);
+					}
+				}
+			}
 		}
 		return new ModelAndView("redirect:/");
 	}

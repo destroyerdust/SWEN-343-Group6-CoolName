@@ -12,8 +12,8 @@
    	<id name="vehicleID" type="int" column="VehicleID">
    		<generator class="native"></generator>
    	</id>
-   	<list name="rideEntries" table="RideEntry" cascade="all" lazy="false">
-   		<key column="VehicleID"></key>
+   	<list name="rideEntries" table="RideEntry" cascade="all-delete-orphan" lazy="false" inverse="true">
+   		<key column="VehicleID" not-null="true"></key>
    		<list-index column="idx"></list-index>
    		<one-to-many class="com.thumbsup.coolname.entity.RideEntry"/>
    	</list>
