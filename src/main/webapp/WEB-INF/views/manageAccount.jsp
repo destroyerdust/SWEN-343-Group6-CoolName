@@ -22,11 +22,13 @@
 				<h1 class="text-center">My Account</h1>
 				<div>
 					<div class="col-sm-offset-2 col-sm-10">
-						<h3>Profile</h3>
-					
-					<button type="button" class="btn btn-primary"
-						onclick="location.href='/coolname/account/profile/edit'">Edit
-						Profile</button>
+						<h3>Profile
+						<span style="float: right;">
+							<button type="button" class="btn btn-primary"
+								onclick="location.href='/coolname/account/profile/edit'">Edit
+								Profile</button>
+						</span>
+						</h3>
 					</div>
 					<form class="form-horizontal">
 						<div class="form-group">
@@ -56,10 +58,13 @@
 					</form>
 				</div>
 				<div class="col-sm-offset-2 col-sm-10">
-					<h3>Vehicles</h3>
+					<h3>Vehicles
+					<span style="float: right;">
 					<button type="button" class="btn btn-primary"
 						onclick="location.href='/coolname/account/vehicle/edit'">Vehicle
 						Management</button>
+						</span>
+						</h3>
 					<c:forEach items="${user.vehicles}" var="vehicle">
 						<div>
 							<span>${vehicle.model}</span><span>${vehicle.name}</span>
@@ -67,10 +72,13 @@
 					</c:forEach>
 				</div>
 				<div class="col-sm-offset-2 col-sm-10">
-					<h3>My Rides</h3>
+					<h3>My Rides
+					<span style="float: right;">
 					<button type="button" class="btn btn-primary"
 						onclick="location.href='/coolname/rides/edit'">Ride
 						Management</button>
+					</span>
+					</h3>
 					<c:forEach items="${user.vehicles}" var="vehicle">
 						<c:forEach items="${vehicle.rideEntries}" var="ride">
 							<c:if test="${ride.status == 'In Progress' || ride.status == 'Seating'}">
