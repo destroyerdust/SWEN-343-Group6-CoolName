@@ -103,7 +103,7 @@ public class RideController {
 			@RequestParam(value="destination", required=true, defaultValue="NULL") String destination,
 			@RequestParam(value="orgin", required=true, defaultValue="NULL") String origin,
 			@RequestParam(value="departureTime", required=true, defaultValue="NULL") String departureTime,
-			@RequestParam(value="arrivalTime", required=true, defaultValue="NULL") string arrivalTime,
+			@RequestParam(value="arrivalTime", required=true, defaultValue="NULL") String arrivalTime,
 			@RequestParam(value="RoundtripRideChoice") String roundtrip,
 			@RequestParam(value="returnDepartureTime", required=false) String returnDepartureTime,
 			@RequestParam(value="returnArrivalTime", required=false) String returnArrivalTime,
