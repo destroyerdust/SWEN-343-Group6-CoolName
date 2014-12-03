@@ -239,7 +239,7 @@ public class AccountController {
 	{
 		boolean status = false;
 		for (Vehicle vehicle : vehicles) {
-			if( vehicle.getVehicleID() != 0 && (vehicle.getDescription().equals("") || vehicle.getLicensePlate().equals("") || vehicle.getModel().equals("") || vehicle.getName().equals("") ||
+			if( vehicle.getVehicleID() != 0 && (vehicle.getDescription().equals("") || vehicle.getLicensePlate().equals("") || vehicle.getModel().equals("") ||
 					vehicle.getNumSeats() == 0))
 			{
 				status = true;
