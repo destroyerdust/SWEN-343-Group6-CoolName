@@ -681,7 +681,7 @@ public class RideController {
 			{
 				for (Vehicle vehicle : oldUser.getVehicles()) {
 					for (RideEntry ride : vehicle.getRideEntries()) {
-						if(ride.getStatus().equals("In Progress"))
+						if(ride.getStatus().equals("In Progress") || ride.getStatus().equals("Seating"))
 						{
 							SignupManager service = new SignupManager();
 							if( service.selectByRide(ride).size() > 0)
@@ -709,7 +709,7 @@ public class RideController {
 					List<RideEntry> rides = oldUser.getVehicles().get(i).getRideEntries();
 					for (int j = 0; j < rides.size(); j++) {
 						rides.get(j).updateStatus();
-						if(rides.get(j).getStatus().equals("In Progress"))
+						if(rides.get(j).getStatus().equals("In Progress") || rides.get(j).getStatus().equals("Seating"))
 						{
 							RideEntry updatedRide = containsRide(rides.get(j), updatedUser.getVehicles().get(i).getRideEntries());
 							if(updatedRide != null)
@@ -722,7 +722,6 @@ public class RideController {
 							}
 							else
 							{
-								System.out.println("TEST");
 								Integer[] point = new Integer[2];
 								point[0] = i;
 								point[1] = j;

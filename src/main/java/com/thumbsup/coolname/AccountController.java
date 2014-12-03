@@ -18,7 +18,6 @@ import com.thumbsup.coolname.dao.UserDAO;
 import com.thumbsup.coolname.entity.RideEntry;
 import com.thumbsup.coolname.entity.User;
 import com.thumbsup.coolname.entity.Vehicle;
-import com.thumbsup.coolname.service.SignupManager;
 import com.thumbsup.coolname.service.UserManager;
 
 @Controller

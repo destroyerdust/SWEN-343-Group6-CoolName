@@ -32,7 +32,7 @@
 				<button style="margin-bottom: 10px;" class="btn btn-primary" type="button" onclick="location.href='/coolname/ride/create'">Create new ride</button>
 				<c:forEach items="${user.vehicles}" var="v">
 					<c:forEach items="${v.rideEntries}" var="ride">
-						<c:if test="${ride.status == 'In Progress'}">
+						<c:if test="${ride.status == 'In Progress' || ride.status == 'Seating'}">
 							<div class="${ride.rideEntryID}" style="margin-bottom: 10px">
 								<div style="float: left;width: 300px;">${ride.name}</div>
 								<div style="margin-left: 50px;">
@@ -46,7 +46,7 @@
 				</c:forEach>
 				<c:forEach items="${user.vehicles}" var="vehicle" varStatus="i">
 					<c:forEach items="${vehicle.rideEntries}" var="ride" varStatus="j">
-						<c:if test="${ride.status == 'In Progress'}">
+						<c:if test="${ride.status == 'In Progress' || ride.status == 'Seating'}">
 							<div class="${ride.rideEntryID}" class="form-group" style="display: none">
 								<form:hidden path="vehicles[${i.index}].rideEntries[${j.index}].rideEntryID" name="rideEntryID" value="${ride.rideEntryID}"/>
 								<label>Name: </label>
