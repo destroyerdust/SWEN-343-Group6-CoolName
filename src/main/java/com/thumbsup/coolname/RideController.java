@@ -146,7 +146,7 @@ public class RideController {
 			
 			//convert times to correctly formatted datetime for the depature time					
 			Timestamp departTime = formatTimestamp(departureTime);
-			Timestamp startTime = new Timestamp(departTime.getTime()+1000*60*30);
+			Timestamp startTime = formatTimestamp(arrivalTime);
 			
 			java.util.Date date= new java.util.Date();
 			Timestamp creationTimestamp = new Timestamp(date.getTime());
@@ -178,7 +178,7 @@ public class RideController {
 					RoundTripManager rtm = new RoundTripManager();					
 					
 					Timestamp departTime2 = formatTimestamp(returnDepartureTime);					
-					Timestamp startTime2 = new Timestamp(departTime2.getTime()+1000*60*30);
+					Timestamp startTime2 = formatTimestamp(returnArrivalTime);
 					
 //					RideEntry startRide = rem.createRideEntry(
 //							creationTimestamp, destination, startTime, null, name,
@@ -278,7 +278,7 @@ public class RideController {
 					RoundTripManager rtm = new RoundTripManager();					
 					
 					Timestamp departTime2 = formatTimestamp(returnDepartureTime);
-					Timestamp startTime2 = new Timestamp(departTime2.getTime()+1000*60*30);
+					Timestamp startTime2 = formatTimestamp(returnArrivalTime);
 					
 					RideEntry startRide = rem.createRideEntry(
 							creationTimestamp, destination, startTime, null, name,
