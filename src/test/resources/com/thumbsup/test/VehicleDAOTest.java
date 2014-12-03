@@ -23,6 +23,7 @@ public class VehicleDAOTest {
 	public static void setUpBeforeClass(){
 		entity.setName("Car test");
 		entity.setModel("Model Test");
+		entity.setLicensePlate("Testing");
 		entity.setDescription("Description Test");
 		entity.setNumSeats(3);
 		User driver = new User();

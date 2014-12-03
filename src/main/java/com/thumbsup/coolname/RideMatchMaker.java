@@ -1,5 +1,6 @@
 package com.thumbsup.coolname;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.thumbsup.coolname.entity.RideEntry;
@@ -70,11 +71,13 @@ public class RideMatchMaker {
 		// Remove all RideEntry objects that don't have a Vehicle already.
 		// Intuition: RideEntries with Vehicles are Drivers that are looking for
 		// Passengers
+		List<RideEntry> toDelete = new ArrayList<RideEntry>();
 		for (RideEntry re : results) {
 			if (re.getVehicle() == null) {
-				results.remove(re);
+				toDelete.add(re);
 			}
 		}
+		results.removeAll(toDelete);
 
 		return results;
 	}

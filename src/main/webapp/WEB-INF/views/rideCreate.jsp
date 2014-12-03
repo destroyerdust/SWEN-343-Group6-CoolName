@@ -37,13 +37,13 @@
 				<!-- Google Map End -->
 				
 				<div class="form-group">
-					<label for="destination" class="col-sm-2 control-label">Destination Description</label>
+					<label for="destination" class="col-sm-2 control-label">Destination</label>
 					<div class="col-sm-8">
 						<input name="destination" type="text" class="form-control">
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="orgin" class="col-sm-2 control-label">Origin Description</label>
+					<label for="orgin" class="col-sm-2 control-label">Origin</label>
 					<div class="col-sm-8">
 						<input name="orgin" type="text" class="form-control">
 					</div>
@@ -222,6 +222,12 @@
     });
 	$(function () {
         $('#datetimepicker2').datetimepicker();
+    });
+	$(function () {
+        $('#datetimepicker3').datetimepicker();
+    });
+	$(function () {
+        $('#datetimepicker4').datetimepicker();
     });
 </script>
 <script>

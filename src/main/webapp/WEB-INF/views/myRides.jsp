@@ -24,7 +24,7 @@
 		<div>INCORRECT INFORMATION</div>
 	</c:if>
 	<c:if test="${p}">
-		<div>THE VEHICLE(S) COULD NOT BE DELETED, IT IS ALREADY RELATED TO A RIDE</div>
+		<div>THE RIDE(S) COULD NOT BE DELETED, IT IS ALREADY RELATED TO AN USER</div>
 	</c:if>
 	<form:form action="edit" method="POST" modelAttribute="user">
 		<div class="form-group">

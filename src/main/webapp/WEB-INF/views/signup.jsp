@@ -70,6 +70,12 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label for="plate" class="col-sm-2 control-label">License Plate</label>
+			<div class="col-sm-8">
+				<input type="text" id="plate" class="form-control" name="plate">
+			</div>
+		</div>
+		<div class="form-group">
 			<label for="seats" class="col-sm-2 control-label">Number of Seats</label>
 			<div class="col-sm-8">
 				<input type="number" id="seats" class="form-control" name="seats" min="0" max="10" step="1" value="4">
@@ -175,6 +181,19 @@
                             regexp: /^\(\d{3}\)\s\d{3}-\d{4}/,
                             message: 'The phone number can only be (555) 555-5555 format'
                         },
+                		
+                	}
+                },
+                plate: {
+                	validators: {
+                		nonEmpty: {
+                			message: 'Plate is required'
+                		},
+                		 stringLength: {
+                             min: 4,
+                             max: 7,
+                             message: 'The plate must be more than 3 and less than 8 characters long'
+                         }
                 		
                 	}
                 }

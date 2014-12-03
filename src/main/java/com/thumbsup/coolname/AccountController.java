@@ -40,6 +40,7 @@ public class AccountController {
 							@RequestParam(value="lstn", required=true, defaultValue="") String lastName,
 							@RequestParam(value="cell", required=true, defaultValue="") String cellPhone,
 							@RequestParam(value="caraswr", required=true, defaultValue="") String carAnswer,
+							@RequestParam(value="plate", required=false) String plate,
 							@RequestParam(value="model", required=false) String model,
 							@RequestParam(value="seats", required=false) String seats,
 							@RequestParam(value="desc", required=false, defaultValue="") String description,
@@ -59,6 +60,7 @@ public class AccountController {
 			if(carAnswer.equalsIgnoreCase("Yes"))
 			{
 				v = new Vehicle();
+				v.setLicensePlate(plate);
 				v.setDescription(description);
 				v.setModel(model);
 				v.setNumSeats(Integer.parseInt(seats));

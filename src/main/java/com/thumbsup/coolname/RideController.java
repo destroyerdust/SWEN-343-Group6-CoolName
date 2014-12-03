@@ -668,18 +668,38 @@ public class RideController {
 	{
 		UserManager services = new UserManager();
 		User oldUser = services.selectUser((Integer) request.getSession().getAttribute("auth"));
+		for (Vehicle vehicle : oldUser.getVehicles()) {
+			for (RideEntry ride : vehicle.getRideEntries()) {
+				ride.updateStatus();
+			}
+		}
+		
 		if(oldUser != null)
 		{
 			
 			if(updatedUser.getVehicles() == null)
 			{
 				for (Vehicle vehicle : oldUser.getVehicles()) {
+					for (RideEntry ride : vehicle.getRideEntries()) {
+						if(ride.getStatus().equals("In Progress"))
+						{
+							SignupManager service = new SignupManager();
+							if( service.selectByRide(ride).size() > 0)
+							{
+								request.setAttribute("s", true);
+								request.setAttribute("p", true);
+								return new ModelAndView("myRides","user", oldUser);
+							}
+						}
+					}
+				}			
+				for (Vehicle vehicle : oldUser.getVehicles()) {
 					vehicle.getRideEntries().removeAll(vehicle.getRideEntries());
 				}
 			}
 			else if(validateRides(updatedUser.getVehicles()))
 			{
-				request.setAttribute("s", true);
+				request.setAttribute("s", false);
 				return new ModelAndView("myRides", "user", oldUser);
 			}
 			else
@@ -719,7 +739,7 @@ public class RideController {
 					{
 						request.setAttribute("s", true);
 						request.setAttribute("p", true);
-						return new ModelAndView("myVehicles","user", oldUser);
+						return new ModelAndView("myRides","user", oldUser);
 					}
 					oldUser.getVehicles().get(integers[0]).removeRideEntry(ride);
 				}
@@ -738,7 +758,7 @@ public class RideController {
 						ride.getNumSeats() == 0))
 				{
 					status = true;
-					break;
+					return status;
 				}
 			}
 		}

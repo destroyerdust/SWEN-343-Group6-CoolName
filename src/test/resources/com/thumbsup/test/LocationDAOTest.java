@@ -20,6 +20,9 @@ public class LocationDAOTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass(){
+		entity.setTitle("TestingSuite");
+		entity.setLatitude(0);
+		entity.setLongitude(0);
 		entity.setRideEntryID(1);
 	}
 
