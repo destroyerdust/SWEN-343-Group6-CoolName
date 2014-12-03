@@ -116,6 +116,33 @@ public class GroupController {
 		return "groupView";
 	}
 	
+	@RequestMapping(value = "/group/{groupID}/edit", method = RequestMethod.GET)
+	public ModelAndView edit(Locale locale, Model model, HttpServletRequest request,@PathVariable int groupID)
+	{
+		GroupManager gm = new GroupManager();
+		Group group = gm.selectGroup(groupID);
+
+		//if the owner is the current logged in user
+		if(group.getOwnerID() == Integer.parseInt(request.getSession().getAttribute("auth").toString())){			
+			model.addAttribute("group", group);
+			return new ModelAndView("groupEdit");
+		}
+		
+		return new ModelAndView("redirect:/group/list");	
+	}
+	
+	@RequestMapping(value = "/group/{groupID}/edit", method = RequestMethod.POST)
+	public ModelAndView editPost(Locale locale, Model model, 
+			@RequestParam(value="description", required=false, defaultValue="NULL") String description,	
+			HttpServletRequest request,@PathVariable int groupID)
+	{		
+		GroupManager gm = new GroupManager();
+		Group group = gm.selectGroup(groupID);
+		gm.updateGroup(groupID, group.getName(), description, group.getOwnerID());
+		
+		return new ModelAndView("redirect:/group/list");	
+	}
+	
 	@RequestMapping(value = "/group/{groupID}/join", method = RequestMethod.GET)
 	public ModelAndView join(Locale locale, Model model, @PathVariable int groupID, HttpServletRequest request)
 	{
